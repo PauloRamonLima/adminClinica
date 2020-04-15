@@ -1,0 +1,81 @@
+<html xmlns="htp://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<style>
+		.header-column{
+			background: #D8D8D8;
+			font-size: 15px;
+		}
+	</style>
+</h:head>
+
+<h:body>
+	<ui:composition template="template.xhtml">
+		<ui:define name="corpo">
+
+			<div class="row">
+				<div class="col-md-12">
+				<div id="principal">
+				<h:form id="formulario">
+					<div class="card">
+					<p:messages/>
+						<div class="card-header" style=" background: #5882FA; color: white; text-align: center;">
+							<h2 class="card-title">Pacientes</h2>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body p-0"></div>
+						<!-- /.card-body -->
+						<div id="content">
+						<h:dataTable id="table"  value="#{pacienteBean.pacientes}" var="paciente" class="table table-bordered">
+							<h:column>
+							<f:facet name="header">Nome</f:facet>
+								<h:outputText value="#{paciente.nome}" />
+							</h:column>
+							<h:column>
+							<f:facet name="header" class="header-column">CPF</f:facet>
+								<h:outputText value="#{paciente.cpf}" />
+							</h:column>
+							<h:column>
+							<f:facet name="header" class="header-column">Data De Nascimento</f:facet>
+								<h:outputText value="#{paciente.dtNascimento}" />
+							</h:column>
+							<h:column>
+							<f:facet name="header" class="header-column">RG</f:facet>
+								<h:outputText value="#{paciente.rg}" />
+							</h:column>
+							<h:column>
+							<f:facet name="header">Ações</f:facet>
+							<p:spacer width="40" height="10" />
+								<h:commandButton value="Excluir" class="btn btn-danger" onclick="atualizar()">
+									<f:ajax listener="#{pacienteBean.deletar(paciente.id)}" execute="@all" render="@all" event="click"/>
+								</h:commandButton>
+								 <p:spacer width="20" height="10"/>
+								
+							    <h:commandButton action="#{pacienteBean.deletar(leito.id)}" value="Editar" class="btn btn-warning"/>
+								
+							</h:column>
+							
+						</h:dataTable>
+						</div>
+					</div>
+					</h:form>
+					</div>
+				</div>
+				</div>
+				<script>
+					function atualizar(){
+						console.log('chamou')	
+						setTimeout(function(){
+							window.location.reload();
+					     }, 200);
+					}
+				</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

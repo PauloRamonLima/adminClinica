@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AtestadoObito" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fae004b6-4269-4d54-ae54-42037d483f8c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="Logo" class="java.awt.Image"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="horario" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<field name="nascimento" class="java.lang.String"/>
+	<field name="municipio" class="java.lang.String"/>
+	<field name="uf" class="java.lang.String"/>
+	<field name="motivo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="131" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="81" y="95" width="399" height="30" forecolor="#FFFFFF" backcolor="#807E7E" uuid="ac50715d-5b92-47bd-9428-cdccd5ab7c39"/>
+				<box padding="0">
+					<pen lineWidth="1.0" lineColor="#141414"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Atestado De Obito]]></text>
+			</staticText>
+			<image hAlign="Center">
+				<reportElement x="180" y="15" width="200" height="50" uuid="6a99b000-999a-4247-9589-b7acb1dcdf5c"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="294" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="47" width="290" height="20" uuid="fcd686a2-ff50-4f48-ba78-382da5723741"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Declaro que o(a) paciente(a) com o nome :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="76" width="60" height="21" uuid="686f8921-19d3-4766-918a-549a052402c6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[CPF :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="140" width="160" height="23" uuid="c0df0f4e-6e95-4dce-9a73-205f68056b34"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Chegou a obito no dia :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="300" y="47" width="250" height="20" uuid="68a71619-b72e-44f4-8420-53af1936e9ff"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="76" width="100" height="21" uuid="d0e8d817-cbdd-4de7-b1a3-07d7cbec7dcd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="142" width="125" height="21" uuid="d0a9c7be-0227-44b9-ae8d-ab3c9050aa07"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="76" width="40" height="21" uuid="a0318866-2de9-4ea1-8747-b95ecaac9608"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[RG: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="200" y="76" width="125" height="21" uuid="a34e6dd8-6937-4f7e-968c-121abe039d89"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rg}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="325" y="76" width="100" height="21" uuid="a5caf486-de9b-4e40-8cb9-a4725b18d729"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Dt Nascimento]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="76" width="120" height="21" uuid="fdf36ba9-e156-4e80-8594-37ac6b1427d3"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nascimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="110" width="180" height="20" uuid="a40a6948-0617-4c49-b72a-710f5321e620"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Morador Do Municipio De :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="186" y="110" width="364" height="20" uuid="60581eb1-67c1-4e90-b9c7-ab7ed389252a"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{municipio}.concat("/").concat($F{uf})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="192" width="559" height="21" forecolor="#FFFFFF" backcolor="#878686" uuid="1fabb0b4-ff87-41bd-82af-1dc6111a6d32"/>
+				<box padding="0">
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Motivo Do Obito]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="213" width="560" height="81" uuid="a28680fa-43f0-4c1e-b55e-6461fd7f883d"/>
+				<box>
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="78" splitType="Stretch">
+			<staticText>
+				<reportElement x="346" y="19" width="199" height="21" uuid="b39046e3-c827-47c8-bf8c-231f376b6c96"/>
+				<textElement textAlignment="Center">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Carimbo e Assinatura]]></text>
+			</staticText>
+			<textField pattern="EEEE dd,MMMM-yyyy">
+				<reportElement x="0" y="48" width="210" height="30" uuid="5767b766-4ddc-443f-aa40-ab3f0d8ee1de"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="347" y="18" width="200" height="1" uuid="449a5ec8-a803-47f1-82af-dea8deafc326">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

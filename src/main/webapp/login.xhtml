@@ -1,0 +1,190 @@
+<html xmlns="htp://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<meta charset="utf-8" />
+	
+	<title>Sig - clin</title>
+    <link rel="icon" href="resources/img/logosigclean.png" type="image/png" sizes="20x20"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Login</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
+	<link rel="stylesheet"
+		href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+	<link rel="stylesheet"
+		href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+	<link rel="stylesheet"
+		href="plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+	<link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css" />
+	<link rel="stylesheet" href="resources/dist/css/adminlte.min.css" />
+	<link rel="stylesheet"
+		href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
+	<link rel="stylesheet"
+		href="plugins/daterangepicker/daterangepicker.css" />
+	<link rel="stylesheet" href="plugins/summernote/summernote-bs4.css" />
+	<link
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
+		rel="stylesheet" />
+
+	<style>
+.Bimage {
+	background-image:
+		url("resources/img/backlogo.jpeg");
+}
+</style>
+
+	<style type="text/css">
+.white-button.ui-button.ui-state-default {
+	background-color: #ffffff;
+	color: #222222;
+	border-color: #d6d6d6;
+	/* with the exported variables from Nova and Luna Themes*/
+	border-color: var(- -input-border-color, #d6d6d6);
+}
+
+.white-button.ui-button.ui-state-default:enabled:hover, .white-button.ui-button.ui-state-default:focus
+	{
+	background-color: #f2f2f2;
+	border-color: #ccc;
+	color: #373a3c;
+	/* with the exported variables from Nova and Luna Themes*/
+	border-color: var(- -input-hover-border-color, #ccc);
+}
+
+.green-button.ui-button.ui-state-default {
+	background-color: #5cb85c;
+	border-color: #5cb85c;
+	color: #fff;
+}
+
+.green-button.ui-button.ui-state-default:enabled:hover, .green-button.ui-button.ui-state-default:focus
+	{
+	background-color: #4cae4c;
+	border-color: #5cb85c;
+}
+
+.red-button.ui-button.ui-state-default {
+	background-color: #d9534f;
+	border-color: #d9534f;
+	color: #fff;
+}
+
+.red-button.ui-button.ui-state-default:enabled:hover, .red-button.ui-button.ui-state-default:focus
+	{
+	background-color: #d43f3a;
+	border-color: #d9534f;
+}
+
+.pf, .pf * {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+.nest-bf-in-pf .form-group {
+	margin-bottom: 0px;
+}
+</style>
+
+
+</h:head>
+
+<h:body class="login-page Bimage">
+	<div class="login-box">
+
+		<!-- /.login-logo -->
+		<div class="card">
+			<div class="card-body login-card-body">
+				<div class="login-logo">
+					<h:graphicImage value="resources/img/logosigclean.png" class="img-fluid" />
+				</div>
+
+				<h:form id="formLogin">
+				<p:messages/>
+
+					<div class="col-sm-12 ">
+						<!-- text input -->
+						<div class="form-group">
+							<h:outputLabel value="Usuário:" />
+							<h:inputText value="#{usuarioBean.login}" autocomplete="off" class="form-control" >
+						<f:passThroughAttribute name="placeholder" value="login"/>
+					</h:inputText>
+
+						</div>
+					</div>
+					<div class="col-sm-12">
+						<div class="form-group">
+							<h:outputLabel value="Senha:" />
+							<h:inputSecret value="#{usuarioBean.senha}" class="form-control" >
+						<f:passThroughAttribute name="placeholder" value="senha"/>
+					</h:inputSecret>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-2">
+							<div class="icheck-primary"></div>
+						</div>
+						<!-- /.col -->
+						<div class="col-7">
+						<h:commandButton action="#{usuarioBean.showIndexPage()}"
+								value="Entrar" class="btn btn-primary btn-block" />
+						<!-- /.col -->
+					</div>
+					<div class="col-7">
+						<br/>
+						<h:commandLink action="#{usuarioBean.showCadastroPage()}" value="Cadastre-se" />
+						<br/>
+						<h:commandLink action="#{usuarioBean.showAlterarSenhaPage()}" value="Esqueci Minha Senha" />
+						
+					</div>
+					</div>
+				</h:form>
+
+
+			</div>
+		</div>
+	</div>
+	<!-- /.login-box -->
+	<!-- jQuery -->
+	<script src="plugins/jquery/jquery.min.js"></script>
+	<!-- jQuery UI 1.11.4 -->
+	<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+	<!-- Bootstrap 4 -->
+	<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- ChartJS -->
+	<script src="plugins/chart.js/Chart.min.js"></script>
+	<!-- Sparkline -->
+	<script src="plugins/sparklines/sparkline.js"></script>
+	<!-- JQVMap -->
+	<script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+	<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+	<!-- jQuery Knob Chart -->
+	<script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+	<!-- daterangepicker -->
+	<script src="plugins/moment/moment.min.js"></script>
+	<script src="plugins/daterangepicker/daterangepicker.js"></script>
+	<!-- Tempusdominus Bootstrap 4 -->
+	<script
+		src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+	<!-- Summernote -->
+	<script src="plugins/summernote/summernote-bs4.min.js"></script>
+	<!-- overlayScrollbars -->
+	<script
+		src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="resources/dist/js/adminlte.js"></script>
+	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+	<script src="resources/dist/js/pages/dashboard.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="resources/dist/js/demo.js"></script>
+</h:body>
+</html>

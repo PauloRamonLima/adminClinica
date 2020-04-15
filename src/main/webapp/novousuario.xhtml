@@ -1,0 +1,118 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8"/>
+	<title>Sig - clin</title>
+  <link rel="icon" href="resources/img/logosigclean.png" type="image/png" sizes="20x20"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+  
+  	<link rel="stylesheet"  href="resources/css/style.css"/>  
+
+  <title>Sig - clin</title>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+  <link rel="stylesheet" href="/resources/demos/style.css"/>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css"/>
+  <!-- Theme style -->
+  <link rel="stylesheet" href="resources/dist/css/adminlte.min.css"/>
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"/>
+  
+  <style>
+  	
+  	body{
+  		background: #E0E0F8;
+  	}
+  	
+  	.topo{
+  		text-align: center;
+  		position: relative;
+  		top: 15px; 
+  	}
+  	
+ </style>
+</h:head>
+
+<h:body>
+
+			<div class="container">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<br />
+						</div>
+						<!-- /.box-header -->
+						<!-- form start -->
+							<div class="box-body">
+							<h:form>
+							<div style="float: right; margin-top: 5px;">
+								<h:commandButton action="#{usuarioBean.showLoginPage()}" value="Voltar" class="btn btn-warning"/>
+							</div>
+							<div class="col-sm-12 topo">
+								  <h:graphicImage value="resources/img/logosigclean.png" class="img-fluid" style="width: 250px;" />
+								  <p:spacer height="20px"/>
+								  <h1>Cadastrar Novo Usuario</h1>
+								  
+							</div>	
+								<p:messages></p:messages>
+							<br/>																										
+							<div class="col-sm-6 ">
+									<!-- text input -->
+									<div class="form-group">	
+								<label><font
+									style="vertical-align: inherit;"><font
+										style="vertical-align: inherit;">Nome</font></font></label>
+								<h:inputText value="#{usuarioBean.usuario.nome}" autocomplete="off" class="form-control"/>
+								</div>
+								</div>
+						
+							    <div class="col-sm-6 ">
+									<!-- text input -->
+									<div class="form-group">
+							    <label><font
+									style="vertical-align: inherit;"><font
+										style="vertical-align: inherit;">Login</font></font></label>
+								<h:inputText value="#{usuarioBean.usuario.login}" autocomplete="off" class="form-control"/>
+								</div></div>
+							    
+							    <div class="col-sm-6 ">
+									<!-- text input -->
+									<div class="form-group">
+							    <label><font
+									style="vertical-align: inherit;"><font
+										style="vertical-align: inherit;">Email</font></font></label>
+								<h:inputText value="#{usuarioBean.usuario.email}" autocomplete="off" class="form-control"/>
+					
+								</div>
+								</div>
+							    
+							     <div class="col-sm-6 ">
+									<!-- text input -->
+									<div class="form-group">
+							     <label><font
+									style="vertical-align: inherit;"><font
+										style="vertical-align: inherit;">Senha</font></font></label>
+								<h:inputSecret value="#{usuarioBean.senha}" autocomplete="off" class="form-control"/>
+								</div>
+								</div>
+							    
+								<h:commandButton action="#{usuarioBean.salvar()}"
+									value="Cadastrar" ajax="false" class="btn btn-info" type="submit">
+									<f:ajax execute="@form" render="@form"/>
+									</h:commandButton>
+							</h:form>							   
+							</div>
+							
+							
+						</div>
+					</div>
+				
+</h:body>
+</html>

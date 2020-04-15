@@ -1,0 +1,79 @@
+<html xmlns="htp://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<style>
+		.header-column{
+			background: #D8D8D8;
+			font-size: 15px;
+		}
+	</style>
+</h:head>
+
+<h:body>
+	<ui:composition template="template.xhtml">
+		<ui:define name="corpo">
+			<p:messages></p:messages>
+			<div class="row">
+				<div class="col-md-12">
+				<h:form>
+					<div class="card">
+						<div class="card-header" style=" background: #5882FA; color: white; text-align: center;">
+							<h2 class="card-title">Exames</h2>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body p-0"></div>
+						<!-- /.card-body -->
+						<h:dataTable rows="7"  value="#{exameBean.exames}" var="exame" class="table table-bordered">
+							<h:column>
+							<f:facet name="header">Nome</f:facet>
+								<h:outputText value="#{exame.nome}" />
+							</h:column>
+							<h:column>
+							<f:facet name="header" class="header-column">Paciente</f:facet>
+								<h:outputText value="#{exame.paciente.nome}" />
+							</h:column>
+							<h:column>
+							<f:facet name="header" class="header-column">Medico</f:facet>
+								<h:outputText value="#{exame.medico.nome}" />
+							</h:column>
+							<h:column>
+							<f:facet name="header" class="header-column">Data</f:facet>
+								<h:outputText value="#{exame.data}" />
+							</h:column>
+							<h:column>
+							<f:facet name="header" class="header-column">Realizado</f:facet>
+								<h:outputText value="#{exame.realizado ? 'Sim' : 'Não'}" />
+							</h:column>
+							<h:column>
+							<f:facet name="header">Ações</f:facet>
+							<p:spacer width="40" height="10" />
+								<h:commandButton value="Excluir" class="btn btn-danger" onclick="atualizar()">
+									<f:ajax listener="{exameBean.deletar(exame.id)}" execute="@all" render="@all" event="click"/>
+								</h:commandButton>
+								 <p:spacer width="20" height="10" />
+								
+							    <h:commandButton action="#{exameBean.showPageEditar(exame.id)}" value="Editar" class="btn btn-warning"/>
+								
+							</h:column>
+						</h:dataTable>
+					</div>
+					</h:form>
+				</div>
+				</div>
+				<script>
+					function atualizar(){
+						console.log('chamou')	
+						setTimeout(function(){
+							window.location.reload();
+					     }, 200);
+					}
+				</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
