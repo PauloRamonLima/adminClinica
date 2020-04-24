@@ -7,11 +7,11 @@
 <h:head>
 	<meta charset="utf-8" />
 	<style>
-		.header-column{
-			background: #D8D8D8;
-			font-size: 15px;
-		}
-	</style>
+.header-column {
+	background: #D8D8D8;
+	font-size: 15px;
+}
+</style>
 </h:head>
 
 <h:body>
@@ -20,59 +20,207 @@
 
 			<div class="row">
 				<div class="col-md-12">
-				<div id="principal">
-				<h:form id="formulario">
-					<div class="card">
-					<p:messages/>
-						<div class="card-header" style=" background: #5882FA; color: white; text-align: center;">
-							<h2 class="card-title">Pacientes</h2>
-						</div>
-						<!-- /.card-header -->
-						<div class="card-body p-0"></div>
-						<!-- /.card-body -->
-						<div id="content">
-						<h:dataTable id="table"  value="#{pacienteBean.pacientes}" var="paciente" class="table table-bordered">
-							<h:column>
-							<f:facet name="header">Nome</f:facet>
-								<h:outputText value="#{paciente.nome}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header" class="header-column">CPF</f:facet>
-								<h:outputText value="#{paciente.cpf}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header" class="header-column">Data De Nascimento</f:facet>
-								<h:outputText value="#{paciente.dtNascimento}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header" class="header-column">RG</f:facet>
-								<h:outputText value="#{paciente.rg}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header">Ações</f:facet>
-							<p:spacer width="40" height="10" />
-								<h:commandButton value="Excluir" class="btn btn-danger" onclick="atualizar()">
-									<f:ajax listener="#{pacienteBean.deletar(paciente.id)}" execute="@all" render="@all" event="click"/>
-								</h:commandButton>
-								 <p:spacer width="20" height="10"/>
-								
-							    <h:commandButton action="#{pacienteBean.deletar(leito.id)}" value="Editar" class="btn btn-warning"/>
-								
-							</h:column>
-							
-						</h:dataTable>
+					<div id="principal">
+						<div class="card">
+							<!-- /.card-header -->
+							<div class="card-body p-0"></div>
+							<!-- /.card-body -->
+							<div id="content">
+								<p:panel header="Pacientes">
+									<h:form id="formulario">
+										<p:messages />
+										<p:dataTable id="table" paginatorPosition="bottom"
+											paginatorAlwaysVisible="false" reflow="true"
+											value="#{pacienteBean.pacientes}" var="paciente"
+											paginator="true" rows="10">
+											<p:column headerText="Nome"
+												style="width: 380px;text-align: center;">
+												<h:outputText value="#{paciente.nome}" />
+											</p:column>
+											<p:column headerText="CPF"
+												style="width: 150px;text-align: center;">
+												<h:outputText value="#{paciente.cpf}" />
+											</p:column>
+											<p:column headerText="Data De Nascimento"
+												style="text-align: center;">
+												<h:outputText value="#{paciente.dtNascimento}" />
+											</p:column>
+											<p:column headerText="RG"
+												style="width: 150px;text-align: center;">
+												<h:outputText value="#{paciente.rg}" />
+											</p:column>
+											<p:column headerText="Ações" style="width: 90px;">
+												<p:spacer width="5" height="10" />
+												<p:commandLink onclick="atualizar()"
+													action="#{pacienteBean.deletar(paciente.id)}"
+													update="formulario" process="@this" title="Excluir">
+													<i class="fa fa-trash" aria-hidden="true"
+														style="font-size: 18px; color: red"></i>
+												</p:commandLink>
+												<p:spacer width="5" height="10" />
+
+												<p:commandLink
+													action="#{pacienteBean.buscarPacientePorId(paciente.id)}"
+													oncomplete="PF('dlg2').show();" update="formulario"
+													title="Editar">
+													<i class="fa fa-cog fa-fw" aria-hidden="true"
+														style="font-size: 18px; color: black;"></i>
+												</p:commandLink>
+
+											</p:column>
+
+										</p:dataTable>
+									</h:form>
+								</p:panel>
+
+							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+
+				<p:dialog header="Editar Paciente" widgetVar="dlg2" modal="true" position="320,100" width="900" height="440" style="position: fixed; ">
+				<p:outputPanel autoUpdate="true">
+					<h:form role="form">
+
+						<p:messages />
+
+						<div class="row">
+							<div class="col-sm-7 ">
+								<!-- text input -->
+								<div class="form-group">
+									<h:outputLabel value="Nome:" />
+									<h:inputText value="#{pacienteBean.paciente.nome}"
+										styleClass="form-control" autocomplete="off" />
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									<label>Data de nascimento:</label>
+									<h:inputText value="#{pacienteBean.paciente.dtNascimento}"
+										autocomplete="off" class="form-control nascimento">
+										<f:passThroughAttribute name="placeholder" value="dd/mmm/aaaa" />
+									</h:inputText>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+
+							<div class="col-sm-3 ">
+								<!-- text input -->
+								<div class="form-group">
+									<h:outputLabel value="CPF:" />
+									<h:inputText value="#{pacienteBean.paciente.cpf}"
+										styleClass="form-control cpf" id="cpf" autocomplete="off" />
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									<h:outputLabel value="RG" />
+									<h:inputText value="#{pacienteBean.paciente.rg}"
+										styleClass="form-control rg" autocomplete="off" />
+								</div>
+							</div>
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<h:outputLabel value="Estado Civil:" />
+									<h:selectOneMenu value="#{pacienteBean.paciente.estCivil}"
+										class="form-control">
+										<f:selectItem itemValue="Não" itemLabel="Selecione uma opção!"
+											noSelectedOption="true" />
+										<f:selectItem itemValue="Solteiro(a)" itemLabel="Solteiro(a)" />
+										<f:selectItem itemValue="Casado(a)" itemLabel="Casado(a)" />
+										<f:selectItem itemValue="Viúvo" itemLabel="Viúvo(a)" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="form-group">
+									<h:outputLabel value="CEP:" />
+									<h:inputText value="#{pacienteBean.paciente.cep}"
+										styleClass="form-control" autocomplete="off">
+										<f:ajax event="blur" execute="@this"
+											listener="#{pacienteBean.pesquisaCep}"
+											render="logradouro localidade bairro uf" />
+									</h:inputText>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<!-- text input -->
+								<div class="form-group">
+									<h:outputLabel value="Endereço:" />
+									<h:inputText value="#{pacienteBean.paciente.logradouro}"
+										id="logradouro" styleClass="form-control" autocomplete="off" />
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<h:outputLabel value="Bairro:" />
+									<h:inputText value="#{pacienteBean.paciente.bairro}"
+										id="bairro" styleClass="form-control" autocomplete="off" />
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+
+							<div class="col-sm-4 ">
+								<!-- text input -->
+								<div class="form-group">
+									<h:outputLabel value="Cidade:" />
+									<h:inputText value="#{pacienteBean.paciente.localidade}"
+										id="localidade" styleClass="form-control" autocomplete="off" />
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<div class="form-group">
+									<h:outputLabel value="UF:" />
+									<h:inputText value="#{pacienteBean.paciente.uf}" id="uf"
+										styleClass="form-control" autocomplete="off" />
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									<h:outputLabel value="Numero:" />
+									<h:inputText value="#{pacienteBean.paciente.endNumero}"
+										styleClass="form-control" autocomplete="off" />
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group">
+
+								<h:commandButton value="Atualizar" type="submit"
+									action="#{pacienteBean.alterar()}" styleClass="btn btn-info" />
+
+							</div>
+						</div>
+
+
 					</h:form>
-					</div>
-				</div>
-				</div>
-				<script>
+				</p:outputPanel>
+			</p:dialog>
+			<script>
 					function atualizar(){
 						console.log('chamou')	
 						setTimeout(function(){
 							window.location.reload();
-					     }, 200);
+					     }, 1500);
 					}
 				</script>
 		</ui:define>

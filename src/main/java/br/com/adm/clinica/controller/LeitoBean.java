@@ -46,8 +46,7 @@ public class LeitoBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		try {
-			nomesJson = transformaJavaEmJson.transformaJavaEmJsonPaciente();
-			System.out.println("chamou");
+			nomesJson = transformaJavaEmJson.transformaJavaEmJsonPacienteSemInternacao();
 			leitos = leitoDAO.findAll();
 		}catch (NullPointerException e) {
 			// TODO: handle exception
@@ -90,7 +89,8 @@ public class LeitoBean implements Serializable {
 	
 	public void showPageEditar(Long id) throws IOException {
 		idLeito = id;
-		FacesContext.getCurrentInstance().getExternalContext().redirect("editarleito.xhtml?faces-redirect=true");
+		leito = leitoDAO.findById(id);
+	//	FacesContext.getCurrentInstance().getExternalContext().redirect("editarleito.xhtml?faces-redirect=true");
 }
 	
 	public void showLeitos() throws IOException {

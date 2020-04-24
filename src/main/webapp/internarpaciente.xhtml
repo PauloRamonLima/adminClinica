@@ -34,11 +34,11 @@
 									style="vertical-align: inherit;"><font
 										style="vertical-align: inherit;">Paciente</font></font></label> <br />
 									
-								<h:inputText value="#{leitoInternacaoBean.nomePaciente}" class="form-control tags"  />
+								<h:inputText value="#{leitoInternacaoBean.nomePaciente}" id="nome" class="form-control tags"  />
 							   
 					   			 <br />
 								<h:commandButton action="#{leitoInternacaoBean.InternarPaciente}"
-									value="Salvar" class="btn btn-success"/>
+									value="Internar" class="btn btn-info"/>
 									
 									  <h:inputHidden value="#{leitoBean.nomesJson}" id="valor01" />
 							</div>

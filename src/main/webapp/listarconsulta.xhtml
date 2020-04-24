@@ -23,41 +23,37 @@
 				<h:form>
 				<p:messages></p:messages>
 					<div class="card">
-						<div class="card-header" style=" background: #5882FA; color: white; text-align: center;">
-							<h2 class="card-title">Consultas</h2>
-						</div>
 						<!-- /.card-header -->
 						<div class="card-body p-0"></div>
 						<!-- /.card-body -->
-						<h:dataTable rows="7"  value="#{consultaBean.consultas}" var="consulta" class="table table-bordered">
-							<h:column>
-							<f:facet name="header" class="header-column">Paciente</f:facet>
-								<h:outputText value="#{consulta.paciente.nome}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header" class="header-column">Medico</f:facet>
-								<h:outputText value="#{consulta.medico.nome}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header" class="header-column">Data</f:facet>
-								<h:outputText value="#{consulta.data}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header" class="header-column">Realizado</f:facet>
-								<h:outputText value="#{consulta.realizado ? 'Sim' : 'Não'}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header">Ações</f:facet>
-							<p:spacer width="40" height="10" />
-								<h:commandButton value="Excluir" class="btn btn-danger" onclick="atualizar()">
-									<f:ajax listener="#{consultaBean.deletar(consulta.id)}" execute="@all" render="@all" event="click"/>
-								</h:commandButton>	
-								<p:spacer width="20" height="10" />							
-							    <h:commandButton action="#{consultaBean.showPageEditar(consulta.id)}" value="Editar" class="btn btn-warning"/>
-							
-							</h:column>
-
-						</h:dataTable>
+						<p:panel header="Consultas">
+							<p:dataTable rows="7"  value="#{consultaBean.consultas}" var="consulta" class="table table-bordered">
+								<p:column headerText="Paciente" style="text-align: center;">
+									<h:outputText value="#{consulta.paciente.nome}" />
+								</p:column>
+								<p:column headerText="Medico" style="text-align: center;">
+									<h:outputText value="#{consulta.medico.nome}" />
+								</p:column>
+								<p:column headerText="Data" style="text-align: center; width: 160px;">
+									<h:outputText value="#{consulta.data}" />
+								</p:column>
+								<p:column headerText="Realizado" style="text-align: center; width: 120px;">
+									<h:outputText value="#{consulta.realizado ? 'Sim' : 'Não'}" />
+								</p:column>
+								<p:column headerText="Ações" style="width: 90px;">
+									<p:spacer width="5" height="10" />
+								
+								<p:commandLink onclick="atualizar()" action="#{consultaBean.deletar(consulta.id)}" update="@all" process="@this"  title="Excluir">
+							<i class="fa fa-trash" aria-hidden="true" style="font-size:18px;color:red"></i></p:commandLink>
+								 <p:spacer width="5" height="10" />
+								
+								<p:commandLink action="#{consultaBean.showPageEditar(consulta.id)}" title="Editar">
+							<i class="fa fa-cog fa-fw" aria-hidden="true" style="font-size:18px;color:black;"></i></p:commandLink>
+								
+							</p:column>
+	
+							</p:dataTable>
+						</p:panel>
 					</div>
 					</h:form>
 				</div>

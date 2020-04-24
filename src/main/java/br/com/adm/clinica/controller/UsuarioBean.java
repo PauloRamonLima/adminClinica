@@ -10,12 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.persistence.NoResultException;
 
-import com.sun.istack.internal.logging.Logger;
-
-import br.com.adm.clinica.config.SessionContext;
 import br.com.adm.clinica.dao.UsuarioDAO;
 import br.com.adm.clinica.model.Usuario;
 

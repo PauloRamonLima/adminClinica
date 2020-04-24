@@ -15,53 +15,69 @@
 			<div class="row">
 			<div class="col-md-12">
 			
-			<p:messages></p:messages>
 					<div class="card">
-						<div class="card-header" style=" background: #5882FA; color: white;">
-							<h2 class="card-title">Leitos</h2>
-						</div>
 						<!-- /.card-header -->
 						<div class="card-body p-0"></div>
 						<!-- /.card-body -->
+						<p:panel header="Leitos">
 						<h:form>
-						<h:dataTable columnClasses="coluna1,coluna2,colunaAcoes" value="#{leitoBean.leitos}" id="tabela" var="leito" class="table table-bordered">
-							<h:column>
-							<f:facet name="header">Nome</f:facet>
+						<p:messages></p:messages>
+						<p:dataTable value="#{leitoBean.leitos}" id="tabela" var="leito" class="table table-bordered">
+							<p:column headerText="Nome" style="width: 500px;text-align: center;">
 								<h:outputText value="#{leito.descricao}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header">Leitos De Internação</f:facet>
+							</p:column>
+							<p:column headerText="Leitos De Internação" style="text-align: center;">
 								<h:commandLink action="#{leitoInternacaoBean.showLeitoInternacaoOcupado(leito)}"><i class="fa fa-bed" style="font-size:18px;color:red"><SPAN> Ocupados</SPAN></i></h:commandLink>
 								<p:spacer width="15" />
 								<h:commandLink action="#{leitoInternacaoBean.showLeitoInternacaoDesocupado(leito)}"><i class="fa fa-bed"  style="font-size:18px;color:gray;"><SPAN> Livres</SPAN></i></h:commandLink>
 								<p:spacer width="15" />
 								<h:commandLink action="#{leitoBean.salvarLeitoIntercacao(leito.id)}"><i class="fa fa-bed"  style="font-size:18px;color:green;"><SPAN> Novo</SPAN></i></h:commandLink>
-							</h:column>
-							<h:column>
-							<f:facet name="header">Ações</f:facet>
-							<p:spacer width="40" height="10" />
-								<h:commandButton value="Excluir" class="btn btn-danger" onclick="atualizar()">
-									<f:ajax listener="#{leitoBean.deletar(leito.id)}" execute="@all" render="@all" event="click"/>
-								</h:commandButton>
-								 <p:spacer width="20" height="10" />
+							</p:column>
+							<p:column headerText="Ações" style="width: 90px;">
+							 <p:spacer width="5" height="10" />	
+								<p:commandLink onclick="atualizar()" action="#{leitoBean.deletar(leito.id)}" update="@all" process="@this"  title="Excluir">
+							<i class="fa fa-trash" aria-hidden="true" style="font-size:18px;color:red"></i></p:commandLink>
+								 <p:spacer width="5" height="10" />	
 								
-							    <h:commandButton action="#{leitoBean.showPageEditar(leito.id)}" value="Editar" class="btn btn-warning"/>
+							<p:commandLink action="#{leitoBean.showPageEditar(leito.id)}"  onclick="PF('dlg2').show();" title="Editar">
+							<i class="fa fa-cog fa-fw" aria-hidden="true" style="font-size:18px;color:black;"></i></p:commandLink>
 								
-							</h:column>
+							</p:column>
 							
-						</h:dataTable>
+						</p:dataTable>
 						</h:form>
-						
+						</p:panel>
 					</div>
 					
 				</div>
 				</div>
+				
+				<p:dialog header="Modal Dialog"  position="320,100" widgetVar="dlg2" modal="true" width="600" height="200">
+    				<h:form role="form">
+							<div class="box-body">
+							<div class="col-sm-6">
+								<p:messages></p:messages>
+
+								<label for="exampleInputEmail1"><font
+									style="vertical-align: inherit;"><font
+										style="vertical-align: inherit;">Nome</font></font></label> <br />
+								<h:inputTextarea value="#{leitoBean.leito.descricao}" autocomplete="off" class="form-control"/>
+								
+							    <br/>
+								<h:commandButton action="#{leitoBean.alterar()}" onclick="atualizar()"
+									value="Atualizar" ajax="false" class="btn btn-success"/>					   
+							</div>
+							</div>
+							
+						</h:form>				</p:dialog>  
+				
+				
 				<script>
 					function atualizar(){
 						console.log('chamou')	
 						setTimeout(function(){
 							window.location.reload();
-					     }, 200);
+					     }, 1500);
 					}
 				</script>
 		</ui:define>

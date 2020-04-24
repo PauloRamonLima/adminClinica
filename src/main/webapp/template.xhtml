@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="x-ua-compatible" content="ie=edge"/>
   
-  	<link rel="stylesheet"  href="resources/css/style.css"/>  
+  	<link rel="stylesheet"  href="./resources/css/style.css"/>  
 
   <title>Sig - clin</title>
   <link rel="icon" href="resources/img/logosigclean.png" type="image/png" sizes="20x20"/>
@@ -25,7 +25,10 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"/>
   
   <style>
-.pf, .pf * {
+  .ui-datatable-header{
+   background: blue;
+}
+/* .pf, .pf * {
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
@@ -33,7 +36,7 @@
 
 .nest-bf-in-pf .form-group {
 	margin-bottom: 0px;
-}
+} */
 </style>
   
 <!--   <script> jQuery(document).ready(function(jQuery){ });</script>  -->
@@ -49,11 +52,16 @@
 	      <li class="nav-item">
 	        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
 	      </li>
-	      <li class="nav-item d-none d-sm-inline-block">
-	        <a href="index.xhtml"  class="nav-link">Pagina Inicial</a>
-	      </li>
 	    </ul>
-    <!-- Right navbar links -->	
+	    <!-- <div style="float: rigth;">
+	    	<h:outputLink value="#{facesContext.externalContext.requestContextPath}
+      /logout">Sair</h:outputLink>
+	    </div> -->
+    <!-- Right navbar links -->
+    <div style="float: right;">
+    		        <a href="index.xhtml"  class="nav-link"> <i class="fa fa-heartbeat" aria-hidden="true" style= "color: red;"></i> <b><i>Farmacia</i></b></a>
+    	
+    </div>	
   </nav>
   <!-- /.navbar -->
 
@@ -89,7 +97,7 @@
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>Novo</p>
 								</a></li>
-								<li class="nav-item"><a href="./novopaciente.xhtml"
+								<li class="nav-item"><a href="./listarpacienteinternado.xhtml"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>Internados</p>
 								</a></li>

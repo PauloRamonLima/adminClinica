@@ -9,6 +9,8 @@
 		<class>br.com.adm.clinica.model.Medico</class>
 		<class>br.com.adm.clinica.model.Paciente</class>
 		<class>br.com.adm.clinica.model.Usuario</class>
+		<class>br.com.adm.clinica.model.Medicamento</class>
+		<class>br.com.adm.clinica.model.Farmacia</class>
 			
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/clinica" />

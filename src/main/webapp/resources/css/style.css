@@ -3,6 +3,8 @@
 		}
 .coluna2{
 			width: 230px;
+		position: absolute;
+		r  
 		
 		}
 .colunaAcoes{
@@ -25,4 +27,6 @@
 		
 		}
 		
-		
+.ui-datatable-header{
+   background: blue;
+}

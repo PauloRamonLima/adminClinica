@@ -17,6 +17,8 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.persistence.NoResultException;
 
+import org.eclipse.jdt.internal.compiler.parser.Scanner;
+
 import com.google.gson.Gson;
 
 import br.com.adm.clinica.dao.ConsultaDAO;
@@ -27,6 +29,7 @@ import br.com.adm.clinica.model.Consulta;
 import br.com.adm.clinica.model.Exame;
 import br.com.adm.clinica.model.LeitoInternacao;
 import br.com.adm.clinica.model.Paciente;
+import br.com.adm.clinica.model.vo.PacienteInternadoVO;
 
 @ManagedBean
 @ViewScoped
@@ -46,14 +49,18 @@ public class PacienteBean implements Serializable {
 
 	private List<Paciente> pacientes = new ArrayList<Paciente>();
 	
+	private List<PacienteInternadoVO> pacientesInternados = new ArrayList<>();
+	
+	private List<LeitoInternacao> leitosDeInternacaoOcupados = new ArrayList<>();
+	
 
 	@PostConstruct
 	public void init() {
 		try {
 			pacientes = pacienteDAO.findAll();
+			buscarPacientesInternados();
 		} catch (NullPointerException e) {
-			// TODO: handle exception
-			System.out.println("Lista Vazia");
+			e.printStackTrace();
 		}
 	}
 
@@ -114,7 +121,23 @@ public class PacienteBean implements Serializable {
 	}
 
 	public void buscarPacientePorId(Long id) {
-		pacienteDAO.findById(id);
+		paciente = pacienteDAO.findById(id);
+	}
+	
+	public void buscarPacientesInternados() {
+		pacientesInternados = new ArrayList<>();
+		leitosDeInternacaoOcupados = new ArrayList<>();
+		leitosDeInternacaoOcupados = leitoInternacaoDAO.buscarPacientesInternados();
+		PacienteInternadoVO pacienteVO = new PacienteInternadoVO();
+		for(int i = 0; i < leitosDeInternacaoOcupados.size(); i++) {
+			pacienteVO.setNomePaciente(leitosDeInternacaoOcupados.get(i).getPaciente().getNome());
+			pacienteVO.setCpf(leitosDeInternacaoOcupados.get(i).getPaciente().getCpf());
+			pacienteVO.setLeito(leitosDeInternacaoOcupados.get(i).getLeito().getDescricao());
+			pacienteVO.setLeitoInternacao(leitosDeInternacaoOcupados.get(i).getNumero().toString());
+			pacientesInternados.add(pacienteVO);
+			pacienteVO = new PacienteInternadoVO();
+			
+		}
 	}
 
 	public void alterar(Long id) {
@@ -175,6 +198,22 @@ public class PacienteBean implements Serializable {
 
 	public void setPacientes(List<Paciente> pacientes) {
 		this.pacientes = pacientes;
+	}
+
+	public List<PacienteInternadoVO> getPacientesInternados() {
+		return pacientesInternados;
+	}
+
+	public void setPacientesInternados(List<PacienteInternadoVO> pacientesInternados) {
+		this.pacientesInternados = pacientesInternados;
+	}
+
+	public List<LeitoInternacao> getLeitosDeInternacaoOcupados() {
+		return leitosDeInternacaoOcupados;
+	}
+
+	public void setLeitosDeInternacaoOcupados(List<LeitoInternacao> leitosDeInternacaoOcupados) {
+		this.leitosDeInternacaoOcupados = leitosDeInternacaoOcupados;
 	}
 
 }
