@@ -2,19 +2,14 @@ package br.com.adm.clinica.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.persistence.NoResultException;
-
-import com.google.gson.Gson;
+import javax.inject.Named;
 
 import br.com.adm.clinica.dao.ExameDAO;
 import br.com.adm.clinica.dao.MedicoDAO;
@@ -25,7 +20,7 @@ import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 
 @ViewScoped
-@ManagedBean
+@Named
 public class ExameBean implements Serializable {
 
 	private static final long serialVersionUID = -6235197230054526106L;

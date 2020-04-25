@@ -7,22 +7,19 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-
-import com.google.gson.Gson;
+import javax.inject.Named;
 
 import br.com.adm.clinica.dao.ConsultaDAO;
 import br.com.adm.clinica.dao.MedicoDAO;
 import br.com.adm.clinica.dao.PacienteDAO;
 import br.com.adm.clinica.model.Consulta;
-import br.com.adm.clinica.model.Exame;
 import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class ConsultaBean implements Serializable {
 

@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 import br.com.adm.clinica.dao.LeitoDAO;
 import br.com.adm.clinica.dao.LeitoInternacaoDAO;
@@ -17,7 +17,7 @@ import br.com.adm.clinica.model.Leito;
 import br.com.adm.clinica.model.LeitoInternacao;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 
-@ManagedBean
+@Named
 @RequestScoped
 public class LeitoBean implements Serializable {
 

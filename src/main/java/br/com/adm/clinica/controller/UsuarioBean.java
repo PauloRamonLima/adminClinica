@@ -6,24 +6,27 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.NoResultException;
 
 import br.com.adm.clinica.dao.UsuarioDAO;
 import br.com.adm.clinica.model.Usuario;
 
-@ManagedBean
+@Named
 @SessionScoped
 public class UsuarioBean implements Serializable {
 
 	private static final long serialVersionUID = -4326028160868302820L;
 
-	private UsuarioDAO usuarioDAO = new UsuarioDAO();
+	@Inject
+	private UsuarioDAO usuarioDAO;
 
-	private Usuario usuario = new Usuario();
+	@Inject
+	private Usuario usuario;
 
 	private String login;
 

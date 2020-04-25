@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
@@ -25,7 +26,7 @@ import br.com.adm.clinica.model.vo.AtestadoMedicoVO;
 import br.com.adm.clinica.util.RelatorioGeneric;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class RelAtestatoMedicoBean implements Serializable {
 	

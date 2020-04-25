@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @ViewScoped
-@ManagedBean
+@Named
 public class DashboardBean implements Serializable {
 	
 	

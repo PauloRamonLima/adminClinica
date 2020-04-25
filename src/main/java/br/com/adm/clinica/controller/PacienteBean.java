@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.persistence.NoResultException;
 
 import org.eclipse.jdt.internal.compiler.parser.Scanner;
@@ -31,7 +32,7 @@ import br.com.adm.clinica.model.LeitoInternacao;
 import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.model.vo.PacienteInternadoVO;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class PacienteBean implements Serializable {
 

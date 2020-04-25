@@ -7,11 +7,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import br.com.adm.clinica.dao.MedicamentoDAO;
 import br.com.adm.clinica.model.Medicamento;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class MedicamentoBean implements Serializable {
 
