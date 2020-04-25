@@ -53,6 +53,8 @@ public class PacienteBean implements Serializable {
 	
 	private List<LeitoInternacao> leitosDeInternacaoOcupados = new ArrayList<>();
 	
+	private LeitoInternacao leitoInternacao = new LeitoInternacao();
+	
 
 	@PostConstruct
 	public void init() {
@@ -117,7 +119,7 @@ public class PacienteBean implements Serializable {
 		
 		pacienteDAO.delete(id);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Paciente Deletado Com Sucasso", "Paciente Deletado Com Sucasso"));
+				"Paciente Deletado Com Sucesso", "Paciente Deletado Com Sucesso"));
 	}
 
 	public void buscarPacientePorId(Long id) {
@@ -181,6 +183,16 @@ public class PacienteBean implements Serializable {
 		context.addMessage(null, message);
 
 	}
+	
+	public void darAltaPaciente(String leito, Long numero) {
+		leitoInternacao = leitoInternacaoDAO.buscarLeitoDeInternacaPorLeitoENumeracao(leito, numero);
+		leitoInternacao.setDataInternacao(null);
+		leitoInternacao.setPaciente(null);
+		leitoInternacaoDAO.update(leitoInternacao);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Alta Concluida", "Alta Concluida"));
+		
+	}
 
 	// getters e setters
 
@@ -214,6 +226,14 @@ public class PacienteBean implements Serializable {
 
 	public void setLeitosDeInternacaoOcupados(List<LeitoInternacao> leitosDeInternacaoOcupados) {
 		this.leitosDeInternacaoOcupados = leitosDeInternacaoOcupados;
+	}
+
+	public LeitoInternacao getLeitoInternacao() {
+		return leitoInternacao;
+	}
+
+	public void setLeitoInternacao(LeitoInternacao leitoInternacao) {
+		this.leitoInternacao = leitoInternacao;
 	}
 
 }

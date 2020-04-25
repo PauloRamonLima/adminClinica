@@ -42,6 +42,12 @@ public class LeitoInternacaoDAO extends GenericDAO<LeitoInternacao> {
 		String queryJPQL = "SELECT l FROM LeitoInternacao l  WHERE l.leito = :leito and l.paciente != null";
 		return em.createQuery(queryJPQL, LeitoInternacao.class).setParameter("leito", leito).getResultList();
 	}
+	
+	public LeitoInternacao buscarLeitoDeInternacaPorLeitoENumeracao(String leito, Long numero) {
+		EntityManager em = JPAResourceBean.getEntityManager();
+		String queryJPQL = "SELECT l FROM LeitoInternacao l  WHERE l.leito.descricao = :leito and l.numero = :numero";
+		return em.createQuery(queryJPQL, LeitoInternacao.class).setParameter("leito", leito).setParameter("numero", numero).getSingleResult();
+	}
 
 	public List<LeitoInternacao> buscarLeitosDeInternacaoDesocupados(Leito leito) {
 

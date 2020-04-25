@@ -20,7 +20,7 @@
 						<div class="card-body p-0"></div>
 						<!-- /.card-body -->
 						<p:panel header="Leitos">
-						<h:form>
+						<h:form id="formulario">
 						<p:messages></p:messages>
 						<p:dataTable value="#{leitoBean.leitos}" id="tabela" var="leito" class="table table-bordered">
 							<p:column headerText="Nome" style="width: 500px;text-align: center;">
@@ -53,9 +53,10 @@
 				</div>
 				
 				<p:dialog header="Modal Dialog"  position="320,100" widgetVar="dlg2" modal="true" width="600" height="200">
-    				<h:form role="form">
+    				<h:form role="form" id="form">
 							<div class="box-body">
-							<div class="col-sm-6">
+							<div class="col-sm-12">
+							<div id="edit">
 								<p:messages></p:messages>
 
 								<label for="exampleInputEmail1"><font
@@ -64,12 +65,14 @@
 								<h:inputTextarea value="#{leitoBean.leito.descricao}" autocomplete="off" class="form-control"/>
 								
 							    <br/>
-								<h:commandButton action="#{leitoBean.alterar()}" onclick="atualizar()"
-									value="Atualizar" ajax="false" class="btn btn-success"/>					   
+								<h:commandButton action="#{leitoBean.alterar()}" 
+									value="Atualizar" class="btn btn-success">
+									</h:commandButton>					   
 							</div>
 							</div>
-							
-						</h:form>				</p:dialog>  
+							</div>
+						</h:form>				
+					</p:dialog>  
 				
 				
 				<script>

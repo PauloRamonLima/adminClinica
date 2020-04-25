@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,9 +28,11 @@ public class Medicamento implements Serializable {
 	private String nome;
 	
 	@Column(name = "medicamento_tipo")
+	@Enumerated(EnumType.STRING)
 	private TipoMedicamento tipoMedicamento;
 	
 	@Column(name = "medicamento_tipo_usuario")
+	@Enumerated(EnumType.STRING)
 	private TipoUsuarioMedicamento tipoUsuarioMedicamento;
 
 	public Long getId() {

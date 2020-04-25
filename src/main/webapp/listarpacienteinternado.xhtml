@@ -46,18 +46,20 @@
 											</p:column>
 											<p:column headerText="Ações" style="width: 90px;">
 												<p:spacer width="5" height="10" />
-												<p:commandLink onclick="atualizar()"
-													action="#{pacienteBean.deletar(paciente.id)}"
-													update="formulario" process="@this" title="Excluir">
-													<i class="fa fa-trash" aria-hidden="true"
-														style="font-size: 18px; color: red"></i>
+
+												<p:commandLink action="#{pacienteBean.darAltaPaciente(paciente.leito, paciente.leitoInternacao)}"
+													update="formulario" title="Exame">
+													<i class="fa fa-plus-square" aria-hidden="true"
+														style="font-size: 18px; color: red;"></i>
 												</p:commandLink>
 												<p:spacer width="5" height="10" />
 
-												<p:commandLink action="#{pacienteBean.deletar(paciente.id)}"
-													update="formulario" title="Editar">
-													<i class="fa fa-cog fa-fw" aria-hidden="true"
-														style="font-size: 18px; color: black;"></i>
+												<p:commandLink action="#{pacienteBean.darAltaPaciente(paciente.leito, paciente.leitoInternacao)}"
+													 title="Alta">
+													<i class="fa fa-child" aria-hidden="true"
+														style="font-size: 18px; color: green;"></i>
+													<f:ajax execute="@form" render="@form" />
+														
 												</p:commandLink>
 
 											</p:column>
