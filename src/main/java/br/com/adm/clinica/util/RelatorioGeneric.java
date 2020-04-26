@@ -1,7 +1,5 @@
 package br.com.adm.clinica.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,16 +10,14 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
-public class RelatorioGeneric {
-	
-	
+
+public class RelatorioGeneric {	
 	
 	public void gerarRelatorio(List<?> lista,String caminho, Map<String, Object> parameters, String nomePdf){
 		try {		

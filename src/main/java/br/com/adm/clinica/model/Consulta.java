@@ -12,8 +12,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "adm_consulta")
+@Getter
+@Setter
 public class Consulta implements Serializable {
 
 	private static final long serialVersionUID = -4551323848788724456L;
@@ -38,45 +43,4 @@ public class Consulta implements Serializable {
 	@Column(name = "exame_realizado")
 	private boolean realizado;
 
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-
-	public Medico getMedico() {
-		return medico;
-	}
-
-	public void setMedico(Medico medico) {
-		this.medico = medico;
-	}
-
-	public boolean isRealizado() {
-		return realizado;
-	}
-
-	public void setRealizado(boolean realizado) {
-		this.realizado = realizado;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-	
 }

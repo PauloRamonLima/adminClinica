@@ -14,8 +14,13 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "adm_usuario")
+@Getter
+@Setter
 public class Usuario implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 7460833738380185408L;

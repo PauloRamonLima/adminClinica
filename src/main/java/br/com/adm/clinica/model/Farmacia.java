@@ -12,8 +12,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "adm_farmacia")
+@Getter
+@Setter
 public class Farmacia implements Serializable {
 
 	private static final long serialVersionUID = 8644843565961175839L;
@@ -33,37 +38,5 @@ public class Farmacia implements Serializable {
 	
 	@Column(name = "farmacia_nome")
 	private String nome;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Medicamento getMedicamento() {
-		return medicamento;
-	}
-
-	public void setMedicamento(Medicamento medicamento) {
-		this.medicamento = medicamento;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public int getQuantidadeDoMedicamento() {
-		return quantidadeDoMedicamento;
-	}
-
-	public void setQuantidadeDoMedicamento(int quantidadeDoMedicamento) {
-		this.quantidadeDoMedicamento = quantidadeDoMedicamento;
-	}
 
 }

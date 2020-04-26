@@ -29,37 +29,40 @@ import br.com.adm.clinica.service.ConsultaService;
 import br.com.adm.clinica.service.ExameService;
 import br.com.adm.clinica.service.LeitoInternacaoService;
 import br.com.adm.clinica.service.PacienteService;
+import lombok.Getter;
+import lombok.Setter;
 
 @Named
 @ViewScoped
+@Getter
+@Setter
 public class PacienteBean implements Serializable {
 
 	private static final long serialVersionUID = -7178530229889330245L;
-	
+
 	@Inject
 	private PacienteService pacienteService;
-	
+
 	@Inject
 	private LeitoInternacaoService leitoInternacaoService;
-	
+
 	@Inject
 	private ExameService exameService;
-	
+
 	@Inject
 	private ConsultaService consultaService;
 
 	@Inject
 	private Paciente paciente;
-	
+
 	@Inject
 	private LeitoInternacao leitoInternacao;
 
 	private List<Paciente> pacientes = new ArrayList<Paciente>();
-	
+
 	private List<PacienteInternadoVO> pacientesInternados = new ArrayList<>();
-	
+
 	private List<LeitoInternacao> leitosDeInternacaoOcupados = new ArrayList<>();
-	
 
 	@PostConstruct
 	public void init() {
@@ -72,27 +75,27 @@ public class PacienteBean implements Serializable {
 	}
 
 	public void salvar() {
-		
-		try {	
-		if(pacienteService.buscarPacientePorCpf(paciente.getCpf()) != null) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"CPF já cadastrado", "CPF já cadastrado"));
+
+		try {
+			if (pacienteService.buscarPacientePorCpf(paciente.getCpf()) != null) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "CPF já cadastrado", "CPF já cadastrado"));
 				return;
 			}
-		}catch (NoResultException e) {
-		
+		} catch (NoResultException e) {
+
 		}
-		
-		try {	
-			if(pacienteService.buscarPacientePorRg(paciente.getRg()) != null) {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"RG já cadastrado", "RG já cadastrado"));
-					return;
-				}
-			}catch (NoResultException e) {
-			
+
+		try {
+			if (pacienteService.buscarPacientePorRg(paciente.getRg()) != null) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "RG já cadastrado", "RG já cadastrado"));
+				return;
 			}
-		
+		} catch (NoResultException e) {
+
+		}
+
 		pacienteService.salvar(paciente);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Paciente Cadastrado Com Sucesso", "Paciente Cadastrado Com Sucesso"));
@@ -102,48 +105,49 @@ public class PacienteBean implements Serializable {
 	public void deletar(Long id) {
 		Paciente paciente = pacienteService.buscarPorId(id);
 		List<Exame> exames = exameService.buscarExamesPorPaciente(paciente);
-		if(!exames.isEmpty()) {
-			for(Exame exame : exames) {
+		if (!exames.isEmpty()) {
+			for (Exame exame : exames) {
 				exameService.deletar(exame.getId());
 			}
 		}
 		List<Consulta> consultas = consultaService.buscarConsultaPorPaciente(paciente);
-		if(!consultas.isEmpty()) {
-			for(Consulta consulta : consultas) {
+		if (!consultas.isEmpty()) {
+			for (Consulta consulta : consultas) {
 				consultaService.deletar(consulta.getId());
 			}
 		}
-		
+
 		try {
 			LeitoInternacao leito = leitoInternacaoService.buscarLeitoDeInternacaoPorPaciente(paciente);
 			leito.setPaciente(null);
 			leitoInternacaoService.alterar(leito);
-		}catch (NoResultException e) {
-			
+		} catch (NoResultException e) {
+
 		}
-		
+
 		pacienteService.deletar(id);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Paciente Deletado Com Sucesso", "Paciente Deletado Com Sucesso"));
+		pacientes = pacienteService.listar();
 	}
 
 	public void buscarPacientePorId(Long id) {
 		paciente = pacienteService.buscarPorId(id);
 	}
-	
+
 	public void buscarPacientesInternados() {
 		pacientesInternados = new ArrayList<>();
 		leitosDeInternacaoOcupados = new ArrayList<>();
 		leitosDeInternacaoOcupados = leitoInternacaoService.buscarPacientesInternados();
 		PacienteInternadoVO pacienteVO = new PacienteInternadoVO();
-		for(int i = 0; i < leitosDeInternacaoOcupados.size(); i++) {
+		for (int i = 0; i < leitosDeInternacaoOcupados.size(); i++) {
 			pacienteVO.setNomePaciente(leitosDeInternacaoOcupados.get(i).getPaciente().getNome());
 			pacienteVO.setCpf(leitosDeInternacaoOcupados.get(i).getPaciente().getCpf());
 			pacienteVO.setLeito(leitosDeInternacaoOcupados.get(i).getLeito().getDescricao());
 			pacienteVO.setLeitoInternacao(leitosDeInternacaoOcupados.get(i).getNumero().toString());
 			pacientesInternados.add(pacienteVO);
 			pacienteVO = new PacienteInternadoVO();
-			
+
 		}
 	}
 
@@ -188,57 +192,15 @@ public class PacienteBean implements Serializable {
 		context.addMessage(null, message);
 
 	}
-	
+
 	public void darAltaPaciente(String leito, Long numero) {
 		leitoInternacao = leitoInternacaoService.buscarLeitoDeInternacaPorLeitoENumeracao(leito, numero);
 		leitoInternacao.setDataInternacao(null);
 		leitoInternacao.setPaciente(null);
 		leitoInternacaoService.alterar(leitoInternacao);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Alta Concluida", "Alta Concluida"));
-		
-	}
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta Concluida", "Alta Concluida"));
 
-	// getters e setters
-
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-
-	public List<Paciente> getPacientes() {
-		return pacientes;
-	}
-
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
-	}
-
-	public List<PacienteInternadoVO> getPacientesInternados() {
-		return pacientesInternados;
-	}
-
-	public void setPacientesInternados(List<PacienteInternadoVO> pacientesInternados) {
-		this.pacientesInternados = pacientesInternados;
-	}
-
-	public List<LeitoInternacao> getLeitosDeInternacaoOcupados() {
-		return leitosDeInternacaoOcupados;
-	}
-
-	public void setLeitosDeInternacaoOcupados(List<LeitoInternacao> leitosDeInternacaoOcupados) {
-		this.leitosDeInternacaoOcupados = leitosDeInternacaoOcupados;
-	}
-
-	public LeitoInternacao getLeitoInternacao() {
-		return leitoInternacao;
-	}
-
-	public void setLeitoInternacao(LeitoInternacao leitoInternacao) {
-		this.leitoInternacao = leitoInternacao;
 	}
 
 }

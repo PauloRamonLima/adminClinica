@@ -12,8 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Setter;
+
+import lombok.Getter;
+
 @Entity
 @Table(name = "adm_medicamento")
+@Getter
+@Setter
 public class Medicamento implements Serializable {
 	
 	private static final long serialVersionUID = -285594409066347562L;
@@ -34,38 +40,5 @@ public class Medicamento implements Serializable {
 	@Column(name = "medicamento_tipo_usuario")
 	@Enumerated(EnumType.STRING)
 	private TipoUsuarioMedicamento tipoUsuarioMedicamento;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public TipoMedicamento getTipoMedicamento() {
-		return tipoMedicamento;
-	}
-
-	public void setTipoMedicamento(TipoMedicamento tipoMedicamento) {
-		this.tipoMedicamento = tipoMedicamento;
-	}
-
-	public TipoUsuarioMedicamento getTipoUsuarioMedicamento() {
-		return tipoUsuarioMedicamento;
-	}
-
-	public void setTipoUsuarioMedicamento(TipoUsuarioMedicamento tipoUsuarioMedicamento) {
-		this.tipoUsuarioMedicamento = tipoUsuarioMedicamento;
-	}
 	
-
 }

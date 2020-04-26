@@ -15,9 +15,13 @@ import javax.persistence.NoResultException;
 
 import br.com.adm.clinica.model.Usuario;
 import br.com.adm.clinica.service.UsuarioService;
+import lombok.Getter;
+import lombok.Setter;
 
 @Named
 @SessionScoped
+@Getter
+@Setter
 public class UsuarioBean implements Serializable {
 
 	private static final long serialVersionUID = -4326028160868302820L;
@@ -36,34 +40,34 @@ public class UsuarioBean implements Serializable {
 
 	public void salvar() {
 		try {
-		Usuario user = usuarioService.buscarUsuarioPorLogin(usuario.getLogin());
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-				"Login Em Uso, Por Favor Alterar", "Login Em Uso, Por Favor Alterar"));
-		return;
-		}catch (NoResultException e) {
-		usuario.setSenha(convertStringToMd5(senha));
-		usuarioService.salvar(usuario);
-		usuario = new Usuario();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Usuario Cadastrado", "Usuario Cadastrado"));
+			Usuario user = usuarioService.buscarUsuarioPorLogin(usuario.getLogin());
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Login Em Uso, Por Favor Alterar", "Login Em Uso, Por Favor Alterar"));
+			return;
+		} catch (NoResultException e) {
+			usuario.setSenha(convertStringToMd5(senha));
+			usuarioService.salvar(usuario);
+			usuario = new Usuario();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario Cadastrado", "Usuario Cadastrado"));
+		}
 	}
-	}
-	
+
 	public void alterarSenha() {
 		try {
 			Usuario user = usuarioService.buscarUsuarioPorLogin(login);
-			if(senha.equals(repitaSenha)) {
+			if (senha.equals(repitaSenha)) {
 				user.setSenha(convertStringToMd5(senha));
 				usuarioService.alterar(user);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Senha Atualizada", "Senha Atualizada"));
-			}else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Senhas Diferentes", "Senhas Diferentes"));
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Senha Atualizada", "Senha Atualizada"));
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Senhas Diferentes", "Senhas Diferentes"));
 			}
-		}catch (NoResultException e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Usuario Não Encontrado", "Usuario Não Encontrado"));
+		} catch (NoResultException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario Não Encontrado", "Usuario Não Encontrado"));
 			return;
 		}
 	}
@@ -119,38 +123,6 @@ public class UsuarioBean implements Serializable {
 	public void showLoginPage() throws IOException {
 
 		FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml?faces-redirect=true");
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public String getRepitaSenha() {
-		return repitaSenha;
-	}
-
-	public void setRepitaSenha(String repitaSenha) {
-		this.repitaSenha = repitaSenha;
 	}
 
 }

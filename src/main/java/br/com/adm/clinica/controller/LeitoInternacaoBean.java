@@ -22,9 +22,13 @@ import br.com.adm.clinica.service.LeitoInternacaoService;
 import br.com.adm.clinica.service.LeitoService;
 import br.com.adm.clinica.service.PacienteService;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
+import lombok.Getter;
+import lombok.Setter;
 
 @Named
 @SessionScoped
+@Getter
+@Setter
 public class LeitoInternacaoBean implements Serializable {
 
 	private static final long serialVersionUID = -2138249260881247947L;
@@ -113,77 +117,4 @@ public class LeitoInternacaoBean implements Serializable {
 		idLeitoInternacao = id;
 		 FacesContext.getCurrentInstance().getExternalContext().redirect("internarpaciente.xhtml?faces-redirect=true");
 	}
-
-	public LeitoInternacao getLeitoInternacao() {
-		return leitoInternacao;
-	}
-
-	public void setLeitoInternacao(LeitoInternacao leitoInternacao) {
-		this.leitoInternacao = leitoInternacao;
-	}
-
-	public List<LeitoInternacao> getLeitosInternacao() {
-		return leitosInternacao;
-	}
-
-	public void setLeitosInternacao(List<LeitoInternacao> leitosInternacao) {
-		this.leitosInternacao = leitosInternacao;
-	}
-
-	public Long getIdLeito() {
-		return idLeito;
-	}
-
-	public void setIdLeito(Long idLeito) {
-		this.idLeito = idLeito;
-	}
-
-	public String getNomePaciente() {
-		return nomePaciente;
-	}
-
-	public void setNomePaciente(String nomePaciente) {
-		this.nomePaciente = nomePaciente;
-	}
-
-	public List<LeitoInternacao> getLeitosInternacaoDesocupados() {
-		return leitosInternacaoDesocupados;
-	}
-
-	public void setLeitosInternacaoDesocupados(List<LeitoInternacao> leitosInternacaoDesocupados) {
-		this.leitosInternacaoDesocupados = leitosInternacaoDesocupados;
-	}
-
-	public TransformaJavaEmJson getTransformaJavaEmJson() {
-		return transformaJavaEmJson;
-	}
-
-	public void setTransformaJavaEmJson(TransformaJavaEmJson transformaJavaEmJson) {
-		this.transformaJavaEmJson = transformaJavaEmJson;
-	}
-
-	public String getNomesJson() {
-		return nomesJson;
-	}
-
-	public void setNomesJson(String nomesJson) {
-		this.nomesJson = nomesJson;
-	}
-
-	public static Long getIdLeitoInternacao() {
-		return idLeitoInternacao;
-	}
-
-	public static void setIdLeitoInternacao(Long idLeitoInternacao) {
-		LeitoInternacaoBean.idLeitoInternacao = idLeitoInternacao;
-	}
-
-	public List<LeitoInternacao> getLeitosInternacaoOcupados() {
-		return leitosInternacaoOcupados;
-	}
-
-	public void setLeitosInternacaoOcupados(List<LeitoInternacao> leitosInternacaoOcupados) {
-		this.leitosInternacaoOcupados = leitosInternacaoOcupados;
-	}
-	
 }

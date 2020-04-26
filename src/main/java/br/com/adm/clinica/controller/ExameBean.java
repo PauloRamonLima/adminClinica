@@ -19,13 +19,18 @@ import br.com.adm.clinica.service.ExameService;
 import br.com.adm.clinica.service.MedicoService;
 import br.com.adm.clinica.service.PacienteService;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
+import lombok.Getter;
+import lombok.Setter;
 
 @ViewScoped
 @Named
+@Getter
+@Setter
 public class ExameBean implements Serializable {
 
 	private static final long serialVersionUID = -6235197230054526106L;
 	
+	@Inject
 	private Exame exame;
 	
 	@Inject
@@ -66,7 +71,8 @@ public class ExameBean implements Serializable {
 	
 	private static Long idExame;
 	
-	private TransformaJavaEmJson transformaJavaEmJson = new TransformaJavaEmJson();
+	@Inject
+	private TransformaJavaEmJson transformaJavaEmJson;
 
 	@PostConstruct
 	public void init() {
@@ -100,6 +106,7 @@ public class ExameBean implements Serializable {
 	public void deletar(Long id) {
 		exameService.deletar(id);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exame Cancelado Com Sucesso", "Exame Cancelado Com Sucesso"));
+		exames = exameService.listar();
 
 	}
 	
@@ -116,141 +123,13 @@ public class ExameBean implements Serializable {
 		
 		exameService.alterar(exameSelecionado);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exame Atualizado Com Sucesso", "Exame Atualizado Com Sucesso"));
+		exames = exameService.listar();
+
 	}
 	
 	public void showPageEditar(Long id) throws IOException {
 			idExame = id;
 			 FacesContext.getCurrentInstance().getExternalContext().redirect("editarexame.xhtml?faces-redirect=true");
 	}
-
-	public Exame getExame() {
-		return exame;
-	}
-
-	public void setExame(Exame exame) {
-		this.exame = exame;
-	}
-
-	public List<Exame> getExames() {
-		return exames;
-	}
-
-	public void setExames(List<Exame> exames) {
-		this.exames = exames;
-	}
-
-	public List<Paciente> getPacientes() {
-		return pacientes;
-	}
-
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
-	}
-
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-
-	public List<String> getNomes() {
-		return nomes;
-	}
-
-	public void setNomes(List<String> nomes) {
-		this.nomes = nomes;
-	}
-
-	public String getNomePaciente() {
-		return nomePaciente;
-	}
-
-	public void setNomePaciente(String nomePaciente) {
-		this.nomePaciente = nomePaciente;
-	}
-
-	public String getNomeMedico() {
-		return nomeMedico;
-	}
-
-	public void setNomeMedico(String nomeMedico) {
-		this.nomeMedico = nomeMedico;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getNomesJson() {
-		return nomesJson;
-	}
-
-	public void setNomesJson(String nomesJson) {
-		this.nomesJson = nomesJson;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-
-	public String getNomesMedicosJson() {
-		return nomesMedicosJson;
-	}
-
-	public void setNomesMedicosJson(String nomesMedicosJson) {
-		this.nomesMedicosJson = nomesMedicosJson;
-	}
-
-	public double getValor() {
-		return valor;
-	}
-
-	public void setValor(double valor) {
-		this.valor = valor;
-	}
-
-	public List<String> getNomesMedicos() {
-		return nomesMedicos;
-	}
-
-	public void setNomesMedicos(List<String> nomesMedicos) {
-		this.nomesMedicos = nomesMedicos;
-	}
-
-	public List<Medico> getMedicos() {
-		return medicos;
-	}
-
-	public void setMedicos(List<Medico> medicos) {
-		this.medicos = medicos;
-	}
-
-	public Long getIdExame() {
-		return idExame;
-	}
-
-	public void setIdExame(Long idExame) {
-		this.idExame = idExame;
-	}
-
-	public TransformaJavaEmJson getTransformaJavaEmJson() {
-		return transformaJavaEmJson;
-	}
-
-	public void setTransformaJavaEmJson(TransformaJavaEmJson transformaJavaEmJson) {
-		this.transformaJavaEmJson = transformaJavaEmJson;
-	}
-
-	
 	
 }

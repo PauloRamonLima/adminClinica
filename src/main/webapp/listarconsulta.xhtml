@@ -21,7 +21,7 @@
 			<div class="row">
 				<div class="col-md-12">
 				<h:form>
-				<p:messages></p:messages>
+				<p:messages />
 					<div class="card">
 						<!-- /.card-header -->
 						<div class="card-body p-0"></div>
@@ -43,7 +43,7 @@
 								<p:column headerText="Ações" style="width: 90px;">
 									<p:spacer width="5" height="10" />
 								
-								<p:commandLink onclick="atualizar()" action="#{consultaBean.deletar(consulta.id)}" update="@all" process="@this"  title="Excluir">
+								<p:commandLink action="#{consultaBean.deletar(consulta.id)}" update="@form" process="@this" ajax="false"  title="Excluir">
 							<i class="fa fa-trash" aria-hidden="true" style="font-size:18px;color:red"></i></p:commandLink>
 								 <p:spacer width="5" height="10" />
 								

@@ -13,8 +13,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "adm_leito")
+@Getter
+@Setter
 public class Leito implements Serializable {
 	
 	private static final long serialVersionUID = 6628052714973825174L;
@@ -34,21 +39,5 @@ public class Leito implements Serializable {
 			orphanRemoval = true
 			)
 	private List<LeitoInternacao> leitosInternacao;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
 
 }

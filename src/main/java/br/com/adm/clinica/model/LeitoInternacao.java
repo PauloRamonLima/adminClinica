@@ -14,8 +14,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "adm_leitoInternacao")
+@Getter
+@Setter
 public class LeitoInternacao implements Serializable {
 
 	private static final long serialVersionUID = 4374106940293223559L;
@@ -38,45 +43,5 @@ public class LeitoInternacao implements Serializable {
 	
 	@Column(name = "leitoInternacao_dataInternacao")
 	private Date dataInternacao;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Leito getLeito() {
-		return leito;
-	}
-
-	public void setLeito(Leito leito) {
-		this.leito = leito;
-	}
-
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-
-	public Date getDataInternacao() {
-		return dataInternacao;
-	}
-
-	public void setDataInternacao(Date dataInternacao) {
-		this.dataInternacao = dataInternacao;
-	}
-
-	public Long getNumero() {
-		return numero;
-	}
-
-	public void setNumero(Long numero) {
-		this.numero = numero;
-	}
 	
 }

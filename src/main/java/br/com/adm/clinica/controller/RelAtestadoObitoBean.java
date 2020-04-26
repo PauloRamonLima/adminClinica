@@ -26,9 +26,13 @@ import br.com.adm.clinica.model.vo.AtestadoObitoVO;
 import br.com.adm.clinica.service.PacienteService;
 import br.com.adm.clinica.util.RelatorioGeneric;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
+import lombok.Getter;
+import lombok.Setter;
 
 @Named
 @ViewScoped
+@Getter
+@Setter
 public class RelAtestadoObitoBean implements Serializable {
 	
 	private static final long serialVersionUID = -4487089058590375789L;
@@ -103,79 +107,5 @@ public class RelAtestadoObitoBean implements Serializable {
 				.getExternalContext().getSession(false);
 		return session.getServletContext().getRealPath(diretorio);
 	}
-	
-	public RelatorioGeneric getRelatorioGeneric() {
-		return relatorioGeneric;
-	}
-
-	public void setRelatorioGeneric(RelatorioGeneric relatorioGeneric) {
-		this.relatorioGeneric = relatorioGeneric;
-	}
-
-	public String getNomePaciente() {
-		return nomePaciente;
-	}
-
-	public void setNomePaciente(String nomePaciente) {
-		this.nomePaciente = nomePaciente;
-	}
-
-	public AtestadoObitoVO getAtestado() {
-		return atestado;
-	}
-
-	public void setAtestado(AtestadoObitoVO atestado) {
-		this.atestado = atestado;
-	}
-
-	public List<AtestadoObitoVO> getAtestadosObitoVO() {
-		return atestadosObitoVO;
-	}
-
-	public void setAtestadosObitoVO(List<AtestadoObitoVO> atestadosObitoVO) {
-		this.atestadosObitoVO = atestadosObitoVO;
-	}
-
-	public List<Paciente> getPacientes() {
-		return pacientes;
-	}
-
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
-	}
-
-	public List<String> getNomes() {
-		return nomes;
-	}
-
-	public void setNomes(List<String> nomes) {
-		this.nomes = nomes;
-	}
-
-	public String getNomesJson() {
-		return nomesJson;
-	}
-
-	public void setNomesJson(String nomesJson) {
-		this.nomesJson = nomesJson;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-
-	public String getMotivo() {
-		return motivo;
-	}
-
-	public void setMotivo(String motivo) {
-		this.motivo = motivo;
-	}
-	
-
 	
 }
