@@ -1,6 +1,10 @@
 package br.com.adm.clinica.model.vo;
 
-public class ReceituarioVO {
+import java.io.Serializable;
+
+public class ReceituarioVO implements Serializable {
+	
+	private static final long serialVersionUID = 8429310552290977889L;
 	
 	private String paciente;
 

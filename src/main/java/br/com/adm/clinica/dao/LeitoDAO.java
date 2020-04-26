@@ -1,12 +1,16 @@
 package br.com.adm.clinica.dao;
 
+import java.io.Serializable;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import br.com.adm.clinica.model.Leito;
 
-public class LeitoDAO extends GenericDAO<Leito> {
+public class LeitoDAO extends GenericDAO<Leito> implements Serializable {
 	
+	private static final long serialVersionUID = 7416769957135083740L;
+
 	public LeitoDAO() {
 		super(Leito.class);
 	}

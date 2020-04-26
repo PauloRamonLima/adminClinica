@@ -9,14 +9,15 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.adm.clinica.dao.ExameDAO;
-import br.com.adm.clinica.dao.MedicoDAO;
-import br.com.adm.clinica.dao.PacienteDAO;
 import br.com.adm.clinica.model.Exame;
 import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
+import br.com.adm.clinica.service.ExameService;
+import br.com.adm.clinica.service.MedicoService;
+import br.com.adm.clinica.service.PacienteService;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 
 @ViewScoped
@@ -27,12 +28,16 @@ public class ExameBean implements Serializable {
 	
 	private Exame exame;
 	
-	private ExameDAO exameDAO = new ExameDAO();;
+	@Inject
+	private ExameService exameService;
 	
-	private PacienteDAO pacienteDAO = new PacienteDAO();;
+	@Inject
+	private PacienteService pacienteService;
 	
-	private MedicoDAO medicoDAO = new MedicoDAO();
+	@Inject
+	private MedicoService medicoService;
 	
+	@Inject
 	private Paciente paciente;
 	
 	private String nomePaciente;
@@ -68,7 +73,7 @@ public class ExameBean implements Serializable {
 		try {
 			nomesMedicosJson = transformaJavaEmJson.transformaJavaEmJsonMedico();
 			nomesJson = transformaJavaEmJson.transformaJavaEmJsonPaciente();
-			exames = exameDAO.findAll();
+			exames = exameService.listar();
 		}catch (NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -76,32 +81,32 @@ public class ExameBean implements Serializable {
 	
 	public void salvar() {
 		Exame exame = new Exame();
-		Paciente paciente = pacienteDAO.buscarPacientePorNome(nomePaciente);
-		Medico medico = medicoDAO.buscarMedicoPorNome(nomeMedico);
+		Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente);
+		Medico medico = medicoService.buscarMedicoPorNome(nomeMedico);
 		exame.setPaciente(paciente);
 		exame.setMedico(medico);
 		exame.setNome(nome);
 		exame.setData(data.replace("T", " "));
 		exame.setRealizado(false);
-		exameDAO.save(exame);
+		exameService.salvar(exame);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exame Cadastrado Com Sucesso", "Exame Cadastrado Com Sucesso"));
 		exame = new Exame();
 	}
 	
 	public void listarTodos() {
-		exameDAO.findAll();
+		exameService.listar();
 	}
 	
 	public void deletar(Long id) {
-		exameDAO.delete(id);
+		exameService.deletar(id);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exame Cancelado Com Sucesso", "Exame Cancelado Com Sucesso"));
 
 	}
 	
 	public void alterar() {
-		Exame exameSelecionado = exameDAO.findById(idExame);
-		Paciente paciente = pacienteDAO.buscarPacientePorNome(nomePaciente);
-		Medico medico = medicoDAO.buscarMedicoPorNome(nomeMedico);
+		Exame exameSelecionado = exameService.buscarPorId(idExame);
+		Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente);
+		Medico medico = medicoService.buscarMedicoPorNome(nomeMedico);
 	    exameSelecionado.setPaciente(paciente);
 		exameSelecionado.setMedico(medico);
 		exameSelecionado.setNome(nome);
@@ -109,7 +114,7 @@ public class ExameBean implements Serializable {
 		exameSelecionado.setRealizado(false);
 		exameSelecionado.setNome(nome);
 		
-		exameDAO.update(exameSelecionado);
+		exameService.alterar(exameSelecionado);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exame Atualizado Com Sucesso", "Exame Atualizado Com Sucesso"));
 	}
 	
@@ -124,22 +129,6 @@ public class ExameBean implements Serializable {
 
 	public void setExame(Exame exame) {
 		this.exame = exame;
-	}
-
-	public ExameDAO getExameDAO() {
-		return exameDAO;
-	}
-
-	public void setExameDAO(ExameDAO exameDAO) {
-		this.exameDAO = exameDAO;
-	}
-
-	public PacienteDAO getPacienteDAO() {
-		return pacienteDAO;
-	}
-
-	public void setPacienteDAO(PacienteDAO pacienteDAO) {
-		this.pacienteDAO = pacienteDAO;
 	}
 
 	public List<Exame> getExames() {
@@ -212,14 +201,6 @@ public class ExameBean implements Serializable {
 
 	public void setData(String data) {
 		this.data = data;
-	}
-
-	public MedicoDAO getMedicoDAO() {
-		return medicoDAO;
-	}
-
-	public void setMedicoDAO(MedicoDAO medicoDAO) {
-		this.medicoDAO = medicoDAO;
 	}
 
 	public String getNomesMedicosJson() {

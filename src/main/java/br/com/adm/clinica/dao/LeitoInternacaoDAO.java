@@ -1,5 +1,6 @@
 package br.com.adm.clinica.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,8 +10,10 @@ import br.com.adm.clinica.model.Leito;
 import br.com.adm.clinica.model.LeitoInternacao;
 import br.com.adm.clinica.model.Paciente;
 
-public class LeitoInternacaoDAO extends GenericDAO<LeitoInternacao> {
+public class LeitoInternacaoDAO extends GenericDAO<LeitoInternacao> implements Serializable{
 
+	private static final long serialVersionUID = 993161257726214854L;
+	
 	@Inject
 	private EntityManager em;
 	

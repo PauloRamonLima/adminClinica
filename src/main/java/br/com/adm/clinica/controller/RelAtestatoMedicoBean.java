@@ -11,18 +11,16 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
-import br.com.adm.clinica.dao.PacienteDAO;
 import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.model.vo.AtestadoMedicoVO;
+import br.com.adm.clinica.service.PacienteService;
 import br.com.adm.clinica.util.RelatorioGeneric;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 
@@ -38,7 +36,8 @@ public class RelAtestatoMedicoBean implements Serializable {
 	
 	private String dias;
 	
-	private AtestadoMedicoVO atestado = new AtestadoMedicoVO();
+	@Inject
+	private AtestadoMedicoVO atestado;
 	
 	private List<AtestadoMedicoVO> atestadosMedicoVO = new ArrayList<AtestadoMedicoVO>();
 	
@@ -46,11 +45,13 @@ public class RelAtestatoMedicoBean implements Serializable {
 	
 	private List<String> nomes = new ArrayList<String>();
 	
-	private PacienteDAO pacienteDAO = new PacienteDAO();
-	
+	/*
+	 * @Inject private PacienteService pacienteService;
+	 */
 	private String nomesJson;
 	
-	private TransformaJavaEmJson transformaJavaEmJson = new TransformaJavaEmJson();
+	@Inject
+	private TransformaJavaEmJson transformaJavaEmJson;
 
 	
 	@PostConstruct
@@ -130,14 +131,6 @@ public class RelAtestatoMedicoBean implements Serializable {
 
 	public void setNomes(List<String> nomes) {
 		this.nomes = nomes;
-	}
-
-	public PacienteDAO getPacienteDAO() {
-		return pacienteDAO;
-	}
-
-	public void setPacienteDAO(PacienteDAO pacienteDAO) {
-		this.pacienteDAO = pacienteDAO;
 	}
 
 	public String getNomesJson() {

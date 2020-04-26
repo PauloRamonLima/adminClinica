@@ -1,7 +1,11 @@
 package br.com.adm.clinica.model.vo;
 
-public class PacienteInternadoVO {
+import java.io.Serializable;
+
+public class PacienteInternadoVO implements Serializable {
 	
+	private static final long serialVersionUID = 4468834832033043208L;
+
 	private String nomePaciente;
 	
 	private String leito;

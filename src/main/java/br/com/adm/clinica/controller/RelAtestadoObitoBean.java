@@ -14,16 +14,16 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import br.com.adm.clinica.dao.PacienteDAO;
 import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.model.vo.AtestadoObitoVO;
+import br.com.adm.clinica.service.PacienteService;
 import br.com.adm.clinica.util.RelatorioGeneric;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 
@@ -37,7 +37,8 @@ public class RelAtestadoObitoBean implements Serializable {
 	
 	private String nomePaciente;
 	
-	private AtestadoObitoVO atestado = new AtestadoObitoVO();
+	@Inject
+	private AtestadoObitoVO atestado;
 	
 	private List<AtestadoObitoVO> atestadosObitoVO = new ArrayList<AtestadoObitoVO>();
 	
@@ -45,7 +46,8 @@ public class RelAtestadoObitoBean implements Serializable {
 	
 	private List<String> nomes = new ArrayList<String>();
 	
-	private PacienteDAO pacienteDAO = new PacienteDAO();
+	@Inject
+	private PacienteService pacienteService;
 	
 	private String nomesJson;
 	
@@ -53,7 +55,8 @@ public class RelAtestadoObitoBean implements Serializable {
 	
 	private String motivo;
 	
-	private TransformaJavaEmJson transformaJavaEmJson = new TransformaJavaEmJson();
+	@Inject
+	private TransformaJavaEmJson transformaJavaEmJson;
 	
 	@PostConstruct
 	public void init() {
@@ -80,7 +83,7 @@ public class RelAtestadoObitoBean implements Serializable {
 		File logo = new File(getRealPath("resources/img/logosigclean.png"));
 		Image logoSistema = ImageIO.read(logo);
 		atestadosObitoVO = new ArrayList<AtestadoObitoVO>();
-		Paciente paciente = pacienteDAO.buscarPacientePorNome(atestado.getNome());
+		Paciente paciente = pacienteService.buscarPacientePorNome(atestado.getNome());
 		atestado.setHorario(data);
 		atestado.setCpf(paciente.getCpf());
 		atestado.setMunicipio(paciente.getLocalidade());
@@ -147,14 +150,6 @@ public class RelAtestadoObitoBean implements Serializable {
 
 	public void setNomes(List<String> nomes) {
 		this.nomes = nomes;
-	}
-
-	public PacienteDAO getPacienteDAO() {
-		return pacienteDAO;
-	}
-
-	public void setPacienteDAO(PacienteDAO pacienteDAO) {
-		this.pacienteDAO = pacienteDAO;
 	}
 
 	public String getNomesJson() {

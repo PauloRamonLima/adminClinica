@@ -1,25 +1,36 @@
 package br.com.adm.clinica.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.NoResultException;
 
 import com.google.gson.Gson;
 
-import br.com.adm.clinica.dao.LeitoInternacaoDAO;
-import br.com.adm.clinica.dao.MedicoDAO;
-import br.com.adm.clinica.dao.PacienteDAO;
 import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
+import br.com.adm.clinica.service.LeitoInternacaoService;
+import br.com.adm.clinica.service.MedicoService;
+import br.com.adm.clinica.service.PacienteService;
+import lombok.Getter;
+import lombok.Setter;
 
-public class TransformaJavaEmJson {
+@Getter
+@Setter
+public class TransformaJavaEmJson implements Serializable {
 	
-	private PacienteDAO pacienteDAO = new PacienteDAO();
+	private static final long serialVersionUID = 4000011349335176603L;
 	
-	private LeitoInternacaoDAO leitoInternacaoDAO = new LeitoInternacaoDAO();
+	@Inject
+	private PacienteService pacienteService;
 	
-	private MedicoDAO medicoDAO = new MedicoDAO();
+	@Inject
+	private LeitoInternacaoService leitoInternacaoDAO;
+	
+	@Inject
+	private MedicoService medicoService;
 	
 	private List<Paciente> pacientes = new ArrayList<Paciente>();
 	
@@ -34,7 +45,7 @@ public class TransformaJavaEmJson {
 	private String nomesMedicosJson;
 	
 	public String transformaJavaEmJsonPaciente() {
-		pacientes = pacienteDAO.findAll();
+		pacientes = pacienteService.listar();
 		nomes = new ArrayList<String>();
 		
 		for(Paciente paciente : pacientes) {
@@ -49,7 +60,7 @@ public class TransformaJavaEmJson {
 	}
 	
 	public String transformaJavaEmJsonPacienteSemInternacao() {
-		pacientes = pacienteDAO.findAll();
+		pacientes = pacienteService.listar();
 		nomes = new ArrayList<String>();
 		
 		for(Paciente paciente : pacientes) {
@@ -68,7 +79,7 @@ public class TransformaJavaEmJson {
 	}
 	
 	public String transformaJavaEmJsonMedico() {
-		medicos = medicoDAO.findAll();
+		medicos = medicoService.listar();
 		nomesMedicos = new ArrayList<String>();
 		
 		for(Medico medico : medicos) {
@@ -80,80 +91,6 @@ public class TransformaJavaEmJson {
 		nomesMedicosJson = gson.toJson(nomesMedicos);
 			
 		return nomesMedicosJson;
-	}
-	
-	// getters e setters
-
-	public PacienteDAO getPacienteDAO() {
-		return pacienteDAO;
-	}
-
-	public void setPacienteDAO(PacienteDAO pacienteDAO) {
-		this.pacienteDAO = pacienteDAO;
-	}
-
-	public MedicoDAO getMedicoDAO() {
-		return medicoDAO;
-	}
-
-	public void setMedicoDAO(MedicoDAO medicoDAO) {
-		this.medicoDAO = medicoDAO;
-	}
-
-	public List<Paciente> getPacientes() {
-		return pacientes;
-	}
-
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
-	}
-
-	public List<Medico> getMedicos() {
-		return medicos;
-	}
-
-	public void setMedicos(List<Medico> medicos) {
-		this.medicos = medicos;
-	}
-
-	public List<String> getNomes() {
-		return nomes;
-	}
-
-	public void setNomes(List<String> nomes) {
-		this.nomes = nomes;
-	}
-
-	public List<String> getNomesMedicos() {
-		return nomesMedicos;
-	}
-
-	public void setNomesMedicos(List<String> nomesMedicos) {
-		this.nomesMedicos = nomesMedicos;
-	}
-
-	public String getNomesJson() {
-		return nomesJson;
-	}
-
-	public void setNomesJson(String nomesJson) {
-		this.nomesJson = nomesJson;
-	}
-
-	public String getNomesMedicosJson() {
-		return nomesMedicosJson;
-	}
-
-	public void setNomesMedicosJson(String nomesMedicosJson) {
-		this.nomesMedicosJson = nomesMedicosJson;
-	}
-
-	public LeitoInternacaoDAO getLeitoInternacaoDAO() {
-		return leitoInternacaoDAO;
-	}
-
-	public void setLeitoInternacaoDAO(LeitoInternacaoDAO leitoInternacaoDAO) {
-		this.leitoInternacaoDAO = leitoInternacaoDAO;
 	}
 
 }

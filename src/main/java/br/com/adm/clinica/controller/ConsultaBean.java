@@ -9,14 +9,15 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.adm.clinica.dao.ConsultaDAO;
-import br.com.adm.clinica.dao.MedicoDAO;
-import br.com.adm.clinica.dao.PacienteDAO;
 import br.com.adm.clinica.model.Consulta;
 import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
+import br.com.adm.clinica.service.ConsultaService;
+import br.com.adm.clinica.service.MedicoService;
+import br.com.adm.clinica.service.PacienteService;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 
 @Named
@@ -25,11 +26,14 @@ public class ConsultaBean implements Serializable {
 
 	private static final long serialVersionUID = -1289342901613744971L;
 	
-	private ConsultaDAO consultaDAO = new ConsultaDAO();
+	@Inject
+	private ConsultaService consultaService;
 	
-	private PacienteDAO pacienteDAO = new PacienteDAO();
+	@Inject
+	private PacienteService pacienteService;
 	
-	private MedicoDAO medicoDAO = new MedicoDAO();
+	@Inject
+	private MedicoService medicoService;
 	
 	private String nomePaciente;
 	
@@ -39,6 +43,7 @@ public class ConsultaBean implements Serializable {
 	
 	private String data;
 	
+	@Inject
 	private Consulta consulta;
 	
 	private List<Consulta> consultas = new ArrayList<Consulta>();
@@ -57,7 +62,8 @@ public class ConsultaBean implements Serializable {
 	
 	private static Long idConsulta;
 
-	private TransformaJavaEmJson transformaJavaEmJson = new TransformaJavaEmJson();
+	@Inject
+	private TransformaJavaEmJson transformaJavaEmJson;
 
 	
 	@PostConstruct
@@ -65,7 +71,7 @@ public class ConsultaBean implements Serializable {
 		try {
 			nomesMedicosJson = transformaJavaEmJson.transformaJavaEmJsonMedico();
 			nomesJson = transformaJavaEmJson.transformaJavaEmJsonPaciente();
-			consultas = consultaDAO.findAll();
+			consultas = consultaService.listar();
 		}catch (NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -73,30 +79,30 @@ public class ConsultaBean implements Serializable {
 	
 	public void salvar() {
 		  Consulta consulta = new Consulta(); 
-		  Paciente paciente = pacienteDAO.buscarPacientePorNome(nomePaciente); Medico medico =
-		  medicoDAO.buscarMedicoPorNome(nomeMedico); consulta.setPaciente(paciente);
+		  Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente); Medico medico =
+		  medicoService.buscarMedicoPorNome(nomeMedico); consulta.setPaciente(paciente);
 		  consulta.setMedico(medico);
 		  consulta.setData(data.replace("T", " "));
 		  consulta.setRealizado(false);
-		 consultaDAO.save(consulta);
+		 consultaService.salvar(consulta);
 		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Consulta Marcada Com Sucesso", "Consulta Marcada Com Sucesso"));
 	}
 	
 	public void deletar(Long id) {
-		consultaDAO.delete(id);
+		consultaService.deletar(id);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Consulta Cancelado Com Sucesso", "Consulta Cancelado Com Sucesso"));
 
 	}
 	
 	public void alterar() {
-		Consulta consultaSelecionada = consultaDAO.findById(idConsulta);
-		Paciente paciente = pacienteDAO.buscarPacientePorNome(nomePaciente); 
-		Medico medico = medicoDAO.buscarMedicoPorNome(nomeMedico); 
+		Consulta consultaSelecionada = consultaService.buscarPorId(idConsulta);
+		Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente); 
+		Medico medico = medicoService.buscarMedicoPorNome(nomeMedico); 
 		consultaSelecionada.setPaciente(paciente);
 		consultaSelecionada.setMedico(medico);
 		consultaSelecionada.setData(data.replace("T", " "));
 		consultaSelecionada.setRealizado(false);
-		consultaDAO.update(consultaSelecionada);
+		consultaService.alterar(consultaSelecionada);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Consulta Atualizada Com Sucesso", "Consulta Atualizada Com Sucesso"));
 	}
 	
@@ -105,30 +111,6 @@ public class ConsultaBean implements Serializable {
 		 FacesContext.getCurrentInstance().getExternalContext().redirect("editarconsulta.xhtml?faces-redirect=true");
 }
 
-	
-	public ConsultaDAO getConsultaDAO() {
-		return consultaDAO;
-	}
-
-	public void setConsultaDAO(ConsultaDAO consultaDAO) {
-		this.consultaDAO = consultaDAO;
-	}
-
-	public PacienteDAO getPacienteDAO() {
-		return pacienteDAO;
-	}
-
-	public void setPacienteDAO(PacienteDAO pacienteDAO) {
-		this.pacienteDAO = pacienteDAO;
-	}
-
-	public MedicoDAO getMedicoDAO() {
-		return medicoDAO;
-	}
-
-	public void setMedicoDAO(MedicoDAO medicoDAO) {
-		this.medicoDAO = medicoDAO;
-	}
 
 	public String getNomePaciente() {
 		return nomePaciente;

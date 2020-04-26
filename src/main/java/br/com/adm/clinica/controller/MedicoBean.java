@@ -7,13 +7,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.adm.clinica.dao.MedicoDAO;
 import br.com.adm.clinica.model.Medico;
+import br.com.adm.clinica.service.MedicoService;
 
 @Named
 @ViewScoped
@@ -21,9 +21,11 @@ public class MedicoBean implements Serializable {
 	
 	private static final long serialVersionUID = 3585539643557964267L;
 
-	private Medico medico = new Medico();
+	@Inject
+	private Medico medico;
 	
-	private MedicoDAO medicoDAO = new MedicoDAO();
+	@Inject
+	private MedicoService medicoService;
 	
 	private List<Medico> medicos = new ArrayList<Medico>();
 	
@@ -31,13 +33,12 @@ public class MedicoBean implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		medicos = new ArrayList<Medico>();
-		medicos = medicoDAO.findAll();
+		medicos = medicoService.listar();
 	}
 	
 	public void salvar(){
-		if(medicoDAO.buscarMedicoPorCrm(medico.getCrm()) == null) {
-			medicoDAO.save(medico);
+		if(medicoService.buscarMedicoPorCrm(medico.getCrm()) == null) {
+			medicoService.salvar(medico);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Medico Cadastrado Com Sucesso", "Medico Cadastrado Com Sucasso"));
 			medico = new Medico();
 		}else {
@@ -47,19 +48,19 @@ public class MedicoBean implements Serializable {
 	}
 	
 	public void deletar(Long id){
-		medicoDAO.delete(id);
+		medicoService.deletar(id);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Medico Deletado Com Sucesso", "Medico Deletado Com Sucesso"));
 	}
 	
 	public void buscarMedicoPorId(Long id){
-		medicoDAO.findById(id);
+		medicoService.buscarPorId(id);
 	}
 	
 	public void alterar(){
-		Medico medicoSelecionado = medicoDAO.findById(idMedico);
+		Medico medicoSelecionado = medicoService.buscarPorId(idMedico);
 		medicoSelecionado.setNome(medico.getNome());
 		medicoSelecionado.setCrm(medico.getCrm());
-		medicoDAO.update(medicoSelecionado);
+		medicoService.alterar(medicoSelecionado);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Medico Atualizado Com Sucesso", "Medico Atualizado Com Sucesso"));		
 	}
 	
@@ -74,14 +75,6 @@ public class MedicoBean implements Serializable {
 
 	public void setMedico(Medico medico) {
 		this.medico = medico;
-	}
-
-	public MedicoDAO getMedicoDAO() {
-		return medicoDAO;
-	}
-
-	public void setMedicoDAO(MedicoDAO medicoDAO) {
-		this.medicoDAO = medicoDAO;
 	}
 
 	public List<Medico> getMedicos() {

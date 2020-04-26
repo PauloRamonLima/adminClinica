@@ -1,7 +1,11 @@
 package br.com.adm.clinica.model.vo;
 
-public class AtestadoObitoVO {
+import java.io.Serializable;
+
+public class AtestadoObitoVO implements Serializable{
 	
+	private static final long serialVersionUID = -6039648599560888491L;
+
 	private String nome;
 	
 	private String horario;

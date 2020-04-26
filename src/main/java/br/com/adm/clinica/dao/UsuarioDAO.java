@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.com.adm.clinica.model.Usuario;
-import br.com.adm.clinica.util.JPAResourceBean;
 
 public class UsuarioDAO extends GenericDAO<Usuario> implements Serializable {
 	

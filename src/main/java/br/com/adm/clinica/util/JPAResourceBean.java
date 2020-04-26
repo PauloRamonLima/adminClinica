@@ -10,28 +10,11 @@ import javax.persistence.Persistence;
 
 public class JPAResourceBean {
 
-	private static EntityManagerFactory emFactory;
-
-	/*
-	 * @Produces
-	 * 
-	 * @ApplicationScoped public static EntityManagerFactory getEMF() { if
-	 * (emFactory == null) { emFactory =
-	 * Persistence.createEntityManagerFactory("medpoint"); } return emFactory; }
-	 */
-
 	@Produces
 	@ApplicationScoped
 	public EntityManagerFactory getEMF() {
 		return Persistence.createEntityManagerFactory("medpoint");
 	}
-
-	/*
-	 * @Produces
-	 * 
-	 * @RequestScoped public static EntityManager getEntityManager() { return
-	 * getEMF().createEntityManager(); }
-	 */
 
 	@Produces
 	@RequestScoped

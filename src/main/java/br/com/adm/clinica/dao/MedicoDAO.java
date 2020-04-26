@@ -1,12 +1,15 @@
 package br.com.adm.clinica.dao;
 
+import java.io.Serializable;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.com.adm.clinica.model.Medico;
-import br.com.adm.clinica.util.JPAResourceBean;
 
-public class MedicoDAO extends GenericDAO<Medico> {
+public class MedicoDAO extends GenericDAO<Medico> implements Serializable {
+	
+	private static final long serialVersionUID = 1097192296182987369L;
 	
 	@Inject
 	private EntityManager em;

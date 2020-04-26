@@ -9,12 +9,13 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.adm.clinica.dao.LeitoDAO;
-import br.com.adm.clinica.dao.LeitoInternacaoDAO;
 import br.com.adm.clinica.model.Leito;
 import br.com.adm.clinica.model.LeitoInternacao;
+import br.com.adm.clinica.service.LeitoInternacaoService;
+import br.com.adm.clinica.service.LeitoService;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 
 @Named
@@ -23,15 +24,19 @@ public class LeitoBean implements Serializable {
 
 	private static final long serialVersionUID = -3126727348707012150L;
 	
-	private Leito leito = new Leito();
+	@Inject
+	private Leito leito;
 	
-	private LeitoDAO leitoDAO = new LeitoDAO();
+	@Inject
+	private LeitoService leitoService;
 		
 	private List<Leito> leitos = new ArrayList<Leito>();
 	
+	@Inject
 	private LeitoInternacao leitoInternacao;
 	
-	private LeitoInternacaoDAO leitoInternacaoDAO = new LeitoInternacaoDAO();
+	@Inject
+	private LeitoInternacaoService leitoInternacaoService;
 		
 	private String nomePaciente;
 	
@@ -47,49 +52,49 @@ public class LeitoBean implements Serializable {
 	public void init() {
 		try {
 			nomesJson = transformaJavaEmJson.transformaJavaEmJsonPacienteSemInternacao();
-			leitos = leitoDAO.findAll();
+			leitos = leitoService.listar();
 		}catch (NullPointerException e) {
 			// TODO: handle exception
 		}
 	}
 	
 	public void salvar() {
-		leitoDAO.save(leito);
+		leitoService.salvar(leito);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Leito Cadastrado Com Sucasso", "Leito Cadastrado Com Sucasso"));
 	}
 	
 	public void deletar(Long id) {
-		leitoDAO.delete(id);
-		leitos = leitoDAO.findAll();
+		leitoService.deletar(id);
+		leitos = leitoService.listar();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Leito Deletado Com Sucasso", "Leito Deletado Com Sucasso"));
 
 	}
 	
 	public void alterar() {
-		Leito leitoSelecionado = leitoDAO.findById(idLeito);
+		Leito leitoSelecionado = leitoService.buscarPorId(idLeito);
 		leitoSelecionado.setDescricao(leito.getDescricao());
-		leitoDAO.update(leitoSelecionado);
+		leitoService.alterar(leitoSelecionado);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Leito Atualizado Com Sucasso", "Leito Atualizado Com Sucasso"));
 	}
 	
 	public void salvarLeitoIntercacao(Long id) {
 		Long numero;
 		leitoInternacao = new LeitoInternacao();
-		Leito leito = leitoDAO.findById(id);
+		Leito leito = leitoService.buscarPorId(id);
 		leitoInternacao.setLeito(leito);
-		numero = leitoInternacaoDAO.buscarMaiorLeitosInternacaoPorLeito(id);
+		numero = leitoInternacaoService.buscarMaiorLeitosInternacaoPorLeito(id);
 		if(numero == null) {
 			numero = 0L;		
 		}		
 		leitoInternacao.setNumero(numero + 1);
-		leitoInternacaoDAO.save(leitoInternacao);
+		leitoInternacaoService.salvar(leitoInternacao);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Leito de internação Cadastrado Com Sucasso", "Leito de internação Cadastrado Com Sucasso"));
 		
 	}
 	
 	public void showPageEditar(Long id) throws IOException {
 		idLeito = id;
-		leito = leitoDAO.findById(id);
+		leito = leitoService.buscarPorId(id);
 	//	FacesContext.getCurrentInstance().getExternalContext().redirect("editarleito.xhtml?faces-redirect=true");
 }
 	
@@ -103,14 +108,6 @@ public class LeitoBean implements Serializable {
 
 	public void setLeito(Leito leito) {
 		this.leito = leito;
-	}
-
-	public LeitoDAO getLeitoDAO() {
-		return leitoDAO;
-	}
-
-	public void setLeitoDAO(LeitoDAO leitoDAO) {
-		this.leitoDAO = leitoDAO;
 	}
 
 	public List<Leito> getLeitos() {
@@ -127,14 +124,6 @@ public class LeitoBean implements Serializable {
 
 	public void setLeitoInternacao(LeitoInternacao leitoInternacao) {
 		this.leitoInternacao = leitoInternacao;
-	}
-
-	public LeitoInternacaoDAO getLeitoInternacaoDAO() {
-		return leitoInternacaoDAO;
-	}
-
-	public void setLeitoInternacaoDAO(LeitoInternacaoDAO leitoInternacaoDAO) {
-		this.leitoInternacaoDAO = leitoInternacaoDAO;
 	}
 
 	public String getNomePaciente() {

@@ -13,8 +13,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
 
-import br.com.adm.clinica.dao.UsuarioDAO;
 import br.com.adm.clinica.model.Usuario;
+import br.com.adm.clinica.service.UsuarioService;
 
 @Named
 @SessionScoped
@@ -23,7 +23,7 @@ public class UsuarioBean implements Serializable {
 	private static final long serialVersionUID = -4326028160868302820L;
 
 	@Inject
-	private UsuarioDAO usuarioDAO;
+	private UsuarioService usuarioService;
 
 	@Inject
 	private Usuario usuario;
@@ -36,13 +36,13 @@ public class UsuarioBean implements Serializable {
 
 	public void salvar() {
 		try {
-		Usuario user = usuarioDAO.buscarUsuarioPorLogin(usuario.getLogin());
+		Usuario user = usuarioService.buscarUsuarioPorLogin(usuario.getLogin());
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 				"Login Em Uso, Por Favor Alterar", "Login Em Uso, Por Favor Alterar"));
 		return;
 		}catch (NoResultException e) {
 		usuario.setSenha(convertStringToMd5(senha));
-		usuarioDAO.save(usuario);
+		usuarioService.salvar(usuario);
 		usuario = new Usuario();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Usuario Cadastrado", "Usuario Cadastrado"));
@@ -51,10 +51,10 @@ public class UsuarioBean implements Serializable {
 	
 	public void alterarSenha() {
 		try {
-			Usuario user = usuarioDAO.buscarUsuarioPorLogin(login);
+			Usuario user = usuarioService.buscarUsuarioPorLogin(login);
 			if(senha.equals(repitaSenha)) {
 				user.setSenha(convertStringToMd5(senha));
-				usuarioDAO.update(user);
+				usuarioService.alterar(user);
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Senha Atualizada", "Senha Atualizada"));
 			}else {
@@ -97,7 +97,7 @@ public class UsuarioBean implements Serializable {
 
 	public void showIndexPage() throws IOException {
 		try {
-			if (usuarioDAO.logar(login, convertStringToMd5(senha)) != null) {
+			if (usuarioService.logar(login, convertStringToMd5(senha)) != null) {
 				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
 			}
 		} catch (NoResultException e) {
@@ -135,14 +135,6 @@ public class UsuarioBean implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public UsuarioDAO getUsuarioDAO() {
-		return usuarioDAO;
-	}
-
-	public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
-		this.usuarioDAO = usuarioDAO;
 	}
 
 	public Usuario getUsuario() {

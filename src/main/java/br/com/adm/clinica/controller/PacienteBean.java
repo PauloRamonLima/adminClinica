@@ -11,42 +11,48 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
 
-import org.eclipse.jdt.internal.compiler.parser.Scanner;
-
 import com.google.gson.Gson;
 
-import br.com.adm.clinica.dao.ConsultaDAO;
-import br.com.adm.clinica.dao.ExameDAO;
-import br.com.adm.clinica.dao.LeitoInternacaoDAO;
-import br.com.adm.clinica.dao.PacienteDAO;
 import br.com.adm.clinica.model.Consulta;
 import br.com.adm.clinica.model.Exame;
 import br.com.adm.clinica.model.LeitoInternacao;
 import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.model.vo.PacienteInternadoVO;
+import br.com.adm.clinica.service.ConsultaService;
+import br.com.adm.clinica.service.ExameService;
+import br.com.adm.clinica.service.LeitoInternacaoService;
+import br.com.adm.clinica.service.PacienteService;
 
 @Named
 @ViewScoped
 public class PacienteBean implements Serializable {
 
 	private static final long serialVersionUID = -7178530229889330245L;
+	
+	@Inject
+	private PacienteService pacienteService;
+	
+	@Inject
+	private LeitoInternacaoService leitoInternacaoService;
+	
+	@Inject
+	private ExameService exameService;
+	
+	@Inject
+	private ConsultaService consultaService;
 
-	private PacienteDAO pacienteDAO = new PacienteDAO();
+	@Inject
+	private Paciente paciente;
 	
-	private LeitoInternacaoDAO leitoInternacaoDAO = new LeitoInternacaoDAO();
-	
-	private ExameDAO exameDAO = new ExameDAO();
-	
-	private ConsultaDAO consultaDAO = new ConsultaDAO();
-
-	private Paciente paciente = new Paciente();
+	@Inject
+	private LeitoInternacao leitoInternacao;
 
 	private List<Paciente> pacientes = new ArrayList<Paciente>();
 	
@@ -54,13 +60,11 @@ public class PacienteBean implements Serializable {
 	
 	private List<LeitoInternacao> leitosDeInternacaoOcupados = new ArrayList<>();
 	
-	private LeitoInternacao leitoInternacao = new LeitoInternacao();
-	
 
 	@PostConstruct
 	public void init() {
 		try {
-			pacientes = pacienteDAO.findAll();
+			pacientes = pacienteService.listar();
 			buscarPacientesInternados();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -70,7 +74,7 @@ public class PacienteBean implements Serializable {
 	public void salvar() {
 		
 		try {	
-		if(pacienteDAO.buscarPacientePorCpf(paciente.getCpf()) != null) {
+		if(pacienteService.buscarPacientePorCpf(paciente.getCpf()) != null) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"CPF já cadastrado", "CPF já cadastrado"));
 				return;
@@ -80,7 +84,7 @@ public class PacienteBean implements Serializable {
 		}
 		
 		try {	
-			if(pacienteDAO.buscarPacientePorRg(paciente.getRg()) != null) {
+			if(pacienteService.buscarPacientePorRg(paciente.getRg()) != null) {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"RG já cadastrado", "RG já cadastrado"));
 					return;
@@ -89,48 +93,48 @@ public class PacienteBean implements Serializable {
 			
 			}
 		
-		pacienteDAO.save(paciente);
+		pacienteService.salvar(paciente);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Paciente Cadastrado Com Sucesso", "Paciente Cadastrado Com Sucesso"));
 		paciente = new Paciente();
 	}
 
 	public void deletar(Long id) {
-		Paciente paciente = pacienteDAO.findById(id);
-		List<Exame> exames = exameDAO.buscarExamesPorPaciente(paciente);
+		Paciente paciente = pacienteService.buscarPorId(id);
+		List<Exame> exames = exameService.buscarExamesPorPaciente(paciente);
 		if(!exames.isEmpty()) {
 			for(Exame exame : exames) {
-				exameDAO.delete(exame.getId());
+				exameService.deletar(exame.getId());
 			}
 		}
-		List<Consulta> consultas = consultaDAO.buscarConsultaPorPaciente(paciente);
+		List<Consulta> consultas = consultaService.buscarConsultaPorPaciente(paciente);
 		if(!consultas.isEmpty()) {
 			for(Consulta consulta : consultas) {
-				consultaDAO.delete(consulta.getId());
+				consultaService.deletar(consulta.getId());
 			}
 		}
 		
 		try {
-			LeitoInternacao leito = leitoInternacaoDAO.buscarLeitoDeInternacaoPorPaciente(paciente);
+			LeitoInternacao leito = leitoInternacaoService.buscarLeitoDeInternacaoPorPaciente(paciente);
 			leito.setPaciente(null);
-			leitoInternacaoDAO.update(leito);
+			leitoInternacaoService.alterar(leito);
 		}catch (NoResultException e) {
 			
 		}
 		
-		pacienteDAO.delete(id);
+		pacienteService.deletar(id);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Paciente Deletado Com Sucesso", "Paciente Deletado Com Sucesso"));
 	}
 
 	public void buscarPacientePorId(Long id) {
-		paciente = pacienteDAO.findById(id);
+		paciente = pacienteService.buscarPorId(id);
 	}
 	
 	public void buscarPacientesInternados() {
 		pacientesInternados = new ArrayList<>();
 		leitosDeInternacaoOcupados = new ArrayList<>();
-		leitosDeInternacaoOcupados = leitoInternacaoDAO.buscarPacientesInternados();
+		leitosDeInternacaoOcupados = leitoInternacaoService.buscarPacientesInternados();
 		PacienteInternadoVO pacienteVO = new PacienteInternadoVO();
 		for(int i = 0; i < leitosDeInternacaoOcupados.size(); i++) {
 			pacienteVO.setNomePaciente(leitosDeInternacaoOcupados.get(i).getPaciente().getNome());
@@ -144,8 +148,8 @@ public class PacienteBean implements Serializable {
 	}
 
 	public void alterar(Long id) {
-		Paciente paciente = pacienteDAO.findById(id);
-		pacienteDAO.update(paciente);
+		Paciente paciente = pacienteService.buscarPorId(id);
+		pacienteService.alterar(paciente);
 	}
 
 	public void pesquisaCep(AjaxBehaviorEvent event) {
@@ -186,10 +190,10 @@ public class PacienteBean implements Serializable {
 	}
 	
 	public void darAltaPaciente(String leito, Long numero) {
-		leitoInternacao = leitoInternacaoDAO.buscarLeitoDeInternacaPorLeitoENumeracao(leito, numero);
+		leitoInternacao = leitoInternacaoService.buscarLeitoDeInternacaPorLeitoENumeracao(leito, numero);
 		leitoInternacao.setDataInternacao(null);
 		leitoInternacao.setPaciente(null);
-		leitoInternacaoDAO.update(leitoInternacao);
+		leitoInternacaoService.alterar(leitoInternacao);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Alta Concluida", "Alta Concluida"));
 		
