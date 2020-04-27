@@ -70,7 +70,6 @@ public class LeitoBean implements Serializable {
 	
 	public void deletar(Long id) {
 		leitoService.deletar(id);
-		leitos = leitoService.listar();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Leito Deletado Com Sucesso", "Leito Deletado Com Sucesso"));
 		leitos = leitoService.listar();
 	}

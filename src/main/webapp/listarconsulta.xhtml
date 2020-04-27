@@ -21,12 +21,12 @@
 			<div class="row">
 				<div class="col-md-12">
 				<h:form>
-				<p:messages />
 					<div class="card">
 						<!-- /.card-header -->
 						<div class="card-body p-0"></div>
 						<!-- /.card-body -->
 						<p:panel header="Consultas">
+						<p:messages closable="true"/>
 							<p:dataTable rows="7"  value="#{consultaBean.consultas}" var="consulta" class="table table-bordered">
 								<p:column headerText="Paciente" style="text-align: center;">
 									<h:outputText value="#{consulta.paciente.nome}" />

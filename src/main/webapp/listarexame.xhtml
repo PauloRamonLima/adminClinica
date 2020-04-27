@@ -46,11 +46,11 @@
 							<p:column headerText="Ações" style="width: 90px;">
 							<p:spacer width="5" height="10" />
 								
-								<p:commandLink action="{exameBean.deletar(exame.id)}" update="@form" process="@form" ajax="false"  title="Excluir">
+							<p:commandLink action="{exameBean.deletar(exame.id)}" update="@form" process="@form" ajax="false"  title="Excluir">
 							<i class="fa fa-trash" aria-hidden="true" style="font-size:18px;color:red"></i></p:commandLink>
 								 <p:spacer width="5" height="10" />
 								
-								<p:commandLink action="#{exameBean.showPageEditar(exame.id)}" title="Editar">
+							<p:commandLink action="#{exameBean.showPageEditar(exame.id)}" title="Editar">
 							<i class="fa fa-cog fa-fw" aria-hidden="true" style="font-size:18px;color:black;"></i></p:commandLink>
 								
 							</p:column>
@@ -60,14 +60,6 @@
 					</h:form>
 				</div>
 				</div>
-				<script>
-					function atualizar(){
-						console.log('chamou')	
-						setTimeout(function(){
-							window.location.reload();
-					     }, 200);
-					}
-				</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

@@ -19,6 +19,7 @@
  <session-config>
      <session-timeout>30</session-timeout>
   </session-config>
+  
   <resource-env-ref>  
 	  <resource-env-ref-name>BeanManager</resource-env-ref-name>  
 	  <resource-env-ref-type>javax.enterprise.inject.spi.BeanManager
