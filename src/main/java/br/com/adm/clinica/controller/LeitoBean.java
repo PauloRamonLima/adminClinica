@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -21,7 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Named
-@RequestScoped
+@ViewScoped
 @Getter
 @Setter
 public class LeitoBean implements Serializable {
@@ -99,8 +99,9 @@ public class LeitoBean implements Serializable {
 	}
 	
 	public void showPageEditar(Long id) throws IOException {
-		idLeito = id;
 		leito = leitoService.buscarPorId(id);
+		System.out.println(leito.getDescricao());
+		idLeito = id;
 	//	FacesContext.getCurrentInstance().getExternalContext().redirect("editarleito.xhtml?faces-redirect=true");
 }
 	

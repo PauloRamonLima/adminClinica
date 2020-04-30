@@ -11,78 +11,93 @@
 <h:body>
 	<ui:composition template="template.xhtml">
 		<ui:define name="corpo">
-		
+
 			<div class="row">
-			<div class="col-md-12">
-			
+				<div class="col-md-12">
+
 					<div class="card">
 						<!-- /.card-header -->
 						<div class="card-body p-0"></div>
-						<!-- /.card-body -->
-						<p:panel header="Leitos">
-						<h:form id="formulario">
-						<p:messages></p:messages>
-						<p:dataTable value="#{leitoBean.leitos}" id="tabela" var="leito" class="table table-bordered">
-							<p:column headerText="Nome" style="width: 500px;text-align: center;">
-								<h:outputText value="#{leito.descricao}" />
-							</p:column>
-							<p:column headerText="Leitos De Internação" style="text-align: center;">
-								<h:commandLink action="#{leitoInternacaoBean.showLeitoInternacaoOcupado(leito)}"><i class="fa fa-bed" style="font-size:18px;color:red"><SPAN> Ocupados</SPAN></i></h:commandLink>
-								<p:spacer width="15" />
-								<h:commandLink action="#{leitoInternacaoBean.showLeitoInternacaoDesocupado(leito)}"><i class="fa fa-bed"  style="font-size:18px;color:gray;"><SPAN> Livres</SPAN></i></h:commandLink>
-								<p:spacer width="15" />
-								<h:commandLink action="#{leitoBean.salvarLeitoIntercacao(leito.id)}"><i class="fa fa-bed"  style="font-size:18px;color:green;"><SPAN> Novo</SPAN></i></h:commandLink>
-							</p:column>
-							<p:column headerText="Ações" style="width: 90px;">
-							 <p:spacer width="5" height="10" />	
-								<p:commandLink  action="#{leitoBean.deletar(leito.id)}" update="formulario" process="formulario" ajax="false"  title="Excluir">
-							<i class="fa fa-trash" aria-hidden="true" style="font-size:18px;color:red"></i></p:commandLink>
-								 <p:spacer width="5" height="10" />	
-								
-							<p:commandLink action="#{leitoBean.showPageEditar(leito.id)}"  onclick="PF('dlg2').show();" title="Editar">
-							<i class="fa fa-cog fa-fw" aria-hidden="true" style="font-size:18px;color:black;"></i></p:commandLink>
-								
-							</p:column>
-							
-						</p:dataTable>
-						</h:form>
-						</p:panel>
+						<!-- /.card-body value="#{leitoBean.leitos}" id="tabela" var="leito" -->
+							<h:form id="formulario">
+								<p:panel header="Leitos">
+								<p:messages></p:messages>
+								<p:dataTable id="tabela" paginatorPosition="bottom"
+										paginatorAlwaysVisible="true" reflow="true"
+										value="#{leitoBean.leitos}" var="leito"
+										paginator="true" rows="7" style="margin-top:20px">
+									<p:column headerText="Nome:"
+										style="width: 500px;text-align: center;">
+										<h:outputText value="#{leito.descricao}" />
+									</p:column>
+									<p:column headerText="Leitos De Internação" style="text-align: center;">
+										<h:commandLink
+											action="#{leitoInternacaoBean.showLeitoInternacaoOcupado(leito)}">
+											<i class="fa fa-bed" style="font-size: 18px; color: red"><SPAN>
+													Ocupados</SPAN></i>
+										</h:commandLink>
+										<p:spacer width="15" />
+										<h:commandLink
+											action="#{leitoInternacaoBean.showLeitoInternacaoDesocupado(leito)}">
+											<i class="fa fa-bed" style="font-size: 18px; color: gray;"><SPAN>
+													Livres</SPAN></i>
+										</h:commandLink>
+										<p:spacer width="15" />
+										<h:commandLink
+											action="#{leitoBean.salvarLeitoIntercacao(leito.id)}">
+											<i class="fa fa-bed" style="font-size: 18px; color: green;"><SPAN>
+													Novo</SPAN></i>
+										</h:commandLink>
+									</p:column>
+									<p:column headerText="Ações" style="width: 90px;">
+										<p:spacer width="5" height="10" />
+										<p:commandLink action="#{leitoBean.deletar(leito.id)}"
+											update="formulario" process="formulario" ajax="false"
+											title="Excluir">
+											<i class="fa fa-trash" aria-hidden="true"
+												style="font-size: 18px; color: red"></i>
+										</p:commandLink>
+										<p:spacer width="5" height="10" />
+
+										<p:commandLink action="#{leitoBean.showPageEditar(leito.id)}" update="formulario"
+											oncomplete="PF('dlg2').show();" title="Editar">
+											<i class="fa fa-cog fa-fw" aria-hidden="true"
+												style="font-size: 18px; color: black;"></i>
+										</p:commandLink>
+
+									</p:column>
+
+								</p:dataTable>
+								</p:panel>
+							</h:form>
 					</div>
-					
+
 				</div>
-				</div>
-				
-				<p:dialog header="Modal Dialog"  position="320,100" widgetVar="dlg2" modal="true" width="600" height="200">
-    				<h:form role="form" id="form">
-							<div class="box-body">
-							<div class="col-sm-12">
+			</div>
+
+			<p:dialog header="Atualizar Leito" position="320,100" widgetVar="dlg2"
+				modal="true" width="600" height="200">
+				<h:form role="form" id="form">
+					<div class="box-body">
+						<div class="col-sm-12">
 							<div id="edit">
 								<p:messages></p:messages>
 
 								<label for="exampleInputEmail1"><font
 									style="vertical-align: inherit;"><font
 										style="vertical-align: inherit;">Nome</font></font></label> <br />
-								<h:inputTextarea value="#{leitoBean.leito.descricao}" autocomplete="off" class="form-control"/>
-								
-							    <br/>
-								<h:commandButton action="#{leitoBean.alterar()}" 
+								<h:inputTextarea value="#{leitoBean.leito.descricao}"
+									 class="form-control" />
+
+								<br />
+								<h:commandButton action="#{leitoBean.alterar()}"
 									value="Atualizar" class="btn btn-success">
-									</h:commandButton>					   
+								</h:commandButton>
 							</div>
-							</div>
-							</div>
-						</h:form>				
-					</p:dialog>  
-				
-				
-				<script>
-					function atualizar(){
-						console.log('chamou')	
-						setTimeout(function(){
-							window.location.reload();
-					     }, 1500);
-					}
-				</script>
+						</div>
+					</div>
+				</h:form>
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </h:body>

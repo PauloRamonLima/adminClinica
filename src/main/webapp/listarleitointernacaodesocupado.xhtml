@@ -15,29 +15,27 @@
 			<div class="row">
 			<div class="col-md-12">
 					<div class="card">
-					
-						<div class="card-header" style=" background: #5882FA; color: white;">
-							<h2 class="card-title">Leitos De Internação Desocupados</h2>
-						</div>
+				
 						<!-- /.card-header -->
 						<div class="card-body p-0"></div>
 						<!-- /.card-body -->
 						<h:form>
-						<h:dataTable  value="#{leitoInternacaoBean.leitosInternacaoDesocupados}" columnClasses="colunaNumero,colunaLeito,colunaInternar" var="leitoInternacao" class="table table-bordered">
-							<h:column>
-							<f:facet name="header">Numero</f:facet>
+						<p:panel header="Leitos De Internação Desocupados">
+						<p:dataTable  value="#{leitoInternacaoBean.leitosInternacaoDesocupados}" paginatorPosition="bottom"
+						  var="leitoInternacao" paginatorAlwaysVisible="true" reflow="true"
+						   class="table table-bordered" paginator="true" rows="7" style="margin-top:20px">
+							<p:column headerText="Numero" style="text-align: center;">
 								<h:outputText value="#{leitoInternacao.numero}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header">Leito</f:facet>
+							</p:column>
+							<p:column headerText="Leito" style="text-align: center;">
 								<h:outputText value="#{leitoInternacao.leito.descricao}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header">Paciente</f:facet>
+							</p:column>
+							<p:column headerText="Ações" style="text-align: center;">
 								<h:commandButton action="#{leitoInternacaoBean.showLeitoInternacaoEditar(leitoInternacao.id)}" value="Internar Paciente" class="btn btn-success" />
-							</h:column>
+							</p:column>
 							
-						</h:dataTable>
+						</p:dataTable>
+						</p:panel>
 						</h:form>
 						
 					</div>

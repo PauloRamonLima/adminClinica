@@ -27,7 +27,7 @@
 						<!-- /.card-body -->
 						<p:panel header="Exames">
 						<p:dataTable rows="7" paginatorPosition="bottom" paginatorAlwaysVisible="false" reflow="true" paginator="true"
-						 value="#{exameBean.exames}"  var="exame" class="table table-bordered">
+						 value="#{exameBean.exames}"  var="exame">
 							<p:column headerText="Nome" style="text-align: center;">
 								<h:outputText value="#{exame.nome}" />
 							</p:column>

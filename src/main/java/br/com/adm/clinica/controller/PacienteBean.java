@@ -200,7 +200,7 @@ public class PacienteBean implements Serializable {
 		leitoInternacaoService.alterar(leitoInternacao);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta Concluida", "Alta Concluida"));
-
+		buscarPacientesInternados();
 	}
 
 }
