@@ -11,43 +11,40 @@
 <h:body>
 	<ui:composition template="template.xhtml">
 		<ui:define name="corpo">
-		
+
 			<div class="row">
-			<div class="col-md-12">
+				<div class="col-md-12">
 					<div class="card">
-					
-						<div class="card-header" style=" background: #5882FA; color: white;">
-							<h2 class="card-title">Leitos De Internação Ocupados</h2>
-						</div>
-						<!-- /.card-header -->
+
 						<div class="card-body p-0"></div>
-						<!-- /.card-body -->
 						<h:form>
-						<h:dataTable  value="#{leitoInternacaoBean.leitosInternacaoOcupados}" columnClasses="colunaNumero,colunaLeito,colunaInternar" var="leitoInternacao" class="table table-bordered">
-							<h:column>
-							<f:facet name="header">Numero</f:facet>
-								<h:outputText value="#{leitoInternacao.numero}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header">Leito</f:facet>
-								<h:outputText value="#{leitoInternacao.leito.descricao}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header">Paciente</f:facet>
-								<h:outputText value="#{leitoInternacao.paciente.nome}" />
-							</h:column>
-							<h:column>
-							<f:facet name="header">Data Internação</f:facet>
-								<h:outputText value="#{leitoInternacao.dataInternacao}" />
-							</h:column>
-							
-						</h:dataTable>
+							<p:panel header="Leitos De Internação Ocupados">
+								<p:dataTable 
+									paginatorPosition="bottom"
+									value="#{leitoInternacaoBean.leitosInternacaoOcupados}"
+									paginator="true" rows="7" reflow="true" style="margin-top:20px"
+									var="leitoInternacao" class="table table-bordered">
+									<p:column headerText="Numero">
+										<h:outputText value="#{leitoInternacao.numero}" />
+									</p:column>
+									<p:column headerText="Leito">
+										<h:outputText value="#{leitoInternacao.leito.descricao}" />
+									</p:column>
+									<p:column headerText="Paciente">
+										<h:outputText value="#{leitoInternacao.paciente.nome}" />
+									</p:column>
+									<p:column headerText="Data Internação">
+										<h:outputText value="#{leitoInternacao.dataInternacao}" />
+									</p:column>
+
+								</p:dataTable>
+							</p:panel>
 						</h:form>
-						
+
 					</div>
-					
+
 				</div>
-				</div>
+			</div>
 		</ui:define>
 	</ui:composition>
 </h:body>

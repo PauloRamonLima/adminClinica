@@ -66,6 +66,7 @@ public class LeitoBean implements Serializable {
 	public void salvar() {
 		leitoService.salvar(leito);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Leito Cadastrado Com Sucesso", "Leito Cadastrado Com Sucesso"));
+		leito = new Leito();
 	}
 	
 	public void deletar(Long id) {

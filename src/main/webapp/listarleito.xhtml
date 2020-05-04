@@ -60,7 +60,7 @@
 										<p:spacer width="5" height="10" />
 
 										<p:commandLink action="#{leitoBean.showPageEditar(leito.id)}" update="formulario"
-											oncomplete="PF('dlg2').show();" title="Editar">
+											oncomplete="PF('atualizarLeito').show();" title="Editar">
 											<i class="fa fa-cog fa-fw" aria-hidden="true"
 												style="font-size: 18px; color: black;"></i>
 										</p:commandLink>
@@ -75,7 +75,7 @@
 				</div>
 			</div>
 
-			<p:dialog header="Atualizar Leito" position="320,100" widgetVar="dlg2"
+			<p:dialog header="Atualizar Leito" position="320,100" widgetVar="atualizarLeito"
 				modal="true" width="600" height="200">
 				<h:form role="form" id="form">
 					<div class="box-body">

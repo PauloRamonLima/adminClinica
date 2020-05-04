@@ -26,8 +26,9 @@
 						<div class="card-body p-0"></div>
 						<!-- /.card-body -->
 						<p:panel header="Exames">
-						<p:dataTable rows="7" paginatorPosition="bottom" paginatorAlwaysVisible="false" reflow="true" paginator="true"
-						 value="#{exameBean.exames}"  var="exame">
+						<p:dataTable rows="7" paginatorPosition="bottom" 
+						paginatorAlwaysVisible="true"  reflow="true" paginator="true"
+						 value="#{exameBean.exames}"  var="exame" style="margin-top:20px">
 							<p:column headerText="Nome" style="text-align: center;">
 								<h:outputText value="#{exame.nome}" />
 							</p:column>

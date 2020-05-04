@@ -34,7 +34,7 @@
 									<p:dataTable id="table" paginatorPosition="bottom"
 										paginatorAlwaysVisible="true" reflow="true"
 										value="#{pacienteBean.pacientes}" var="paciente"
-										paginator="true" rows="7" style="margin-top:20px">
+										paginator="true" rows="6" style="margin-top:5px">
 
 										<p:column headerText="Nome:" filterBy="#{paciente.nome}">
 											<h:outputText value="#{paciente.nome}" />
@@ -48,7 +48,7 @@
 										<p:column headerText="RG:">
 											<h:outputText value="#{paciente.rg}" />
 										</p:column>
-										<p:column headerText="Ações" margin="10px" >
+										<p:column headerText="Ações">
 											<p:spacer width="5" height="10" />
 											<p:commandButton
 												action="#{pacienteBean.deletar(paciente.id)}"
@@ -205,7 +205,7 @@
 							<div class="form-group">
 
 								<h:commandButton value="Atualizar" type="submit"
-									action="#{pacienteBean.alterar}" styleClass="btn btn-info" />
+									action="#{pacienteBean.alterar(pacienteBean.paciente)}" styleClass="btn btn-info" />
 
 							</div>
 						</div>

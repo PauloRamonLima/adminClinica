@@ -22,7 +22,7 @@ public abstract class GenericDAO<T extends Serializable> {
 	}
 	
 	public T findById(Long id) {
-		//EntityManager manager = getEntityManager();
+		// select * from exame where id = 8;
 		manager.getTransaction().begin();
 		T entity = (T) manager.find(aClass, id);
 		manager.getTransaction().commit();
@@ -32,7 +32,7 @@ public abstract class GenericDAO<T extends Serializable> {
 	
 	@SuppressWarnings("unchecked")
 	public List<T> findAll(){
-		//EntityManager manager = getEntityManager();
+		// Select * from paciente;
 		manager.getTransaction().begin();
 		Query query = manager.createQuery("from " + aClass.getSimpleName());
 		List<T> entities = query.getResultList();
@@ -50,11 +50,9 @@ public abstract class GenericDAO<T extends Serializable> {
 	}
 	
 	public void update(T entity) {
-		//EntityManager manager = getEntityManager();
 		manager.getTransaction().begin();
 		manager.merge(entity);
 		manager.getTransaction().commit();
-		//manager.close();
 	}
 	
 	public void delete(Long id) {

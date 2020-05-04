@@ -90,6 +90,7 @@ public class LeitoInternacaoBean implements Serializable {
 		leitoInternacao.setPaciente(paciente);
 		leitoInternacaoService.alterar(leitoInternacao);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Paciente Internado Com Sucesso", "Paciente Internado Com Sucesso"));
+		nomePaciente = "";
 	}
 	
 	public void deletar(Long id){

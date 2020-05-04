@@ -27,7 +27,9 @@
 						<!-- /.card-body -->
 						<p:panel header="Consultas">
 						<p:messages closable="true"/>
-							<p:dataTable rows="7"  value="#{consultaBean.consultas}" var="consulta" class="table table-bordered">
+							<p:dataTable rows="7"  value="#{consultaBean.consultas}" var="consulta" 
+							class="table table-bordered" paginatorPosition="bottom" paginator="true"
+							paginatorAlwaysVisible="true" reflow="true">
 								<p:column headerText="Paciente" style="text-align: center;">
 									<h:outputText value="#{consulta.paciente.nome}" />
 								</p:column>
@@ -47,7 +49,7 @@
 							<i class="fa fa-trash" aria-hidden="true" style="font-size:18px;color:red"></i></p:commandLink>
 								 <p:spacer width="5" height="10" />
 								
-								<p:commandLink action="#{consultaBean.showPageEditar(consulta.id)}" title="Editar">
+								<p:commandLink action="#{consultaBean.showPageEditar(consulta.id)}" oncomplete="PF('atualizarConsulta').show();" title="Remarcar Consulta">
 							<i class="fa fa-cog fa-fw" aria-hidden="true" style="font-size:18px;color:black;"></i></p:commandLink>
 								
 							</p:column>
@@ -58,14 +60,44 @@
 					</h:form>
 				</div>
 				</div>
-				<script>
-					function atualizar(){
-						console.log('chamou')	
-						setTimeout(function(){
-							window.location.reload();
-					     }, 200);
-					}
-				</script>
+				<p:dialog header="Remarcar Consulta" position="580,180" widgetVar="atualizarConsulta"
+				modal="true" width="300" height="170">
+				<p:panel>
+					<h:form role="form" id="form">
+							<div class="box-body">
+							<div class="col-sm-12">
+							   <label><font
+									style="vertical-align: inherit;"><font
+										style="vertical-align: inherit;">Data e Horario</font></font></label> <br />
+							     <h:inputText value="#{consultaBean.data}" class="form-control data">
+							    	<f:passThroughAttribute name="placeholder" value="dd/mmm/aaaa --:--"/>
+							    </h:inputText>	 
+					   			 <br />
+								<h:commandButton action="#{consultaBean.alterar()}"
+									value="Remarcar" class="btn btn-info"/>
+									
+									  <h:inputHidden value="#{consultaBean.nomesJson}" id="valor01" />
+					    			  <h:inputHidden value="#{consultaBean.nomesMedicosJson}" id="valor02" />					   
+							</div>
+							</div>
+							
+						</h:form>
+				</p:panel>
+			</p:dialog>
+			 <script>
+  $( function() {
+	  var nomes = document.getElementById('form:valor01').value;
+	  var nomesMedicos = document.getElementById('form:valor02').value;
+	  var medicos = JSON.parse(nomesMedicos);
+    var availableTags = JSON.parse(nomes);
+    $( ".tags" ).autocomplete({
+      source: availableTags
+    });
+    $( ".campo2" ).autocomplete({
+        source: medicos
+      });
+  } );
+  </script>
 		</ui:define>
 	</ui:composition>
 </h:body>

@@ -7,11 +7,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
+
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.NoResultException;
 
 import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.service.MedicoService;
@@ -35,6 +35,10 @@ public class MedicoBean implements Serializable {
 	private List<Medico> medicos = new ArrayList<Medico>();
 
 	private static Long idMedico;
+	
+	private String nomeMedico;
+	
+	private String crm;
 
 	@PostConstruct
 	public void init() {
@@ -42,17 +46,10 @@ public class MedicoBean implements Serializable {
 	}
 
 	public void salvar() {
-		try {
-			medicoService.buscarMedicoPorCrm(medico.getCrm());
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "CRM já cadastrado", "CRM já cadastrado"));
-		}catch (NoResultException e) {
 			medicoService.salvar(medico);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Medico Cadastrado Com Sucesso", "Medico Cadastrado Com Sucasso"));
-			medico = new Medico();
-			// TODO: handle exception
-		}
+			
 	}
 
 	public void deletar(Long id) {

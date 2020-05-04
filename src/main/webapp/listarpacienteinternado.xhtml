@@ -26,55 +26,157 @@
 							<div class="card-body p-0"></div>
 							<!-- /.card-body -->
 							<div id="content">
-								<p:panel header="Pacientes Internados">
-									<h:form id="formulario">
+								<h:form id="formulario">
+									<p:panel header="Pacientes Internados">
 										<p:messages />
 										<p:dataTable id="table" paginatorPosition="bottom"
 											paginatorAlwaysVisible="true" reflow="true"
+											style="margin-top:20px"
 											value="#{pacienteBean.pacientesInternados}" var="paciente"
-											paginator="true" rows="7">
-											<p:column headerText="Nome" filterBy="#{paciente.nomePaciente}"
-												style="width: 380px;text-align: center;">
+											paginator="true" rows="9">
+											<p:column headerText="Nome"
+												filterBy="#{paciente.nomePaciente}">
 												<h:outputText value="#{paciente.nomePaciente}" />
 											</p:column>
-											<p:column headerText="CPF"
-												style="width: 150px;text-align: center;">
+											<p:column headerText="CPF">
 												<h:outputText value="#{paciente.cpf}" />
 											</p:column>
-											<p:column headerText="Leito / N*" style="text-align: center;">
-												<h:outputText value="#{paciente.leito} / #{paciente.leitoInternacao}" />
+											<p:column headerText="Leito / N*">
+												<h:outputText
+													value="#{paciente.leito} / #{paciente.leitoInternacao}" />
 											</p:column>
-											<p:column headerText="Ações" style="width: 120px;">
+											<p:column headerText="Ações" style="width: 130px;">
 												<p:spacer width="10" height="10" />
 
-												<p:commandLink action="#{pacienteBean.darAltaPaciente(paciente.leito, paciente.leitoInternacao)}"
-													update="formulario" title="Exame">
+												<p:commandLink
+													action="#{pacienteBean.buscarExamesPorPacienteInternado(paciente.cpf)}"
+													update="formulario" title="Exames"
+													oncomplete="PF('dlg2').show();">
 													<i class="fa fa-plus-square" aria-hidden="true"
 														style="font-size: 18px; color: red;"></i>
 												</p:commandLink>
 												<p:spacer width="10" height="10" />
 
-												<p:commandLink action="#{pacienteBean.darAltaPaciente(paciente.leito, paciente.leitoInternacao)}"
-													 title="Alta" update="formulario">
+												<p:commandLink
+													action="#{pacienteBean.darAltaPaciente(paciente.leito, paciente.leitoInternacao)}"
+													title="Alta" update="formulario" process="@this">
 													<i class="fa fa-child" aria-hidden="true"
-														style="font-size: 18px; color: green;"></i>														
+														style="font-size: 18px; color: green;"></i>
 												</p:commandLink>
 												<p:spacer width="10" height="10" />
 
-												<p:commandLink action="#{pacienteBean.darAltaPaciente(paciente.leito, paciente.leitoInternacao)}"
-													 title="Obito" update="formulario">
-													<i class="fa fa-thumbs-down" aria-hidden="true"></i>
+												<p:commandLink
+													action="#{pacienteBean.buscarEvolucoesPorPaciente(paciente.cpf)}"
+													title="Evoluções" update="formulario"
+													oncomplete="PF('dlgEvolucao').show();">
+													<i class="fas fa-book"
+														style="font-size: 18px; color: #AEB404;"
+														aria-hidden="true"></i>
 												</p:commandLink>
 
 											</p:column>
 										</p:dataTable>
-									</h:form>
-								</p:panel>
+									</p:panel>
+								</h:form>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<p:dialog header="Exames do Paciente" widgetVar="dlg2" modal="true"
+				position="280,70" width="1050" height="440"
+				style="position: fixed; ">
+				<p:outputPanel autoUpdate="true">
+					<p:messages></p:messages>
+					<div class="row">
+						<div class="col-md-12">
+							<h:form>
+								<div class="card">
+									<!-- /.card-header -->
+									<div class="card-body p-0"></div>
+									<!-- /.card-body -->
+									<p:panel header="Exames">
+										<p:dataTable rows="4" paginatorPosition="bottom"
+											paginatorAlwaysVisible="true" reflow="true" paginator="true"
+											value="#{pacienteBean.examesPacienteInternado}" var="exame"
+											style="margin-top:10px">
+											<p:column headerText="Nome" style="text-align: center;">
+												<h:outputText value="#{exame.nome}" />
+											</p:column>
+											<p:column headerText="Paciente" style="text-align: center;">
+												<h:outputText value="#{exame.paciente.nome}" />
+											</p:column>
+											<p:column headerText="Medico" style="text-align: center;">
+												<h:outputText value="#{exame.medico.nome}" />
+											</p:column>
+											<p:column headerText="Data"
+												style="text-align: center; width: 160px;">
+												<h:outputText value="#{exame.data}" />
+											</p:column>
+											<p:column headerText="Realizado"
+												style="text-align: center; width: 120px;">
+												<h:outputText value="#{exame.realizado ? 'Sim' : 'Não'}" />
+											</p:column>
+										</p:dataTable>
+									</p:panel>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</p:outputPanel>
+			</p:dialog>
+			<p:dialog header="Evoluções do Paciente" widgetVar="dlgEvolucao"
+				modal="true" position="280,70" width="1050" height="440"
+				style="position: fixed; ">
+				<p:outputPanel autoUpdate="true">
+					<div class="row">
+						<div class="col-md-12">
+							<h:form id="formEvolucao">
+								<div class="card">
+									<div class="card-body p-0"></div>
+									<p:panel style="margin-top:10px"
+										rendered="#{pacienteBean.mostrarNovaEvolucao == false}">
+										<p:dataTable rows="4" paginatorPosition="bottom"
+											paginatorAlwaysVisible="true" reflow="true" paginator="true"
+											value="#{pacienteBean.evolucoesPacientesInternados}"
+											var="evolucao" style="margin-top:10px">
+
+											<p:column headerText="Descrição" style="text-align: center;">
+												<h:outputText value="#{evolucao.descEvoucao}" escape="false" />
+											</p:column>
+										</p:dataTable>
+										<p:commandLink action="#{pacienteBean.showNovaEvolucaoPage()}"
+											value="Nova Evolução" update="formEvolucao" />
+									</p:panel>
+									<div class="box-body">
+										<div class="col-sm-12">
+											<p:panel header="Nova Evolução" style="margin-top:3px"
+												rendered="#{pacienteBean.mostrarNovaEvolucao == true}">
+												<p:textEditor widgetVar="editor2"
+													value="#{pacienteBean.evolucao.descEvoucao}" height="235"
+													style="margin-bottom:10px; background: white;"
+													placeholder="Descrição Da Evolução">
+
+												</p:textEditor>
+
+												<p:commandButton
+												action="#{pacienteBean.novaEvolucaoPaciente()}" ajax="false"
+												update="formEvolucao"  process="@this" title="Salvar"  styleClass="btn btn-info"  />
+												<p:spacer height="10" width="20"></p:spacer>
+												<p:commandButton value="Clear" type="button"
+													onclick="PF('editor2').clear();" icon="pi pi-times" />
+
+											</p:panel>
+										</div>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+
+				</p:outputPanel>
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </h:body>

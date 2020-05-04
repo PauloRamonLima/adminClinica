@@ -1,12 +1,14 @@
 package br.com.adm.clinica.controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -21,11 +23,13 @@ import javax.persistence.NoResultException;
 import com.google.gson.Gson;
 
 import br.com.adm.clinica.model.Consulta;
+import br.com.adm.clinica.model.Evolucao;
 import br.com.adm.clinica.model.Exame;
 import br.com.adm.clinica.model.LeitoInternacao;
 import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.model.vo.PacienteInternadoVO;
 import br.com.adm.clinica.service.ConsultaService;
+import br.com.adm.clinica.service.EvolucaoService;
 import br.com.adm.clinica.service.ExameService;
 import br.com.adm.clinica.service.LeitoInternacaoService;
 import br.com.adm.clinica.service.PacienteService;
@@ -51,36 +55,61 @@ public class PacienteBean implements Serializable {
 
 	@Inject
 	private ConsultaService consultaService;
+	
+	@Inject
+	private EvolucaoService evolucaoService;
 
 	@Inject
 	private Paciente paciente;
-
+	
 	@Inject
 	private LeitoInternacao leitoInternacao;
+	
+	@Inject
+	private Evolucao evolucao;
 
 	private List<Paciente> pacientes = new ArrayList<Paciente>();
 
 	private List<PacienteInternadoVO> pacientesInternados = new ArrayList<>();
 
 	private List<LeitoInternacao> leitosDeInternacaoOcupados = new ArrayList<>();
-
+	
+	private List<Exame> examesPacienteInternado = new ArrayList<>();
+	
+	private List<Evolucao> evolucoesPacientesInternados = new ArrayList<>();
+	
+	private boolean mostrarNovaEvolucao = false;
+	
 	@PostConstruct
 	public void init() {
 		try {
-			pacientes = pacienteService.listar();
+			listar();
 			buscarPacientesInternados();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void listar() {
+		pacientes = pacienteService.listar();
+		Collections.sort(pacientes);
+	}
+	
 
 	public void salvar() {
-
+		if(validaPacienteSave())
+		pacienteService.salvar(paciente);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Paciente Cadastrado Com Sucesso", "Paciente Cadastrado Com Sucesso"));
+		paciente = new Paciente();
+	}
+	
+	public boolean validaPacienteSave() {
 		try {
 			if (pacienteService.buscarPacientePorCpf(paciente.getCpf()) != null) {
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "CPF já cadastrado", "CPF já cadastrado"));
-				return;
+				return false;
 			}
 		} catch (NoResultException e) {
 
@@ -90,16 +119,13 @@ public class PacienteBean implements Serializable {
 			if (pacienteService.buscarPacientePorRg(paciente.getRg()) != null) {
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "RG já cadastrado", "RG já cadastrado"));
-				return;
+				return false;
 			}
 		} catch (NoResultException e) {
 
 		}
-
-		pacienteService.salvar(paciente);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Paciente Cadastrado Com Sucesso", "Paciente Cadastrado Com Sucesso"));
-		paciente = new Paciente();
+		
+		return true;
 	}
 
 	public void deletar(Long id) {
@@ -128,7 +154,7 @@ public class PacienteBean implements Serializable {
 		pacienteService.deletar(id);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Paciente Deletado Com Sucesso", "Paciente Deletado Com Sucesso"));
-		pacientes = pacienteService.listar();
+		listar();
 	}
 
 	public void buscarPacientePorId(Long id) {
@@ -149,11 +175,12 @@ public class PacienteBean implements Serializable {
 			pacienteVO = new PacienteInternadoVO();
 
 		}
+		Collections.sort(pacientesInternados);
 	}
 
-	public void alterar(Long id) {
-		Paciente paciente = pacienteService.buscarPorId(id);
+	public void alterar(Paciente paciente) {
 		pacienteService.alterar(paciente);
+		listar();
 	}
 
 	public void pesquisaCep(AjaxBehaviorEvent event) {
@@ -178,7 +205,6 @@ public class PacienteBean implements Serializable {
 			paciente.setBairro(gsonAux.getBairro());
 			paciente.setLocalidade(gsonAux.getLocalidade());
 			paciente.setUf(gsonAux.getUf());
-			// System.out.println(gsonAux);
 
 		} catch (Exception e) {
 			mostrarMsg("Erro!");
@@ -202,5 +228,31 @@ public class PacienteBean implements Serializable {
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta Concluida", "Alta Concluida"));
 		buscarPacientesInternados();
 	}
-
+	
+	public void buscarExamesPorPacienteInternado(String cpf) {
+		paciente = pacienteService.buscarPacientePorCpf(cpf);
+		examesPacienteInternado = exameService.buscarExamesPorPaciente(paciente);
+	}
+	
+	public void buscarEvolucoesPorPaciente(String cpf) {
+		paciente = pacienteService.buscarPacientePorCpf(cpf);
+		evolucoesPacientesInternados = evolucaoService.buscarEvolucoesDePaciente(paciente);
+	}
+	
+	public void showNovaEvolucaoPage() throws IOException {
+		//System.out.println(id);
+//		FacesContext.getCurrentInstance().getExternalContext().redirect("novaevolucao.xhtml?faces-redirect=true&id=" + id);
+		mostrarNovaEvolucao = true;
+	}
+	
+	public void novaEvolucaoPaciente() {
+		evolucao.setPaciente(paciente);
+		evolucaoService.salvar(evolucao);
+		buscarEvolucoesPorPaciente(paciente.getCpf());
+		evolucao = new Evolucao();
+		mostrarNovaEvolucao = false;
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Evolução Do Paciente Cadastrada", "Evolução Do Paciente Cadastrada"));
+	}
+	
 }

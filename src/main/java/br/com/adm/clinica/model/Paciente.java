@@ -16,7 +16,7 @@ import lombok.Setter;
 @Table(name = "adm_paciente")
 @Getter
 @Setter
-public class Paciente implements Serializable {
+public class Paciente implements Serializable, Comparable<Paciente> {
 	
 	private static final long serialVersionUID = -3228230850490987679L;
 
@@ -64,8 +64,11 @@ public class Paciente implements Serializable {
 				+ rg + ", EstCivil=" + EstCivil + ", logradouro=" + logradouro + ", endNumero=" + endNumero
 				+ ", bairro=" + bairro + ", localidade=" + localidade + ", uf=" + uf + ", cep=" + cep + "]";
 	}
-
 	
-
-
+	
+	public int compareTo(Paciente o) {
+        int valor = nome.compareTo(o.nome);
+        return (valor != 0 ? valor : 1);
+    }   
+	
 }

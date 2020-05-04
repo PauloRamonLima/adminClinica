@@ -104,22 +104,21 @@ public class ConsultaBean implements Serializable {
 
 	public void alterar() {
 		Consulta consultaSelecionada = consultaService.buscarPorId(idConsulta);
-		Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente);
-		Medico medico = medicoService.buscarMedicoPorNome(nomeMedico);
-		consultaSelecionada.setPaciente(paciente);
-		consultaSelecionada.setMedico(medico);
-		consultaSelecionada.setData(data.replace("T", " "));
-		consultaSelecionada.setRealizado(false);
+		consultaSelecionada.setData(data);
 		consultaService.alterar(consultaSelecionada);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Consulta Atualizada Com Sucesso", "Consulta Atualizada Com Sucesso"));
+				"Consulta Remarcada Com Sucesso", "Consulta Remarcada Com Sucesso"));
 		consultas = consultaService.listar();
 
 	}
 
 	public void showPageEditar(Long id) throws IOException {
 		idConsulta = id;
-		FacesContext.getCurrentInstance().getExternalContext().redirect("editarconsulta.xhtml?faces-redirect=true");
+		//FacesContext.getCurrentInstance().getExternalContext().redirect("editarconsulta.xhtml?faces-redirect=true");
+	}
+	
+	public void buscarConsultaPorId(Long id) {
+		
 	}
 
 }
