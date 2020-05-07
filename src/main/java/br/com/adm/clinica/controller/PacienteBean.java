@@ -7,8 +7,10 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -240,12 +242,14 @@ public class PacienteBean implements Serializable {
 	}
 	
 	public void showNovaEvolucaoPage() throws IOException {
-		//System.out.println(id);
-//		FacesContext.getCurrentInstance().getExternalContext().redirect("novaevolucao.xhtml?faces-redirect=true&id=" + id);
 		mostrarNovaEvolucao = true;
 	}
 	
 	public void novaEvolucaoPaciente() {
+		GregorianCalendar calendar = new GregorianCalendar();
+		
+		SimpleDateFormat df = new SimpleDateFormat("EEEEEE ',' dd ' de 'MMMM ' de ' yyyy");
+		evolucao.setDescEvoucao(evolucao.getDescEvoucao() + "<br/><center>" + df.format(calendar.getTime() ) + "</center>");
 		evolucao.setPaciente(paciente);
 		evolucaoService.salvar(evolucao);
 		buscarEvolucoesPorPaciente(paciente.getCpf());
