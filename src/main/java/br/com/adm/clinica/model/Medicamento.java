@@ -34,11 +34,9 @@ public class Medicamento implements Serializable {
 	private String nome;
 	
 	@Column(name = "medicamento_tipo")
-	@Enumerated(EnumType.STRING)
-	private TipoMedicamento tipoMedicamento;
+	private String tipoMedicamento;
 	
 	@Column(name = "medicamento_tipo_usuario")
-	@Enumerated(EnumType.STRING)
-	private TipoUsuarioMedicamento tipoUsuarioMedicamento;
+	private String tipoUsuarioMedicamento;
 	
 }

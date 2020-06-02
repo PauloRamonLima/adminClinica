@@ -35,8 +35,5 @@ public class Farmacia implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "medicamento_id")
 	private Medicamento medicamento;
-	
-	@Column(name = "farmacia_nome")
-	private String nome;
 
 }

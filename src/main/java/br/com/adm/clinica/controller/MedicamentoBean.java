@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,6 +39,8 @@ public class MedicamentoBean implements Serializable {
 
 	public void salvar() {
 		medicamentoService.salvar(medicamento);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Medicamento Cadastrado Com Sucesso", "Medicamento Cadastrado Com Sucesso"));
 	}
 
 	public void deletar(Long id) {

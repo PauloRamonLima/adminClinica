@@ -26,11 +26,11 @@ public class RelatorioGeneric {
 		FileInputStream relatorioSource = new FileInputStream(jasper);
 		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista); 
 		JasperPrint jp = JasperFillManager.fillReport(relatorioSource, parameters, ds);
-		JasperExportManager.exportReportToPdfFile(jp, nomePdf + ".pdf");	
+		JasperExportManager.exportReportToPdfFile(jp,getRealPath("resources/relatorios/" + nomePdf + ".pdf"));	
 		JasperViewer viewer = new JasperViewer(jp, false); 
+		viewer.setTitle("Visualizador De PDF");
 	    viewer.show();
 			 
-		System.out.println("Pdf Gerado");
 		} catch (JRException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

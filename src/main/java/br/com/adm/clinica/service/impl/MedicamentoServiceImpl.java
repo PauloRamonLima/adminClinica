@@ -48,4 +48,10 @@ public class MedicamentoServiceImpl implements MedicamentoService, Serializable 
 		return medicamentoDAO.findById(id);
 	}
 
+
+	@Override
+	public Medicamento buscarMedicamentoPorNome(String nome) {
+		return medicamentoDAO.buscarMedicamentoPorNome(nome);
+	}
+
 }

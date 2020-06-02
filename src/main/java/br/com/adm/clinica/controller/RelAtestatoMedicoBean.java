@@ -49,9 +49,6 @@ public class RelAtestatoMedicoBean implements Serializable {
 
 	private List<String> nomes = new ArrayList<String>();
 
-	/*
-	 * @Inject private PacienteService pacienteService;
-	 */
 	private String nomesJson;
 
 	@Inject

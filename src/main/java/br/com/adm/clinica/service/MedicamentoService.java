@@ -11,5 +11,6 @@ public interface MedicamentoService {
 	public void alterar(Medicamento medicamento);
 	public List<Medicamento> listar();
 	public Medicamento buscarPorId(Long id);
+	public Medicamento buscarMedicamentoPorNome(String nome);
 
 }
