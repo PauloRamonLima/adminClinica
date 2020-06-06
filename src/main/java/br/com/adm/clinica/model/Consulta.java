@@ -35,7 +35,7 @@ public class Consulta implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "paciente_id")
 	private Paciente paciente;
-
+	
 	@OneToOne
 	@JoinColumn(name = "medico_id")
 	private Medico medico;

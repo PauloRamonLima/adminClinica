@@ -25,8 +25,4 @@ public class ExameDAO extends GenericDAO<Exame> implements Serializable {
 		  return em.createQuery(queryJPQL, Exame.class).setParameter("paciente", paciente).getResultList();	 
 	}
 	
-	
-	
-	
-
 }

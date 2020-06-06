@@ -26,16 +26,16 @@ public class PacienteDAO extends GenericDAO<Paciente> implements Serializable{
 	}
 	
 	public List<Paciente> buscarPacientesPorLetrasDoNome(String nome){
-		  String queryJPQL = "SELECT p FROM Paciente p WHERE p.nome LIKE :nome";   
+		  String queryJPQL = "SELECT p FROM Paciente p WHERE p.nome LIKE :nome";
 		  return em.createQuery(queryJPQL, Paciente.class).setParameter("nome","%" + nome.toUpperCase() + "%").getResultList();	
 	}
 	
-	public Paciente buscarPacientePorCpf(String cpf) {	   
-		  String queryJPQL = "SELECT p FROM Paciente p WHERE p.cpf = :cpf";   
+	public Paciente buscarPacientePorCpf(String cpf) {
+		  String queryJPQL = "SELECT p FROM Paciente p WHERE p.cpf = :cpf";
 		  return em.createQuery(queryJPQL, Paciente.class).setParameter("cpf", cpf).getSingleResult();	 
 	}
 	
-	public Paciente buscarPacientePorRg(String rg) {	   
+	public Paciente buscarPacientePorRg(String rg) {
 		  String queryJPQL = "SELECT p FROM Paciente p WHERE p.rg = :rg";   
 		  return em.createQuery(queryJPQL, Paciente.class).setParameter("rg", rg).getSingleResult();	 
 	}

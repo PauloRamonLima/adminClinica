@@ -20,7 +20,6 @@ import javax.servlet.http.HttpSession;
 
 import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.model.vo.AtestadoMedicoVO;
-import br.com.adm.clinica.service.PacienteService;
 import br.com.adm.clinica.util.RelatorioGeneric;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 import lombok.Getter;
