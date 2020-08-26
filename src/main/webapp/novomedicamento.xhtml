@@ -55,7 +55,9 @@
          								</h:selectOneMenu>  		  
 					   			 <br />
 								<h:commandButton action="#{medicamentoBean.salvar()}"
-									value="Salvar" class="btn btn-info"/>
+									value="Salvar" class="btn btn-info">
+									<f:ajax render="@form"/>
+								</h:commandButton>
 												   
 							</div>
 							</div>

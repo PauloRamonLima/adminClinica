@@ -51,22 +51,13 @@ public class FarmaciaBean implements Serializable{
 		farmacias = farmaciaService.listar();
 	}
 	
-	public void cadastrarMedicamento() {
-		
-		/*
-		 * Farmacia farm = farmaciaService.buscarFarmaciaPorMedicamento(medicamento);
-		 * 
-		 * if(farm != null) {
-		 * farm.setQuantidadeDoMedicamento(farm.getQuantidadeDoMedicamento() +
-		 * farmacia.getQuantidadeDoMedicamento()); farmaciaService.alterar(farm); }else
-		 * {
-		 */
+	public void cadastrarMedicamento() throws IOException {
+
 		Medicamento med = medicamentoService.buscarMedicamentoPorNome(medicamento);
 		farmacia.setMedicamento(med);
-		farmaciaService.salvar(farmacia);
-		
-		//}
+		farmaciaService.salvar(farmacia);		
 		farmacias = farmaciaService.listar();
+		this.showPageFarmaciaMedicamento();
 	}
 	
 	public void showPageMedicamento() throws IOException {

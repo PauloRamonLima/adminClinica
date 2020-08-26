@@ -95,7 +95,6 @@ public class ConsultaBean implements Serializable {
 
 	public void deletar(Long id) {
 		consultaService.deletar(id);
-		//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successful", "Consulta Cancelado Com Sucesso"));
 		FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Consulta Cancelado Com Sucesso"));
 		consultas = consultaService.listar();
@@ -114,7 +113,6 @@ public class ConsultaBean implements Serializable {
 
 	public void showPageEditar(Long id) throws IOException {
 		idConsulta = id;
-		//FacesContext.getCurrentInstance().getExternalContext().redirect("editarconsulta.xhtml?faces-redirect=true");
 	}
 	
 	public void buscarConsultaPorId(Long id) {

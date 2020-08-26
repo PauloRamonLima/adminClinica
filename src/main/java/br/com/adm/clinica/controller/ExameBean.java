@@ -15,6 +15,7 @@ import javax.inject.Named;
 import br.com.adm.clinica.model.Exame;
 import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
+import br.com.adm.clinica.model.builder.ExameBuilder;
 import br.com.adm.clinica.service.ExameService;
 import br.com.adm.clinica.service.MedicoService;
 import br.com.adm.clinica.service.PacienteService;
@@ -86,17 +87,15 @@ public class ExameBean implements Serializable {
 	}
 	
 	public void salvar() {
-		Exame exame = new Exame();
 		Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente);
 		Medico medico = medicoService.buscarMedicoPorNome(nomeMedico);
-		exame.setPaciente(paciente);
-		exame.setMedico(medico);
-		exame.setNome(nome);
-		exame.setData(data.replace("T", " "));
-		exame.setRealizado(false);
+		Exame exame = new ExameBuilder()
+				.addPaciente(paciente)
+				.addMedico(medico)
+				.addNomeDataRealizado(nome, data, false)
+				.construir();
 		exameService.salvar(exame);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exame Cadastrado Com Sucesso", "Exame Cadastrado Com Sucesso"));
-		exame = new Exame();
 	}
 	
 	public void listarTodos() {
@@ -111,15 +110,15 @@ public class ExameBean implements Serializable {
 	}
 	
 	public void alterar() {
+		
 		Exame exameSelecionado = exameService.buscarPorId(idExame);
 		Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente);
 		Medico medico = medicoService.buscarMedicoPorNome(nomeMedico);
-	    exameSelecionado.setPaciente(paciente);
-		exameSelecionado.setMedico(medico);
-		exameSelecionado.setNome(nome);
-		exameSelecionado.setData(data.replace("T", " "));
-		exameSelecionado.setRealizado(false);
-		exameSelecionado.setNome(nome);
+		exameSelecionado = new ExameBuilder()
+				.addPaciente(paciente)
+				.addMedico(medico)
+				.addNomeDataRealizado(nome, data, false)
+				.construir();
 		
 		exameService.alterar(exameSelecionado);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exame Atualizado Com Sucesso", "Exame Atualizado Com Sucesso"));
@@ -129,7 +128,7 @@ public class ExameBean implements Serializable {
 	
 	public void showPageEditar(Long id) throws IOException {
 			idExame = id;
-			 FacesContext.getCurrentInstance().getExternalContext().redirect("editarexame.xhtml?faces-redirect=true");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("editarexame.xhtml?faces-redirect=true");
 	}
 	
 }

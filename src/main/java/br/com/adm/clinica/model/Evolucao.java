@@ -35,5 +35,5 @@ public class Evolucao implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "paciente_id")
 	private Paciente paciente;
-
+	
 }

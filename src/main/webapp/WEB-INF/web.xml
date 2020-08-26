@@ -20,6 +20,18 @@
      <session-timeout>30</session-timeout>
   </session-config>
   
+  <filter>
+     <filter-name>PageFilter</filter-name>
+     <filter-class>br.com.adm.clinica.filter.PageFilter</filter-class>     
+ </filter>
+  
+ <filter-mapping>
+    <filter-name>PageFilter</filter-name>
+    <url-pattern>/core/*</url-pattern>
+</filter-mapping>
+ <listener>
+             <listener-class>br.com.adm.clinica.session.SessionListener</listener-class>
+       </listener> 
   <resource-env-ref>  
 	  <resource-env-ref-name>BeanManager</resource-env-ref-name>  
 	  <resource-env-ref-type>javax.enterprise.inject.spi.BeanManager

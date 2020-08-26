@@ -41,6 +41,7 @@ public class MedicamentoBean implements Serializable {
 		medicamentoService.salvar(medicamento);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Medicamento Cadastrado Com Sucesso", "Medicamento Cadastrado Com Sucesso"));
+		medicamento = new Medicamento();
 	}
 
 	public void deletar(Long id) {

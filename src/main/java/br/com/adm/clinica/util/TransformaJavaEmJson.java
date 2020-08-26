@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 
 import com.google.gson.Gson;
 
+import br.com.adm.clinica.model.LeitoInternacao;
 import br.com.adm.clinica.model.Medicamento;
 import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
@@ -29,35 +30,18 @@ public class TransformaJavaEmJson implements Serializable {
 	private PacienteService pacienteService;
 	
 	@Inject
-	private LeitoInternacaoService leitoInternacaoDAO;
+	private LeitoInternacaoService leitoInternacaoService;
 	
 	@Inject
 	private MedicoService medicoService;
 	
 	@Inject
-	private MedicamentoService medicamentoService;
-	
-	private List<Paciente> pacientes = new ArrayList<Paciente>();
-	
-	private List<Medico> medicos = new ArrayList<Medico>();
-	
-	private List<Medicamento> medicamentos = new ArrayList<>();
-	
-	private List<String> nomes = new ArrayList<String>();
-	
-	private List<String> nomesMedicos = new ArrayList<String>();
-	
-	private List<String> nomeMedicamento = new ArrayList<>();
-	
-	private String nomesJson;
-	
-	private String nomesMedicosJson;
-	
-	private String nomesMedicamentos;
+	private MedicamentoService medicamentoService;	
 	
 	public String transformaJavaEmJsonPaciente() {
-		pacientes = pacienteService.listar();
-		nomes = new ArrayList<String>();
+		List<Paciente> pacientes = pacienteService.listar();
+		List<String> nomes = new ArrayList<String>();
+		String nomesJson;
 		
 		for(Paciente paciente : pacientes) {
 			nomes.add(paciente.getNome());
@@ -71,51 +55,39 @@ public class TransformaJavaEmJson implements Serializable {
 	}
 	
 	public String transformaJavaEmJsonPacienteSemInternacao() {
-		pacientes = pacienteService.listar();
-		nomes = new ArrayList<String>();
+		List<Paciente> pacientes = pacienteService.listar();
+		List<String> nomes = new ArrayList<String>();
+		String nomesJson;
 		
 		for(Paciente paciente : pacientes) {
 			try {
-				if(leitoInternacaoDAO.buscarLeitoDeInternacaoPorPaciente(paciente) == null); 	
+				if(leitoInternacaoService.buscarLeitoDeInternacaoPorPaciente(paciente) == null); 	
 			}catch (NoResultException e) {
 				nomes.add(paciente.getNome());
 			}
 		}
-		
 		Gson gson = new Gson();
-		
 		nomesJson = gson.toJson(nomes);
-		
 		return nomesJson;
 	}
 	
 	public String transformaJavaEmJsonMedico() {
-		medicos = medicoService.listar();
-		nomesMedicos = new ArrayList<String>();
-		
-		for(Medico medico : medicos) {
-			nomesMedicos.add(medico.getNome());
-		}
-		
+		List<Medico> medicos = medicoService.listar();
+		List<String> nomesMedicos = new ArrayList<String>();
+		String nomesMedicosJson;
+		medicos.stream().forEach(e -> nomesMedicos.add(e.getNome()));
 		Gson gson = new Gson();
-		
-		nomesMedicosJson = gson.toJson(nomesMedicos);
-			
+		nomesMedicosJson = gson.toJson(nomesMedicos);		
 		return nomesMedicosJson;
 	}
 	
 	public String transformaJavaEmJsonMedicamento() {
-		medicamentos = medicamentoService.listar();
-		nomeMedicamento = new ArrayList<>();
-		
-		for(Medicamento medicamento : medicamentos) {
-			nomeMedicamento.add(medicamento.getNome());
-		}
-		
-		Gson gson = new Gson();
-		
-		nomesMedicamentos = gson.toJson(nomeMedicamento);
-		
+		List<Medicamento> medicamentos = medicamentoService.listar();
+		String nomesMedicamentos;
+		List<String> nomeMedicamentos = new ArrayList<>();
+		medicamentos.stream().forEach(e -> nomeMedicamentos.add(e.getNome()));		
+		Gson gson = new Gson();	
+		nomesMedicamentos = gson.toJson(nomeMedicamentos);		
 		return nomesMedicamentos;
 	}
 
