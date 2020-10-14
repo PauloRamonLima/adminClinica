@@ -10,7 +10,6 @@
 		<class>br.com.adm.clinica.model.Paciente</class>
 		<class>br.com.adm.clinica.model.Usuario</class>
 		<class>br.com.adm.clinica.model.Medicamento</class>
-		<class>br.com.adm.clinica.model.Farmacia</class>
 		<class>br.com.adm.clinica.model.Evolucao</class>
 		<class>br.com.adm.clinica.model.Prescricao</class>		
 			

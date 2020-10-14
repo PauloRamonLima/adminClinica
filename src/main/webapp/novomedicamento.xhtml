@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
@@ -9,9 +9,9 @@
 </h:head>
 
 <h:body>
-	 <ui:composition template="template.xhtml">
+	<ui:composition template="template.xhtml">
 		<ui:define name="corpo">
-
+			<h:form id="form">
 			<div class="container">
 				<div style="position: relative; top: 30px;">
 
@@ -19,54 +19,60 @@
 						<div class="box-header with-border">
 							<h3 class="box-title">
 								<font style="vertical-align: inherit;"><font
-									style="vertical-align: inherit;">Cadastrar Novo Medicamento</font></font>
+									style="vertical-align: inherit;">Cadastrar Novo
+										Medicamento</font></font>
 							</h3>
 							<br />
 						</div>
-						<!-- /.box-header -->
-						<!-- form start -->
-						<h:form role="form" id="form">
+	
+						
 							<div class="box-body">
-							<div class="col-sm-6">
-								<p:messages></p:messages>
-								
-							     <label><font
-									style="vertical-align: inherit;"><font
-										style="vertical-align: inherit;">Nome</font></font></label> <br />
-									
-								<h:inputText value="#{medicamentoBean.medicamento.nome}" class="form-control tags"  />
-							      <label><font
-									style="vertical-align: inherit;"><font
-										style="vertical-align: inherit;">Tipo Medicamento</font></font></label> <br />
-							   	<h:selectOneMenu value="#{medicamentoBean.medicamento.tipoMedicamento}"  class="form-control">
-      										<f:selectItem itemValue="Não" itemLabel="Selecione uma opção!"
-												noSelectedOption="true" />
-											<f:selectItem itemValue="LIQUIDO" itemLabel="LIQUIDO" />
-											<f:selectItem itemValue="COMPRIMIDO" itemLabel="COMPRIMIDO" />
-         								</h:selectOneMenu>
-         						<label><font
-									style="vertical-align: inherit;"><font
-										style="vertical-align: inherit;">Tipo Usuario</font></font></label> <br />
-							   	<h:selectOneMenu value="#{medicamentoBean.medicamento.tipoUsuarioMedicamento}"  class="form-control">
-      										<f:selectItem itemValue="Não" itemLabel="Selecione uma opção!"
-												noSelectedOption="true" />
-											<f:selectItem itemValue="ADULTO" itemLabel="ADULTO" />
-											<f:selectItem itemValue="PEDIÁTRICO" itemLabel="PEDIÁTRICO" />
-         								</h:selectOneMenu>  		  
-					   			 <br />
-								<h:commandButton action="#{medicamentoBean.salvar()}"
-									value="Salvar" class="btn btn-info">
-									<f:ajax render="@form"/>
-								</h:commandButton>
-												   
+								<div class="col-sm-6">
+									<p:messages></p:messages>
+
+									<label><font style="vertical-align: inherit;"><font
+											style="vertical-align: inherit;">Nome</font></font></label> <br />
+
+									<h:inputText value="#{medicamentoBean.medicamento.nome}" required="true"
+										class="form-control" />
+									<label><font style="vertical-align: inherit;"><font
+											style="vertical-align: inherit;">Tipo Medicamento</font></font></label> <br />
+									<h:selectOneMenu
+										value="#{medicamentoBean.medicamento.tipoMedicamento}"
+										class="form-control" required="true">
+										<f:selectItem itemValue="Não" itemLabel="Selecione uma opção!"
+											noSelectedOption="true" />
+										<f:selectItem itemValue="LIQUIDO" itemLabel="LIQUIDO" />
+										<f:selectItem itemValue="COMPRIMIDO" itemLabel="COMPRIMIDO" />
+										<f:selectItem itemValue="AMPOLA" itemLabel="AMPOLA" />
+									</h:selectOneMenu>
+									<label><font style="vertical-align: inherit;"><font
+											style="vertical-align: inherit;">Tipo Usuario</font></font></label> <br />
+									<h:selectOneMenu
+										value="#{medicamentoBean.medicamento.tipoUsuarioMedicamento}"
+										required="true"
+										class="form-control">
+										<f:selectItem itemValue="Não" itemLabel="Selecione uma opção!"
+											noSelectedOption="true" />
+										<f:selectItem itemValue="ADULTO" itemLabel="ADULTO" />
+										<f:selectItem itemValue="PEDIÁTRICO" itemLabel="PEDIÁTRICO" />
+									</h:selectOneMenu>
+									<label><font style="vertical-align: inherit;"><font
+											style="vertical-align: inherit;">Quantidade</font></font></label>
+									<h:inputText
+										value="#{medicamentoBean.medicamento.quantidadeDoMedicamento}" required="true"
+										class="form-control" />
+									<br />
+									<h:commandButton action="#{medicamentoBean.salvar()}"
+									value="Salvar" class="btn btn-info"/>
+
+								</div>
 							</div>
-							</div>
-							
-						</h:form>
 					</div>
 				</div>
 			</div>
+			</h:form>
 		</ui:define>
-	 </ui:composition>
+	</ui:composition>
 </h:body>
 </html>

@@ -32,10 +32,4 @@ public class ExameBuilder {
 		this.instancia.setRealizado(realizado);
 		return this;
 	}
-	
-	
-	
-	
-	
-
 }

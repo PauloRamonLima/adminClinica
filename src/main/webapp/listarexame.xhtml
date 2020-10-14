@@ -48,11 +48,13 @@
 							<p:spacer width="5" height="10" />
 								
 							<p:commandLink action="#{exameBean.deletar(exame.id)}" update="formulario" process="@this" ajax="false"  title="Excluir">
-							<i class="fa fa-trash" aria-hidden="true" style="font-size:18px;color:red"></i></p:commandLink>
+								<i class="fa fa-trash" aria-hidden="true" style="font-size:18px;color:red"></i></p:commandLink>
 							<p:spacer width="5" height="10" />
 								
-							<p:commandLink action="#{exameBean.showPageEditar(exame.id)}" title="Editar">
-							<i class="fa fa-cog fa-fw" aria-hidden="true" style="font-size:18px;color:black;"></i></p:commandLink>
+							<p:commandLink action="#{exameBean.showPageEditar(exame.id)}" title="Editar">			
+							<i class="fa fa-cog fa-fw" aria-hidden="true" style="font-size:18px;color:black;"></i>
+							
+							</p:commandLink>
 								
 							</p:column>
 						</p:dataTable>

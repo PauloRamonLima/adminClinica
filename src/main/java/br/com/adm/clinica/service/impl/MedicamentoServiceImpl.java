@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import br.com.adm.clinica.dao.MedicamentoDAO;
 import br.com.adm.clinica.model.Medicamento;
-import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.service.MedicamentoService;
 
 public class MedicamentoServiceImpl implements MedicamentoService, Serializable {

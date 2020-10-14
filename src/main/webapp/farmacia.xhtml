@@ -18,36 +18,73 @@
 					<div class="card">
 						<!-- /.card-header -->
 						<div class="card-body p-0"></div>
-							<h:form id="formulario">
-							<p:commandLink action="#{farmaciaBean.showPageMedicamento()}" title="Novo Medicamento"
-							 style="float: right; margin-right: 20px; margin-top: 10px; color: red;font-size: 18px;"
-								 ajax="false"><i class="fa fa-medkit" aria-hidden="true"></i>
-								 </p:commandLink>
-							<p:commandLink action="#{farmaciaBean.showPageFarmaciaMedicamento()}" title="Cadastrar Medicamento Na Farmacia"
-							 style="float: right; margin-right: 20px; margin-top: 10px; color: black;font-size: 18px;"
-								 ajax="false"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-								 </p:commandLink>	 
-								<p:panel header="Farmacia">
+						<h:form id="formulario">
+							<p:commandLink action="#{medicamentoBean.showPageMedicamento()}"
+								title="Novo Medicamento"
+								style="float: right; margin-right: 20px; margin-top: 10px; color: blue;font-size: 18px;"
+								ajax="false">
+								<i class="fa fa-medkit" aria-hidden="true"></i>
+							</p:commandLink>
+							<p:panel header="Farmacia">
 								<p:messages></p:messages>
 								<p:dataTable id="tabela" paginatorPosition="bottom"
-										paginatorAlwaysVisible="true" reflow="true"
-										value="#{farmaciaBean.farmacias}" var="farmacia"
-										paginator="true" rows="7" style="margin-top:20px">
+									paginatorAlwaysVisible="true" reflow="true"
+									value="#{medicamentoBean.medicamentos}" var="medicamento"
+									paginator="true" rows="7" style="margin-top:20px">
 									<p:column headerText="Medicamento:">
-										<h:outputText value="#{farmacia.medicamento.nome}" />
+										<h:outputText value="#{medicamento.nome}" styleClass="coluna" />
 									</p:column>
 									<p:column headerText="Tipo">
-										<h:outputText value="#{farmacia.medicamento.tipoMedicamento}" />
+										<h:outputText value="#{medicamento.tipoMedicamento}"
+											styleClass="coluna" />
 									</p:column>
 									<p:column headerText="Usuario">
-										<h:outputText value="#{farmacia.medicamento.tipoUsuarioMedicamento}"/>
+										<h:outputText value="#{medicamento.tipoUsuarioMedicamento}"
+											styleClass="coluna" />
 									</p:column>
 									<p:column headerText="Quantidade">
-										<h:outputText value="#{farmacia.quantidadeDoMedicamento}"/>
+										<h:outputText value="#{medicamento.quantidadeDoMedicamento}"
+											styleClass="coluna" />
+									</p:column>
+									<p:column headerText="Ações">
+										<p:commandLink onclick="PF('retirarMed').show();"
+											title="Retirar Medicamento"
+											style="margin-left: 60px; color: red;font-size: 18px;">
+											<i class="fa fa-medkit" aria-hidden="true"></i>
+											<f:setPropertyActionListener value="#{medicamento}" target="#{medicamentoBean.medicamento}" />
+										</p:commandLink>
+										<p:commandLink onclick="PF('adicionarMed').show();"
+											title="Adicionar Medicamento"
+											style="margin-left: 20px; color: green;font-size: 18px;">
+											<i class="fa fa-medkit" aria-hidden="true"></i>		
+											<f:setPropertyActionListener value="#{medicamento}" target="#{medicamentoBean.medicamento}" />
+										</p:commandLink>
 									</p:column>
 								</p:dataTable>
-								</p:panel>
-							</h:form>
+							</p:panel>
+							<div class="col-sm-4 ">
+								<p:dialog header="Retirar Medicamento" modal="true" position="560,100"
+									widgetVar="retirarMed">
+									<h:outputLabel value="QUANTIDADE" />
+									<h:inputText value="#{medicamentoBean.quantidadeMedicamento}"
+										styleClass="form-control" /><br/>
+									<h:commandButton
+										action="#{medicamentoBean.retirarMedicamento()}"
+										value="Retirar" styleClass="btn btn-info" />
+								</p:dialog>
+							</div>
+							<div class="col-sm-4 ">
+								<p:dialog header="Adicionar Medicamento" modal="true" position="560,100"
+									widgetVar="adicionarMed">
+									<h:outputLabel value="QUANTIDADE" />
+									<h:inputText value="#{medicamentoBean.quantidadeMedicamento}"
+										styleClass="form-control" /><br/>
+									<h:commandButton
+										action="#{medicamentoBean.adicionarMedicamento()}"
+										value="Adicionar" styleClass="btn btn-info" />
+								</p:dialog>
+							</div>
+						</h:form>
 					</div>
 				</div>
 			</div>
