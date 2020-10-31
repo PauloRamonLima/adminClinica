@@ -2,12 +2,15 @@ package br.com.adm.clinica.controller;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -17,6 +20,11 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.model.vo.AtestadoMedicoVO;
@@ -69,6 +77,43 @@ public class RelAtestatoMedicoBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Atestado Gerado Com Sucesso", "Atestado Gerado Com Sucesso"));
 	}
+	
+	public void gerarPlanilhaAtestadoMedico() {
+		atestadosMedicoVO = new ArrayList<AtestadoMedicoVO>();
+	
+		atestadosMedicoVO.add(atestado);
+		XSSFWorkbook wb = new XSSFWorkbook();
+		
+		XSSFSheet folha = wb.createSheet("Atestado Medico");
+		Map<String, Object[]> mapa = new TreeMap<>();
+		mapa.put("1",new Object[] { "Nome", "Dias"});
+		mapa.put("2",new Object[] { atestado.getNome()});
+		mapa.put("3",new Object[] { atestado.getDias()});
+		
+		Set<String> keySet = mapa.keySet();
+		int contRow = 0;
+		for(String chave : keySet) {
+			Row row = folha.createRow(contRow++);
+			Object[] objetoAtual = mapa.get(chave);
+			
+			int contCell = 0;
+			for(Object obj : objetoAtual) {
+				Cell celula = row.createCell(contCell++);
+				
+				if(obj instanceof String) {
+					celula.setCellValue((String) obj);
+				} 
+			}
+		}
+		try {
+			FileOutputStream out = new FileOutputStream(new File("ex.atestado.xlsx"));
+			wb.write(out);
+			out.close();
+			System.out.println("Planilha gerada");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	private String getRealPath(String diretorio) {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -76,3 +121,4 @@ public class RelAtestatoMedicoBean implements Serializable {
 	}
 
 }
+
