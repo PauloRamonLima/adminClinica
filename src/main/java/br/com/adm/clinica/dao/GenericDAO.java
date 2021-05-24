@@ -20,7 +20,6 @@ public abstract class GenericDAO<T extends Serializable> {
 	}
 	
 	public T findById(Long id) {
-		// select * from exame where id = 8;
 		manager.getTransaction().begin();
 		T entity = (T) manager.find(aClass, id);
 		manager.getTransaction().commit();
@@ -29,7 +28,6 @@ public abstract class GenericDAO<T extends Serializable> {
 	
 	@SuppressWarnings("unchecked")
 	public List<T> findAll(){
-		// Select * from paciente;
 		manager.getTransaction().begin();
 		Query query = manager.createQuery("from " + aClass.getSimpleName());
 		List<T> entities = query.getResultList();

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AtestadoMedico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bb76b78d-6658-419b-97db-e796f5d4c986">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="Logo" class="java.awt.Image"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="dias" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="180" y="15" width="200" height="50" uuid="fc549a73-a3ba-46de-94da-7cddda7cd5c2"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="81" y="95" width="399" height="30" forecolor="#FFFFFF" backcolor="#807E7E" uuid="e8720f06-65a4-4792-92df-fcda7e88e52c"/>
+				<box padding="0">
+					<pen lineWidth="1.0" lineColor="#141414"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Atestado Médico]]></text>
+			</staticText>
+			<line>
+				<reportElement x="21" y="75" width="509" height="1" uuid="38e54768-d016-4d67-8ab7-dc3420943c66">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="112" splitType="Stretch">
+			<staticText>
+				<reportElement x="26" y="52" width="157" height="20" uuid="ac4b5372-909c-4b94-b380-50c4aca4bdb9">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Atesto que o Paciente :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="80" width="103" height="20" uuid="ddb6dfc7-8ab2-42d5-a502-311901bb429a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[nescessita de :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="80" width="274" height="20" uuid="3328a313-e3cc-423a-976f-0c55ab625d6d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Dias de afastamento de suas atividades ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="52" width="377" height="20" uuid="5c95dde9-3e0d-43d1-a311-a87edc944a6a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="80" width="31" height="21" uuid="6b2a60d3-4447-4d27-a44d-1335afc32f7e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dias}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="82" splitType="Stretch">
+			<line>
+				<reportElement x="347" y="18" width="200" height="1" uuid="d69cf480-5fe4-4692-8375-57710048db83">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="346" y="19" width="199" height="21" uuid="337b942a-fbe7-4b0d-8f35-1438b053aa1b"/>
+				<textElement textAlignment="Center">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Carimbo e Assinatura]]></text>
+			</staticText>
+			<textField pattern="EEEE dd,MMMM-yyyy">
+				<reportElement x="0" y="48" width="210" height="30" uuid="842acac9-673e-4536-828a-6ffcdf42e191"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

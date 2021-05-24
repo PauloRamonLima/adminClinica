@@ -100,8 +100,11 @@ public class UsuarioBean implements Serializable {
 	}
 
 	public void showIndexPage() throws IOException {
-		try {
-			if (usuarioService.logar(login, convertStringToMd5(senha)) != null) {
+		try {	
+			Usuario usuarioLogado = usuarioService.logar(login, convertStringToMd5(senha));
+			if (usuarioLogado != null) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.getExternalContext().getSessionMap().put("usuarioLogado", usuarioLogado);
 				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
 			}
 		} catch (NoResultException e) {

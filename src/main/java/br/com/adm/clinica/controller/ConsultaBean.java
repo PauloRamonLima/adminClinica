@@ -1,6 +1,5 @@
 package br.com.adm.clinica.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,8 +62,9 @@ public class ConsultaBean implements Serializable {
 	private String nomesJson;
 
 	private String nomesMedicosJson;
-
-	private static Long idConsulta;
+	
+	@Inject
+	private Consulta consultaSelecionada;
 
 	@Inject
 	private TransformaJavaEmJson transformaJavaEmJson;
@@ -102,21 +102,11 @@ public class ConsultaBean implements Serializable {
 	}
 
 	public void alterar() {
-		Consulta consultaSelecionada = consultaService.buscarPorId(idConsulta);
-		consultaSelecionada.setData(data);
 		consultaService.alterar(consultaSelecionada);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Consulta Remarcada Com Sucesso", "Consulta Remarcada Com Sucesso"));
 		consultas = consultaService.listar();
 
-	}
-
-	public void showPageEditar(Long id) throws IOException {
-		idConsulta = id;
-	}
-	
-	public void buscarConsultaPorId(Long id) {
-		
 	}
 
 }

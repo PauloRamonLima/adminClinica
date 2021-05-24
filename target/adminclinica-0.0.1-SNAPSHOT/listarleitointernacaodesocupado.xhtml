@@ -1,0 +1,56 @@
+<html xmlns="htp://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+</h:head>
+
+<h:body>
+	<ui:composition template="template.xhtml">
+		<ui:define name="corpo">
+		
+			<div class="row">
+			<div class="col-md-12">
+					<div class="card">
+				
+						<!-- /.card-header -->
+						<div class="card-body p-0"></div>
+						<!-- /.card-body -->
+						<h:form>
+						<p:panel header="Leitos De Internação Desocupados">
+						<p:dataTable  value="#{leitoInternacaoBean.leitosInternacaoDesocupados}" paginatorPosition="bottom"
+						  var="leitoInternacao" paginatorAlwaysVisible="true" reflow="true"
+						   class="table table-bordered" paginator="true" rows="7" style="margin-top:20px">
+							<p:column headerText="Numero" style="text-align: center;">
+								<h:outputText value="#{leitoInternacao.numero}" />
+							</p:column>
+							<p:column headerText="Leito" style="text-align: center;">
+								<h:outputText value="#{leitoInternacao.leito.descricao}" />
+							</p:column>
+							<p:column headerText="Ações" style="text-align: center;">
+								<h:commandButton action="#{leitoInternacaoBean.showLeitoInternacaoEditar(leitoInternacao.id)}" value="Internar Paciente" class="btn btn-success" />
+							</p:column>
+							
+						</p:dataTable>
+						</p:panel>
+						</h:form>
+						
+					</div>
+					
+				</div>
+				</div>
+				<script>
+					function atualizar(){
+						console.log('chamou')	
+						setTimeout(function(){
+							window.location.reload();
+					     }, 200);
+					}
+				</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

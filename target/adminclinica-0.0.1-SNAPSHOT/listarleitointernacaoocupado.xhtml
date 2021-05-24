@@ -1,0 +1,51 @@
+<html xmlns="htp://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+</h:head>
+
+<h:body>
+	<ui:composition template="template.xhtml">
+		<ui:define name="corpo">
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+
+						<div class="card-body p-0"></div>
+						<h:form>
+							<p:panel header="Leitos De Internação Ocupados">
+								<p:dataTable 
+									paginatorPosition="bottom"
+									value="#{leitoInternacaoBean.leitosInternacaoOcupados}"
+									paginator="true" rows="7" reflow="true" style="margin-top:20px"
+									var="leitoInternacao" class="table table-bordered">
+									<p:column headerText="Numero">
+										<h:outputText value="#{leitoInternacao.numero}" />
+									</p:column>
+									<p:column headerText="Leito">
+										<h:outputText value="#{leitoInternacao.leito.descricao}" />
+									</p:column>
+									<p:column headerText="Paciente">
+										<h:outputText value="#{leitoInternacao.paciente.nome}" />
+									</p:column>
+									<p:column headerText="Data Internação">
+										<h:outputText value="#{leitoInternacao.dataInternacao}" />
+									</p:column>
+
+								</p:dataTable>
+							</p:panel>
+						</h:form>
+
+					</div>
+
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

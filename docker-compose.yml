@@ -1,0 +1,26 @@
+version: '3'
+services: 
+    admin-clinica:
+        build: 
+            dockerfile: Dockerfile
+            context: .
+        image: pauloramon123/admin-clinica
+        container_name: admin-clinica
+        ports: 
+            - "80:8080"
+        networks: 
+            - production-network
+        depends_on: 
+            - "database"
+    database:
+        image: postgres
+        environment: 
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        networks: 
+            - production-network
+
+networks: 
+    production-network:
+        driver: bridge
+

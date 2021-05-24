@@ -33,8 +33,7 @@ public class PacienteServiceImpl implements PacienteService, Serializable {
 
 	@Override
 	public void alterar(Paciente paciente) {
-		pacienteDAO.update(paciente);
-		
+		pacienteDAO.update(paciente);	
 	}
 
 	@Override

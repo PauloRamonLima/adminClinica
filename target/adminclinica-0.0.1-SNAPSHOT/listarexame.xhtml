@@ -1,0 +1,69 @@
+<html xmlns="htp://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<style>
+		.header-column{
+			background: #D8D8D8;
+			font-size: 15px;
+		}
+	</style>
+</h:head>
+
+<h:body>
+	<ui:composition template="template.xhtml">
+		<ui:define name="corpo">
+			<p:messages></p:messages>
+			<div class="row">
+				<div class="col-md-12">
+				<h:form id="formulario">
+					<div class="card">
+						<!-- /.card-header -->
+						<div class="card-body p-0"></div>
+						<!-- /.card-body -->
+						<p:panel header="Exames">
+						<p:dataTable rows="7" paginatorPosition="bottom" 
+						paginatorAlwaysVisible="true"  reflow="true" paginator="true"
+						 value="#{exameBean.exames}"  var="exame" style="margin-top:20px">
+							<p:column headerText="Nome" style="text-align: center;">
+								<h:outputText value="#{exame.nome}" />
+							</p:column>
+							<p:column headerText="Paciente" style="text-align: center;">
+								<h:outputText value="#{exame.paciente.nome}" />
+							</p:column>
+							<p:column headerText="Medico" style="text-align: center;">
+								<h:outputText value="#{exame.medico.nome}" />
+							</p:column>
+							<p:column headerText="Data" style="text-align: center; width: 160px;">
+								<h:outputText value="#{exame.data}" />
+							</p:column>
+							<p:column headerText="Realizado" style="text-align: center; width: 120px;">
+								<h:outputText value="#{exame.realizado ? 'Sim' : 'Não'}" />
+							</p:column>
+							<p:column headerText="Ações" style="width: 90px;">
+							<p:spacer width="5" height="10" />
+								
+							<p:commandLink action="#{exameBean.deletar(exame.id)}" update="formulario" process="@this" ajax="false"  title="Excluir">
+								<i class="fa fa-trash" aria-hidden="true" style="font-size:18px;color:red"></i></p:commandLink>
+							<p:spacer width="5" height="10" />
+								
+							<p:commandLink action="#{exameBean.showPageEditar(exame.id)}" title="Editar">			
+							<i class="fa fa-cog fa-fw" aria-hidden="true" style="font-size:18px;color:black;"></i>
+							
+							</p:commandLink>
+								
+							</p:column>
+						</p:dataTable>
+						</p:panel>
+					</div>
+					</h:form>
+				</div>
+				</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

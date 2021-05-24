@@ -9,7 +9,6 @@ import javax.persistence.NoResultException;
 
 import com.google.gson.Gson;
 
-import br.com.adm.clinica.model.LeitoInternacao;
 import br.com.adm.clinica.model.Medicamento;
 import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
