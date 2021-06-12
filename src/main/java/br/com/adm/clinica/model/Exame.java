@@ -38,8 +38,8 @@ public class Exame implements Serializable {
 	private Paciente paciente;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "medico_id")
-	private Medico medico;
+	@JoinColumn(name = "medico_id", referencedColumnName = "usuario_id")
+	private Usuario medico;
 
 	@Column(name = "exame_data")
 	private String data;

@@ -1,8 +1,8 @@
 package br.com.adm.clinica.model.builder;
 
 import br.com.adm.clinica.model.Exame;
-import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
+import br.com.adm.clinica.model.Usuario;
 
 public class ExameBuilder {
 	
@@ -21,10 +21,11 @@ public class ExameBuilder {
 		return this;
 	}
 	
-	public ExameBuilder addMedico(Medico medico) {
+	public ExameBuilder addMedico(Usuario medico) {
 		this.instancia.setMedico(medico);
 		return this;
 	}
+	
 	
 	public ExameBuilder addNomeDataRealizado(String nome, String data, boolean realizado) {
 		this.instancia.setNome(nome);

@@ -13,12 +13,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.adm.clinica.model.Exame;
-import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
+import br.com.adm.clinica.model.Usuario;
 import br.com.adm.clinica.model.builder.ExameBuilder;
 import br.com.adm.clinica.service.ExameService;
-import br.com.adm.clinica.service.MedicoService;
 import br.com.adm.clinica.service.PacienteService;
+import br.com.adm.clinica.service.UsuarioService;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,7 +41,7 @@ public class ExameBean implements Serializable {
 	private PacienteService pacienteService;
 	
 	@Inject
-	private MedicoService medicoService;
+	private UsuarioService usuarioService;
 	
 	@Inject
 	private Paciente paciente;
@@ -62,7 +62,7 @@ public class ExameBean implements Serializable {
 	
 	private List<String> nomesMedicos = new ArrayList<String>();
 	
-	private List<Medico> medicos = new ArrayList<Medico>();
+	private List<Usuario> medicos = new ArrayList<Usuario>();
 		
 	private String nomesJson;
 	
@@ -78,7 +78,6 @@ public class ExameBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		try {
-			nomesMedicosJson = transformaJavaEmJson.transformaJavaEmJsonMedico();
 			nomesJson = transformaJavaEmJson.transformaJavaEmJsonPaciente();
 			exames = exameService.listar();
 		}catch (NullPointerException e) {
@@ -88,7 +87,7 @@ public class ExameBean implements Serializable {
 	
 	public void salvar() {
 		Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente);
-		Medico medico = medicoService.buscarMedicoPorNome(nomeMedico);
+		Usuario medico = usuarioService.buscarMedicoPorNome(nomeMedico);
 		Exame exame = new ExameBuilder()
 				.addPaciente(paciente)
 				.addMedico(medico)
@@ -113,7 +112,7 @@ public class ExameBean implements Serializable {
 		
 		Exame exameSelecionado = exameService.buscarPorId(idExame);
 		Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente);
-		Medico medico = medicoService.buscarMedicoPorNome(nomeMedico);
+		Usuario medico = usuarioService.buscarMedicoPorNome(nomeMedico);
 		exameSelecionado = new ExameBuilder()
 				.addPaciente(paciente)
 				.addMedico(medico)

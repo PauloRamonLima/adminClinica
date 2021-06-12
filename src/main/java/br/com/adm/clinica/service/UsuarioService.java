@@ -13,5 +13,7 @@ public interface UsuarioService {
 	public Usuario buscarPorId(Long id);
 	public Usuario logar(String login, String senha);
 	public Usuario buscarUsuarioPorLogin(String login);
-
+	public List<Usuario> buscarMedicos();
+	public Usuario buscarMedicoPorNome(String nome);
+	
 }

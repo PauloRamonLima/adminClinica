@@ -12,11 +12,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.adm.clinica.model.Consulta;
-import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
+import br.com.adm.clinica.model.Usuario;
 import br.com.adm.clinica.service.ConsultaService;
-import br.com.adm.clinica.service.MedicoService;
 import br.com.adm.clinica.service.PacienteService;
+import br.com.adm.clinica.service.UsuarioService;
 import br.com.adm.clinica.util.TransformaJavaEmJson;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +36,7 @@ public class ConsultaBean implements Serializable {
 	private PacienteService pacienteService;
 
 	@Inject
-	private MedicoService medicoService;
+	private UsuarioService usuarioService;
 
 	private String nomePaciente;
 
@@ -57,7 +57,7 @@ public class ConsultaBean implements Serializable {
 
 	private List<String> nomesMedicos = new ArrayList<String>();
 
-	private List<Medico> medicos = new ArrayList<Medico>();
+	private List<Usuario> medicos = new ArrayList<Usuario>();
 
 	private String nomesJson;
 
@@ -72,7 +72,6 @@ public class ConsultaBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		try {
-			nomesMedicosJson = transformaJavaEmJson.transformaJavaEmJsonMedico();
 			nomesJson = transformaJavaEmJson.transformaJavaEmJsonPaciente();
 			consultas = consultaService.listar();
 		} catch (NullPointerException e) {
@@ -83,7 +82,7 @@ public class ConsultaBean implements Serializable {
 	public void salvar() {
 		Consulta consulta = new Consulta();
 		Paciente paciente = pacienteService.buscarPacientePorNome(nomePaciente);
-		Medico medico = medicoService.buscarMedicoPorNome(nomeMedico);
+		Usuario medico = usuarioService.buscarMedicoPorNome(nomeMedico);
 		consulta.setPaciente(paciente);
 		consulta.setMedico(medico);
 		consulta.setData(data.replace("T", " "));

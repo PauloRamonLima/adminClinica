@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,9 +37,10 @@ public class Consulta implements Serializable {
 	@JoinColumn(name = "paciente_id")
 	private Paciente paciente;
 	
-	@OneToOne
-	@JoinColumn(name = "medico_id")
-	private Medico medico;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "medico_id", referencedColumnName = "usuario_id")
+	private Usuario medico;
+
 	
 	@Column(name = "exame_realizado")
 	private boolean realizado;

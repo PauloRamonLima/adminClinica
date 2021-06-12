@@ -51,4 +51,14 @@ public class UsuarioServiceImpl implements UsuarioService, Serializable {
 		return usuarioDAO.buscarUsuarioPorLogin(login);
 	}
 
+	@Override
+	public List<Usuario> buscarMedicos() {
+		return usuarioDAO.buscarMedicos();
+	}
+
+	@Override
+	public Usuario buscarMedicoPorNome(String nome) {
+		return usuarioDAO.buscarMedicoPorNome(nome);
+	}
+
 }

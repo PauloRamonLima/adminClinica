@@ -10,11 +10,9 @@ import javax.persistence.NoResultException;
 import com.google.gson.Gson;
 
 import br.com.adm.clinica.model.Medicamento;
-import br.com.adm.clinica.model.Medico;
 import br.com.adm.clinica.model.Paciente;
 import br.com.adm.clinica.service.LeitoInternacaoService;
 import br.com.adm.clinica.service.MedicamentoService;
-import br.com.adm.clinica.service.MedicoService;
 import br.com.adm.clinica.service.PacienteService;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,9 +28,6 @@ public class TransformaJavaEmJson implements Serializable {
 	
 	@Inject
 	private LeitoInternacaoService leitoInternacaoService;
-	
-	@Inject
-	private MedicoService medicoService;
 	
 	@Inject
 	private MedicamentoService medicamentoService;	
@@ -68,16 +63,6 @@ public class TransformaJavaEmJson implements Serializable {
 		Gson gson = new Gson();
 		nomesJson = gson.toJson(nomes);
 		return nomesJson;
-	}
-	
-	public String transformaJavaEmJsonMedico() {
-		List<Medico> medicos = medicoService.listar();
-		List<String> nomesMedicos = new ArrayList<String>();
-		String nomesMedicosJson;
-		medicos.stream().forEach(e -> nomesMedicos.add(e.getNome()));
-		Gson gson = new Gson();
-		nomesMedicosJson = gson.toJson(nomesMedicos);		
-		return nomesMedicosJson;
 	}
 	
 	public String transformaJavaEmJsonMedicamento() {

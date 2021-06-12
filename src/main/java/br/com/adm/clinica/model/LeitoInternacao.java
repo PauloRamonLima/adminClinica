@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,12 +34,12 @@ public class LeitoInternacao implements Serializable {
 	@Column(name = "leitoInternacao_numero")
 	private Long numero;
 	
-	@ManyToOne()
-	@JoinColumn(name = "leito_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "leito_id", referencedColumnName = "leito_id")
 	private Leito leito;
 	
-	@OneToOne()
-	@JoinColumn(name = "paciente_id")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "paciente_id", referencedColumnName = "paciente_id")
 	private Paciente paciente;
 	
 	@Column(name = "leitoInternacao_dataInternacao")

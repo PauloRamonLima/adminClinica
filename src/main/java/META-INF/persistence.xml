@@ -6,7 +6,6 @@
 		<class>br.com.adm.clinica.model.Exame</class>
 		<class>br.com.adm.clinica.model.Leito</class>
 		<class>br.com.adm.clinica.model.LeitoInternacao</class>
-		<class>br.com.adm.clinica.model.Medico</class>
 		<class>br.com.adm.clinica.model.Paciente</class>
 		<class>br.com.adm.clinica.model.Usuario</class>
 		<class>br.com.adm.clinica.model.Medicamento</class>
@@ -19,10 +18,10 @@
 			<property name="javax.persistence.jdbc.password" value="postgres" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			
- 		    <property name="hibernate.hbm2ddl.auto" value="update" />
+ 		    <property name="hibernate.hbm2ddl.auto" value="none" />
          	<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<property name="hibernate.show_sql" value="false"/>
-			<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.format_sql" value="false"/>
 		
 		</properties>
 	</persistence-unit>
