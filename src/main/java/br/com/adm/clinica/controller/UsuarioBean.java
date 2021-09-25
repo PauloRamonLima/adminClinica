@@ -31,6 +31,9 @@ public class UsuarioBean implements Serializable {
 
 	@Inject
 	private Usuario usuario;
+	
+	@Inject
+	private Usuario usuarioLogado;
 
 	private String login;
 
@@ -67,7 +70,7 @@ public class UsuarioBean implements Serializable {
 			}
 		} catch (NoResultException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario Não Encontrado", "Usuario Não Encontrado"));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario Nï¿½o Encontrado", "Usuario Nï¿½o Encontrado"));
 			return;
 		}
 	}
@@ -101,7 +104,7 @@ public class UsuarioBean implements Serializable {
 
 	public void showIndexPage() throws IOException {
 		try {	
-			Usuario usuarioLogado = usuarioService.logar(login, convertStringToMd5(senha));
+			usuarioLogado = usuarioService.logar(login, convertStringToMd5(senha));
 			if (usuarioLogado != null) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.getExternalContext().getSessionMap().put("usuarioLogado", usuarioLogado);
@@ -126,6 +129,11 @@ public class UsuarioBean implements Serializable {
 	public void showLoginPage() throws IOException {
 
 		FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml?faces-redirect=true");
+	}
+	
+	public String logout() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "login.xhtml?faces-redirect=true";
 	}
 
 }

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +22,18 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 
@@ -103,6 +116,7 @@ public class PacienteBean implements Serializable {
 		pacienteService.salvar(paciente);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Paciente Cadastrado Com Sucesso", "Paciente Cadastrado Com Sucesso"));
+		this.doPost();
 		paciente = new Paciente();
 	}
 	
@@ -110,7 +124,7 @@ public class PacienteBean implements Serializable {
 		try {
 			if (pacienteService.buscarPacientePorCpf(paciente.getCpf()) != null) {
 				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "CPF já cadastrado", "CPF já cadastrado"));
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "CPF jï¿½ cadastrado", "CPF jï¿½ cadastrado"));
 				return false;
 			}
 		} catch (NoResultException e) {
@@ -120,7 +134,7 @@ public class PacienteBean implements Serializable {
 		try {
 			if (pacienteService.buscarPacientePorRg(paciente.getRg()) != null) {
 				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "RG já cadastrado", "RG já cadastrado"));
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "RG jï¿½ cadastrado", "RG jï¿½ cadastrado"));
 				return false;
 			}
 		} catch (NoResultException e) {
@@ -188,11 +202,13 @@ public class PacienteBean implements Serializable {
 	public void pesquisaCep(AjaxBehaviorEvent event) {
 
 		try {
-
-			URL url = new URL("https://viacep.com.br/ws/" + paciente.getCep() + "/json/");
-			URLConnection connection = url.openConnection();
-			InputStream is = connection.getInputStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			// https://www.botecodigital.dev.br/java/utilizando-apache-httpclient/
+			HttpClient httpCLient = HttpClients.createDefault();
+			HttpGet httpGet = new HttpGet("https://viacep.com.br/ws/" + paciente.getCep() + "/json/");
+			HttpResponse response = httpCLient.execute(httpGet);
+			
+			InputStream is = response.getEntity().getContent();
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 
 			String cep = "";
 			StringBuilder jsonCep = new StringBuilder();
@@ -213,12 +229,34 @@ public class PacienteBean implements Serializable {
 		}
 
 	}
+	
+	public void doPost() {
+		try {
+			HttpClient httpclient = HttpClients.createDefault();
+			HttpPost httpPost = new HttpPost("http://localhost:8080/paciente");
+			httpPost.setHeader("Accept", "application/json");
+			httpPost.setHeader("Content-type", "application/json;charset=UTF-8");
+			String json;
+			Gson gson = new Gson();
+			json = gson.toJson(paciente);
+			StringEntity entityJson = new StringEntity(json, "UTF-8");
+			httpPost.setEntity(entityJson);
+			HttpResponse response = httpclient.execute(httpPost);
+			
+			HttpEntity entity = response.getEntity();
+			String content = EntityUtils.toString(entity);
+			System.out.println(content);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+		}
+		
+	}
 
 	private void mostrarMsg(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = new FacesMessage(msg);
 		context.addMessage(null, message);
-
 	}
 
 	public void darAltaPaciente(String leito, Long numero) {
@@ -256,7 +294,7 @@ public class PacienteBean implements Serializable {
 		evolucao = new Evolucao();
 		mostrarNovaEvolucao = false;
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Evolução Do Paciente Cadastrada", "Evolução Do Paciente Cadastrada"));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Evoluï¿½ï¿½o Do Paciente Cadastrada", "Evoluï¿½ï¿½o Do Paciente Cadastrada"));
 	}
 	
 }
